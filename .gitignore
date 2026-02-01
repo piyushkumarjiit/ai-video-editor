@@ -39,3 +39,17 @@
 
 # Temporary/output folders
 /tmp_advanced3_frames/
+
+# Ignore everything by default, then allow Python and config files
+*
+!*/
+!*.py
+!*.json
+!*.yaml
+!*.yml
+!*.ini
+!*.cfg
+!*.toml
+!*.xml
+!*.fcpxml
+!.gitignore
