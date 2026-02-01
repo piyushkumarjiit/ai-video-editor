@@ -1,0 +1,41 @@
+# Multimedia
+*.mov
+*.mkv
+*.mp4
+*.avi
+*.wmv
+*.flv
+*.webm
+*.m4v
+*.mpg
+*.mpeg
+*.heic
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.tiff
+*.tif
+*.bmp
+*.webp
+*.wav
+*.mp3
+*.aac
+*.flac
+*.ogg
+*.m4a
+
+# Logs and data exports
+*.log
+*.csv
+
+# Virtual environment
+/.venv/
+
+# Project folders to ignore
+/ai_clips/
+/assets/
+/music/
+
+# Temporary/output folders
+/tmp_advanced3_frames/
