@@ -33,6 +33,10 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from threading import Lock
 from sklearn.metrics.pairwise import cosine_similarity
 import warnings
+try:
+    from tqdm import tqdm
+except Exception:
+    tqdm = None
 import gc
 warnings.filterwarnings('ignore')
 
@@ -207,8 +211,70 @@ def load_object_detection_model():
         return None
 
 
+def load_qwen_vl_model(model_name, device=None, torch_dtype=None, quantization=None):
+    """Load Qwen2.5-VL vision-language model for image understanding."""
+    print("\n🤖 Loading Qwen2.5-VL vision-language model...")
+    try:
+        from transformers import AutoProcessor
+        try:
+            from transformers import Qwen2_5_VLForConditionalGeneration
+        except Exception:
+            Qwen2_5_VLForConditionalGeneration = None
+        try:
+            from transformers import BitsAndBytesConfig
+        except Exception:
+            BitsAndBytesConfig = None
+    except ImportError:
+        print("   ⚠️  transformers not installed")
+        print("   Install: pip install transformers sentencepiece")
+        return None
+
+    try:
+        device = device or GPU_DEVICE
+        quantization = (quantization or "").lower().strip()
+        load_kwargs = {"low_cpu_mem_usage": True, "trust_remote_code": True}
+        use_quant = device == "cuda" and quantization in {"8bit", "4bit"} and BitsAndBytesConfig is not None
+        if use_quant:
+            if quantization == "8bit":
+                quant_config = BitsAndBytesConfig(load_in_8bit=True)
+            else:
+                quant_config = BitsAndBytesConfig(load_in_4bit=True)
+            load_kwargs.update({"quantization_config": quant_config, "device_map": {"": 0}})
+
+        if Qwen2_5_VLForConditionalGeneration is not None:
+            model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
+                model_name,
+                torch_dtype=torch_dtype,
+                **load_kwargs,
+            )
+        else:
+            from transformers import AutoModelForCausalLM
+            model = AutoModelForCausalLM.from_pretrained(
+                model_name,
+                torch_dtype=torch_dtype,
+                **load_kwargs,
+            )
+
+        processor = AutoProcessor.from_pretrained(model_name, trust_remote_code=True)
+
+        if not use_quant:
+            model = model.to(device)
+        model.eval()
+        mem = torch.cuda.memory_allocated(0) / 1024**3 if device == 'cuda' else 0
+        print(f"   ✓ Qwen2.5-VL loaded on {device.upper()} ({model_name})")
+        if device == 'cuda':
+            print(f"   GPU memory: {mem:.2f}GB")
+        return {"model": model, "processor": processor, "model_name": model_name, "device": device, "kind": "qwen2.5-vl"}
+    except Exception as e:
+        print(f"   ⚠️  Qwen2.5-VL failed to load: {e}")
+        return None
+
+
 def load_caption_model(model_name="Salesforce/blip-image-captioning-large", device=None, torch_dtype=None, quantization=None):
-    """Load image captioning model (BLIP/BLIP-2)."""
+    """Load image captioning model (BLIP/BLIP-2/Qwen2.5-VL)."""
+    if "qwen2.5-vl" in (model_name or "").lower() or "qwen2-5-vl" in (model_name or "").lower():
+        return load_qwen_vl_model(model_name, device=device, torch_dtype=torch_dtype, quantization=quantization)
+
     print("\n🤖 Loading image captioning model (BLIP)...")
     try:
         from transformers import BlipProcessor, BlipForConditionalGeneration
@@ -293,7 +359,7 @@ def release_model_dict(model_dict):
         pass
 
 
-def caption_keyframes(frames, caption_model, max_length=40, num_beams=5, prompt=None, use_prompt_for_blip=False, min_length=None):
+def caption_keyframes(frames, caption_model, max_length=40, num_beams=5, prompt=None, use_prompt_for_blip=False, min_length=None, max_image_size=None):
     """Generate captions for keyframes."""
     if caption_model is None:
         for frame in frames:
@@ -304,26 +370,69 @@ def caption_keyframes(frames, caption_model, max_length=40, num_beams=5, prompt=
     processor = caption_model["processor"]
     model_name = caption_model.get("model_name", "").lower()
     device = caption_model.get("device", GPU_DEVICE)
+    model_kind = caption_model.get("kind", "")
 
     print("\n📝 Captioning kept keyframes...")
+    iterator = frames
+    if tqdm is not None:
+        iterator = tqdm(frames, desc="Captioning", unit="frame")
     with torch.no_grad():
-        for idx, frame in enumerate(frames):
+        for idx, frame in enumerate(iterator):
             img = Image.open(frame["path"]).convert("RGB")
-            use_prompt = bool(prompt) and ("blip2" in model_name or use_prompt_for_blip)
-            if use_prompt:
-                inputs = processor(images=img, text=prompt, return_tensors="pt")
+            if model_kind == "qwen2.5-vl" or "qwen2.5-vl" in model_name or "qwen2-5-vl" in model_name:
+                if max_image_size:
+                    max_dim = max(img.size)
+                    if max_dim > max_image_size:
+                        scale = max_image_size / float(max_dim)
+                        new_size = (int(img.size[0] * scale), int(img.size[1] * scale))
+                        img = img.resize(new_size, Image.BICUBIC)
+                cap_prompt = prompt or "Describe the image in detail with concrete objects and actions."
+                messages = [
+                    {
+                        "role": "user",
+                        "content": [
+                            {"type": "image", "image": img},
+                            {"type": "text", "text": cap_prompt},
+                        ],
+                    }
+                ]
+                if hasattr(processor, "apply_chat_template"):
+                    text = processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+                    inputs = processor(text=[text], images=[img], return_tensors="pt")
+                else:
+                    inputs = processor(images=img, text=cap_prompt, return_tensors="pt")
+                    text = None
+                inputs = {k: v.to(device) for k, v in inputs.items()}
+                gen_kwargs = {"max_new_tokens": max_length, "do_sample": False}
+                output_ids = model.generate(**inputs, **gen_kwargs)
+                decoded = processor.batch_decode(output_ids, skip_special_tokens=True)[0]
+                if text and decoded.startswith(text):
+                    caption = decoded[len(text):].strip()
+                else:
+                    caption = decoded.strip()
+                if "assistant" in caption:
+                    caption = caption.split("assistant")[-1].strip("\n :")
+                if caption.lower().startswith("you are a helpful assistant"):
+                    caption = caption.split("\n", 1)[-1].strip()
             else:
-                inputs = processor(images=img, return_tensors="pt")
-            inputs = {k: v.to(device) for k, v in inputs.items()}
-            gen_kwargs = {"max_length": max_length, "num_beams": num_beams}
-            if min_length is not None:
-                gen_kwargs["min_length"] = min_length
-            output_ids = model.generate(**inputs, **gen_kwargs)
-            caption = processor.decode(output_ids[0], skip_special_tokens=True)
-            if use_prompt and caption.lower().startswith(prompt.lower()):
-                caption = caption[len(prompt):].lstrip(" :,-")
+                use_prompt = bool(prompt) and ("blip2" in model_name or use_prompt_for_blip)
+                if use_prompt:
+                    inputs = processor(images=img, text=prompt, return_tensors="pt")
+                else:
+                    inputs = processor(images=img, return_tensors="pt")
+                inputs = {k: v.to(device) for k, v in inputs.items()}
+                gen_kwargs = {"max_length": max_length, "num_beams": num_beams}
+                if min_length is not None:
+                    gen_kwargs["min_length"] = min_length
+                output_ids = model.generate(**inputs, **gen_kwargs)
+                caption = processor.decode(output_ids[0], skip_special_tokens=True)
+                if use_prompt and caption.lower().startswith(prompt.lower()):
+                    caption = caption[len(prompt):].lstrip(" :,-")
+
             frame["caption"] = caption
-            if (idx + 1) % 50 == 0 or (idx + 1) == len(frames):
+            frame["caption_model"] = caption_model.get("model_name")
+            frame["caption_prompt"] = prompt
+            if tqdm is None and ((idx + 1) % 50 == 0 or (idx + 1) == len(frames)):
                 print(f"      {idx + 1}/{len(frames)} frames captioned")
 
     print("   ✓ Captioning complete")
@@ -1116,6 +1225,8 @@ def save_keyframe_captions(frames, output_dir, video_stem, suffix=None):
             "frame_index",
             "timestamp",
             "caption",
+            "caption_model",
+            "caption_prompt",
             "frame_path",
         ]
         writer = csv.DictWriter(cf, fieldnames=fieldnames, extrasaction="ignore")
@@ -1127,6 +1238,8 @@ def save_keyframe_captions(frames, output_dir, video_stem, suffix=None):
                 "frame_index": frame.get("index"),
                 "timestamp": round(float(frame.get("timestamp", 0.0)), 3),
                 "caption": frame.get("caption"),
+                "caption_model": frame.get("caption_model"),
+                "caption_prompt": frame.get("caption_prompt"),
                 "frame_path": frame.get("path"),
             }
             jf.write(json.dumps(entry) + "\n")
@@ -1275,6 +1388,7 @@ def process_video(video_path, output_dir, clip_model, resnet_model, sample_inter
         if caption_model is None:
             print("   ⚠️  Captioning skipped (CUDA only; model failed to load).")
         else:
+            cap_max_image_size = captioning_cfg.get("max_image_size", 768)
             kept_frames = caption_keyframes(
                 kept_frames,
                 caption_model,
@@ -1283,6 +1397,7 @@ def process_video(video_path, output_dir, clip_model, resnet_model, sample_inter
                 prompt=cap_prompt,
                 use_prompt_for_blip=cap_use_prompt_for_blip,
                 min_length=cap_min_length,
+                max_image_size=cap_max_image_size,
             )
             save_keyframe_captions(kept_frames, output_dir, video_path.stem, suffix="kept")
     
