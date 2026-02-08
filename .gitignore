@@ -45,6 +45,6 @@
 !*/
 !*.py
 !.gitignore
-!.md
-!.sh
+!*.md
+!*.sh
 
