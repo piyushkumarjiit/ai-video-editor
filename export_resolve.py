@@ -394,6 +394,71 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
         first_video_stem = Path(analyses[0]['video_name']).stem
         candidate_dir = Path(clip_base_dir) / first_video_stem
         primary_render_dir = candidate_dir if candidate_dir.exists() else Path(clip_base_dir)
+    
+    # Collect teaser clips (showcases + interesting scenes)
+    teaser_clips = []
+    teaser_enabled = timeline_config.get('teaser_enabled', True)
+    teaser_max_duration = timeline_config.get('teaser_max_duration', 45.0)  # 30-50 seconds
+    
+    if teaser_enabled and clip_base_dir:
+        for analysis in analyses:
+            data = analysis['data']
+            video_name = analysis['video_name']
+            video_stem = Path(video_name).stem
+            render_dir = Path(clip_base_dir) / video_stem
+            
+            # Collect showcase moments
+            showcases = data.get('showcases', [])
+            for showcase in showcases:
+                timestamp = showcase['timestamp']
+                # Showcase clips are named: {stem}_showcase_{num}_{timestamp}s_1.00x.mkv
+                showcase_pattern = f"{video_stem}_showcase_*_{timestamp}s_1.00x.mkv"
+                matches = list(render_dir.glob(showcase_pattern)) if render_dir.exists() else []
+                if matches:
+                    clip_path = matches[0]
+                    teaser_clips.append({
+                        'path': clip_path,
+                        'type': 'showcase',
+                        'rating': 10,  # Showcases are highest priority
+                        'video': video_name
+                    })
+            
+            # Collect interesting scenes
+            scenes = data.get('scenes', [])
+            for scene in scenes:
+                if scene.get('classification') == 'interesting':
+                    scene_num = scene['scene_num']
+                    speed = scene['speed']
+                    rendered_path = find_rendered_clip(render_dir, video_stem, scene_num, 'interesting', speed)
+                    if rendered_path and rendered_path.exists():
+                        llm_rating = scene.get('llm_rating', 8)
+                        teaser_clips.append({
+                            'path': rendered_path,
+                            'type': 'interesting',
+                            'rating': llm_rating,
+                            'video': video_name
+                        })
+        
+        # Sort by rating (highest first) and limit to teaser_max_duration
+        teaser_clips.sort(key=lambda x: x['rating'], reverse=True)
+        
+        # Select clips that fit within max duration
+        selected_teasers = []
+        total_duration = 0.0
+        for clip in teaser_clips:
+            clip_duration_frac = get_video_duration_frac(str(clip['path']), fps=fps)
+            clip_duration_sec = float(clip_duration_frac)
+            
+            if total_duration + clip_duration_sec <= teaser_max_duration:
+                selected_teasers.append(clip)
+                total_duration += clip_duration_sec
+            
+            if total_duration >= teaser_max_duration * 0.8:  # Stop at 80% of max
+                break
+        
+        if selected_teasers:
+            print(f"\n🎬 Building teaser: {len(selected_teasers)} clips ({total_duration:.1f}s)")
+    
     if intro_path:
         intro_info = build_static_clip_info(
             intro_path,
@@ -405,6 +470,34 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
         if intro_info:
             intro_used_path = intro_info['src_path']
             clip_infos.insert(0, intro_info)
+    
+    # Insert teaser clips after intro
+    if teaser_enabled and selected_teasers:
+        teaser_insert_pos = 1 if intro_path else 0
+        for teaser in selected_teasers:
+            teaser_path = teaser['path']
+            rotation = get_video_rotation_degrees(str(teaser_path))
+            duration_frac = get_video_duration_frac(str(teaser_path), fps=fps)
+            teaser_info = {
+                'scene': {
+                    'start_time': 0.0,
+                    'end_time': float(duration_frac),
+                    'duration': float(duration_frac),
+                    'speed': 1.0,
+                    'classification': 'teaser'
+                },
+                'video_name': teaser_path.name,
+                'video_path': str(teaser_path),
+                'output_duration_frac': duration_frac,
+                'use_rendered': True,
+                'src_path': str(teaser_path),
+                'src_name': teaser_path.name,
+                'src_duration_frac': duration_frac,
+                'rotation': rotation
+            }
+            clip_infos.insert(teaser_insert_pos, teaser_info)
+            teaser_insert_pos += 1
+    
     if outro_path:
         outro_info = build_static_clip_info(
             outro_path,
