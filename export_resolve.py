@@ -460,10 +460,15 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
             print(f"\n🎬 Building teaser: {len(selected_teasers)} clips ({total_duration:.1f}s)")
     
     # Insert teaser clips first (before intro)
+    teaser_insert_pos = 0
     if teaser_enabled and selected_teasers:
         for teaser in selected_teasers:
             teaser_path = teaser['path']
-            rotation = get_video_rotation_degrees(str(teaser_path))
+            # Get rotation from original video, not from extracted showcase clip
+            # (FFmpeg extraction doesn't preserve rotation metadata)
+            original_video_name = teaser['video']
+            rotation = video_rotations.get(original_video_name, 0)
+            video_rotations[teaser_path.name] = rotation
             duration_frac = get_video_duration_frac(str(teaser_path), fps=fps)
             teaser_info = {
                 'scene': {
@@ -482,8 +487,10 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
                 'src_duration_frac': duration_frac,
                 'rotation': rotation
             }
-            clip_infos.append(teaser_info)
+            clip_infos.insert(teaser_insert_pos, teaser_info)
+            teaser_insert_pos += 1
     
+    # Insert intro after teaser
     if intro_path:
         intro_info = build_static_clip_info(
             intro_path,
@@ -494,7 +501,7 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
         )
         if intro_info:
             intro_used_path = intro_info['src_path']
-            clip_infos.append(intro_info)
+            clip_infos.insert(teaser_insert_pos, intro_info)
     
     if outro_path:
         outro_info = build_static_clip_info(
@@ -521,6 +528,11 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
         timeline_config.get('background_music')
         or audio_config.get('background_music')
         or config.get('background_music')
+    )
+    teaser_music_config = (
+        timeline_config.get('teaser_music')
+        or audio_config.get('teaser_music')
+        or config.get('teaser_music')
     )
     audio_role = timeline_config.get('audio_role', 'dialogue')
     watermark_asset_id = None
@@ -746,6 +758,47 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
                         })
             else:
                 print(f"⚠️  Music folder not found: {music_dir}")
+    
+    # Load teaser music assets
+    teaser_music_assets = []
+    if teaser_music_config and isinstance(teaser_music_config, dict):
+        teaser_music_folder = teaser_music_config.get('folder')
+        if teaser_music_folder:
+            teaser_music_dir = Path(teaser_music_folder).expanduser().resolve()
+            if teaser_music_dir.exists() and teaser_music_dir.is_dir():
+                teaser_music_files = sorted(teaser_music_dir.glob('*.wav'))
+                if not teaser_music_files:
+                    print(f"⚠️  No WAV files found in teaser music folder: {teaser_music_dir}")
+                else:
+                    for teaser_music_path in teaser_music_files:
+                        duration_frac, channels = get_audio_info(str(teaser_music_path))
+                        if not duration_frac:
+                            print(f"⚠️  Skipping teaser audio (unknown duration): {teaser_music_path}")
+                            continue
+                        asset_id = f'r{asset_counter}'
+                        asset_counter += 1
+                        asset = SubElement(resources, 'asset', {
+                            'name': teaser_music_path.name,
+                            'start': '0/1s',
+                            'hasAudio': '1',
+                            'id': asset_id,
+                            'uid': to_file_uri(str(teaser_music_path)),
+                            'duration': f"{duration_frac.numerator}/{duration_frac.denominator}s",
+                            'hasVideo': '0',
+                            'audioSources': '1',
+                            'audioChannels': str(channels)
+                        })
+                        SubElement(asset, 'media-rep', {
+                            'src': to_file_uri(str(teaser_music_path)),
+                            'kind': 'original-media'
+                        })
+                        teaser_music_assets.append({
+                            'asset_id': asset_id,
+                            'path': str(teaser_music_path),
+                            'duration': duration_frac
+                        })
+            else:
+                print(f"⚠️  Teaser music folder not found: {teaser_music_dir}")
     
     # Library structure
     library = SubElement(fcpxml, 'library')
@@ -1152,6 +1205,77 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
                         })
                 music_pos += clip_duration
                 music_index += 1
+    
+    # Add teaser music to A1 track
+    if teaser_music_assets and teaser_enabled and selected_teasers:
+        try:
+            teaser_music_lane = int(teaser_music_config.get('audio_lane', 1))
+        except (TypeError, ValueError):
+            teaser_music_lane = 1
+        fade_seconds = teaser_music_config.get('fade_duration', 1.0)
+        fade_in_seconds = teaser_music_config.get('fade_in_duration', fade_seconds)
+        fade_out_seconds = teaser_music_config.get('fade_out_duration', fade_seconds)
+        fade_silence_db = teaser_music_config.get('fade_silence_db', -96.0)
+
+        def _to_duration(value):
+            try:
+                value = float(value)
+            except (TypeError, ValueError):
+                return None
+            if value <= 0:
+                return None
+            return Fraction(value).limit_denominator(10000)
+
+        teaser_fade_duration = _to_duration(fade_seconds)
+        teaser_fade_in_duration = _to_duration(fade_in_seconds)
+        teaser_fade_out_duration = _to_duration(fade_out_seconds)
+        
+        seed = teaser_music_config.get('random_seed')
+        teaser_rng = random.Random(seed) if seed is not None else random.Random()
+        teaser_music_track = teaser_rng.choice(teaser_music_assets)
+        
+        def _fmt_time(value):
+            if value is None:
+                return None
+            return f"{value.numerator}/{value.denominator}s"
+        
+        # Calculate teaser section duration
+        teaser_start = Fraction(0, 1)
+        teaser_end = Fraction(0, 1)
+        for info, (clip_start, clip_end) in zip(clip_infos, clip_timeline_ranges):
+            classification = info['scene'].get('classification')
+            if classification == 'teaser':
+                if teaser_end < clip_end:
+                    teaser_end = clip_end
+        
+        if teaser_end > teaser_start:
+            teaser_duration = teaser_end - teaser_start
+            track_duration = teaser_music_track['duration']
+            clip_duration = track_duration if track_duration <= teaser_duration else teaser_duration
+            
+            if clip_duration > 0:
+                attributes = {
+                    'name': Path(teaser_music_track['path']).name,
+                    'ref': teaser_music_track['asset_id'],
+                    'start': '0/1s',
+                    'offset': f"{teaser_start.numerator}/{teaser_start.denominator}s",
+                    'duration': f"{clip_duration.numerator}/{clip_duration.denominator}s",
+                    'enabled': '1',
+                    'tcFormat': 'NDF',
+                    'lane': str(teaser_music_lane),
+                    'audioStart': '0/1s',
+                    'audioDuration': f"{clip_duration.numerator}/{clip_duration.denominator}s"
+                }
+                if teaser_fade_in_duration:
+                    fade_in = teaser_fade_in_duration if teaser_fade_in_duration <= clip_duration else clip_duration
+                    attributes['audioFadeIn'] = _fmt_time(fade_in)
+                if teaser_fade_out_duration:
+                    fade_out = teaser_fade_out_duration if teaser_fade_out_duration <= clip_duration else clip_duration
+                    attributes['audioFadeOut'] = _fmt_time(fade_out)
+                teaser_music_clip = SubElement(spine, 'asset-clip', attributes)
+                SubElement(teaser_music_clip, 'adjust-volume', {
+                    'amount': '0dB'
+                })
     
     # Add final gap
     gap = SubElement(spine, 'gap', {
