@@ -459,21 +459,8 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
         if selected_teasers:
             print(f"\n🎬 Building teaser: {len(selected_teasers)} clips ({total_duration:.1f}s)")
     
-    if intro_path:
-        intro_info = build_static_clip_info(
-            intro_path,
-            'intro',
-            clip_base_dir,
-            preferred_dir=primary_render_dir,
-            copy_to_clips_dir=copy_intro_outro
-        )
-        if intro_info:
-            intro_used_path = intro_info['src_path']
-            clip_infos.insert(0, intro_info)
-    
-    # Insert teaser clips after intro
+    # Insert teaser clips first (before intro)
     if teaser_enabled and selected_teasers:
-        teaser_insert_pos = 1 if intro_path else 0
         for teaser in selected_teasers:
             teaser_path = teaser['path']
             rotation = get_video_rotation_degrees(str(teaser_path))
@@ -495,8 +482,19 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
                 'src_duration_frac': duration_frac,
                 'rotation': rotation
             }
-            clip_infos.insert(teaser_insert_pos, teaser_info)
-            teaser_insert_pos += 1
+            clip_infos.append(teaser_info)
+    
+    if intro_path:
+        intro_info = build_static_clip_info(
+            intro_path,
+            'intro',
+            clip_base_dir,
+            preferred_dir=primary_render_dir,
+            copy_to_clips_dir=copy_intro_outro
+        )
+        if intro_info:
+            intro_used_path = intro_info['src_path']
+            clip_infos.append(intro_info)
     
     if outro_path:
         outro_info = build_static_clip_info(
