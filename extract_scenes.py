@@ -117,6 +117,7 @@ def process_analysis(analysis_file, video_dir, output_base_dir):
         return
     
     scenes = analysis['scenes']
+    showcases = analysis.get('showcases', [])
     summary = analysis.get('summary', {})
     
     output_dir = Path(output_base_dir) / Path(video_name).stem
@@ -147,6 +148,9 @@ def process_analysis(analysis_file, video_dir, output_base_dir):
     print("     skip         → not exported")
     print()
     
+    extracted_count = 0
+    skipped_count = 0
+    
     for scene in scenes:
         scene_num = scene['scene_num']
         classification = scene['classification']
@@ -156,15 +160,49 @@ def process_analysis(analysis_file, video_dir, output_base_dir):
         output_path = output_dir / output_name
 
         if output_path.exists():
-            print(f"   Skipping {output_path.name} (already exists)")
+            print(f"   ⏭️  Skipping {output_path.name} (already exists)")
+            skipped_count += 1
             continue
 
         extract_scene(video_path, scene, output_path)
+        extracted_count += 1
+    
+    # Extract showcase moments (short clips at 1x speed)
+    if showcases:
+        print(f"\n✨ Extracting {len(showcases)} showcase moments (key highlights at 1x speed)...")
+        
+        for idx, showcase in enumerate(showcases, 1):
+            timestamp = showcase['timestamp']
+            # Extract 5 seconds: 2s before + 3s after the timestamp
+            start_time = max(0, timestamp - 2)
+            duration = 5
+            
+            output_name = f"{video_path.stem}_showcase_{idx:02d}_{timestamp}s_1.00x.mkv"
+            output_path = output_dir / output_name
+            
+            if output_path.exists():
+                print(f"   ⏭️  Skipping {output_path.name} (already exists)")
+                skipped_count += 1
+                continue
+            
+            # Create a fake scene object for extraction
+            showcase_scene = {
+                'start_time': start_time,
+                'duration': duration,
+                'speed': 1.0
+            }
+            
+            extract_scene(video_path, showcase_scene, output_path)
+            extracted_count += 1
     
     print()
     print("=" * 60)
     print("📊 Extraction Complete")
     print("=" * 60)
+    print(f"  Extracted:    {extracted_count} clips")
+    print(f"  Skipped:      {skipped_count} clips (already exist)")
+    print(f"  Total:        {len(scenes)} scenes + {len(showcases)} showcases")
+    print()
     print(f"  Interesting:  {class_counts.get('interesting', summary.get('interesting', 0))} scenes")
     print(f"  Moderate:     {class_counts.get('moderate', summary.get('moderate', 0))} scenes")
     print(f"  Low:          {class_counts.get('low', summary.get('low', 0))} scenes")

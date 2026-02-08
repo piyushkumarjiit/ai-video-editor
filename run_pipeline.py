@@ -153,47 +153,35 @@ def main():
 			if not videos_to_analyze:
 				print("\n▶ [1/3] Analyze videos (skipped - JSON exists)")
 			else:
-				for vid in videos_to_analyze:
-					cmd = [
-						python,
-						str(base_dir / "analyze_advanced3.py"),
-						"--config",
-						str(Path(args.config).resolve()),
-						"--output-dir",
-						str(output_dir),
-						"--sample-interval",
-						str(sample_interval),
-						"--video",
-						str(vid),
-					]
-					run_stage(f"[1/3] Analyze video {vid.name}", cmd, base_dir)
+				# Run batch analysis with analyze_advanced5.py
+				cmd = [
+					python,
+					str(base_dir / "analyze_advanced5.py"),
+					"--sample-interval",
+					str(sample_interval),
+					"--skip-duplicate-captions",
+					"--max-scene-length",
+					"40",
+				]
+				if video_path:
+					cmd.extend(["--video", str(video_path)])
+				run_stage("[1/3] Analyze videos with Qwen2.5-VL-7B", cmd, base_dir)
 		else:
 			print("\n▶ [1/3] Analyze videos (skipped)")
 
 		if not skip_extract:
-			analysis_files = sorted(output_dir.glob("scene_analysis_*.json"), key=lambda p: p.name.lower())
-			analysis_files = [p for p in analysis_files if p.exists()]
-			if not analysis_files:
-				print("\n▶ [2/3] Extract scenes (skipped - no analysis JSON found)")
-			else:
-				pending = [p for p in analysis_files if not clips_complete(p, clips_dir)]
-				if not pending:
-					print("\n▶ [2/3] Extract scenes (skipped - clips already exist)")
-				else:
-					for analysis_file in pending:
-						cmd = [
-							python,
-							str(base_dir / "extract_scenes.py"),
-							"--config",
-							str(Path(args.config).resolve()),
-							"--analysis",
-							str(analysis_file),
-							"--video-dir",
-							str(video_dir),
-							"--output-dir",
-							str(clips_dir),
-						]
-						run_stage(f"[2/3] Extract scenes {analysis_file.name}", cmd, base_dir)
+			# Run batch extraction with extract_scenes.py
+			cmd = [
+				python,
+				str(base_dir / "extract_scenes.py"),
+				"--analysis-dir",
+				str(output_dir),
+				"--output-dir",
+				str(clips_dir),
+			]
+			if video_dir != input_dir:
+				cmd.extend(["--video-dir", str(video_dir)])
+			run_stage("[2/3] Extract scenes and showcase moments", cmd, base_dir)
 		else:
 			print("\n▶ [2/3] Extract scenes (skipped)")
 

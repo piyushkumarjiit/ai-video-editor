@@ -440,8 +440,8 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
         watermark_path = watermark_config.get('path')
         transparency = normalize_transparency(watermark_config.get('transparency'))
         if transparency is None:
-            transparency = 0.8
-        watermark_opacity = 1.0 - transparency
+            transparency = 0.3  # Default 30% transparent = 70% opaque
+        watermark_opacity = 1.0 - transparency  # Convert transparency to opacity
         watermark_position = watermark_config.get('position', 'bottom-right')
     
     # FCP XML structure (version 1.13 - DaVinci Resolve format)
@@ -912,6 +912,7 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
             'anchor': '0 0'
         })
         SubElement(watermark_clip, 'adjust-blend', {
+            'amount': f"{watermark_opacity:.3f}",
             'opacity': f"{watermark_opacity:.3f}"
         })
 

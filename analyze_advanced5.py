@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Advanced AI Video Analysis v4 - TWO-PASS LLM-ENHANCED WORKFLOW
+Advanced AI Video Analysis v5 - TWO-PASS LLM-ENHANCED WORKFLOW
 Combines vision models + LLM reasoning for intelligent scene detection:
 
 **PASS 1: Enhanced Metadata Collection**
 1. CLIP (ViT-B/32) - Semantic understanding (GPU)
 2. ResNet-50 - Deep feature extraction (GPU)
 3. Duplicate Detection - Cosine similarity
-4. LLaVA-1.6-vicuna-13B - Caption ALL frames early
+4. Qwen2.5-VL-7B - Caption ALL frames early (faster 7B model)
 5. Caption-based features - Extract keywords, action intensity
 
 **PASS 2: LLM Scene Analysis**
@@ -143,9 +143,9 @@ def suppress_stdout_stderr():
         for fd in null_fds + save_fds:
             os.close(fd)
 
-print("🚀 Advanced AI Video Analysis v4 - TWO-PASS LLM WORKFLOW")
+print("🚀 Advanced AI Video Analysis v5 - TWO-PASS LLM WORKFLOW")
 print("=" * 70)
-print("Pass 1: CLIP + ResNet + LLaVA captions + metadata")
+print("Pass 1: CLIP + ResNet + Qwen2.5-VL captions + metadata")
 print("Pass 2: LLM scene detection + classification + showcases")
 print("=" * 70)
 
@@ -266,8 +266,8 @@ def load_resnet_model():
 
 
 def load_llava_model():
-    """Load LLaVA GGUF model using llama-cpp-python with GPU acceleration."""
-    print("\n🤖 Loading LLaVA-1.6-vicuna-13B GGUF (llama-cpp-python + GPU)...")
+    """Load Qwen2.5-VL-7B GGUF model using llama-cpp-python with GPU acceleration."""
+    print("\n🤖 Loading Qwen2.5-VL-7B GGUF (llama-cpp-python + GPU)...")
     try:
         from llama_cpp import Llama
         from llama_cpp.llama_chat_format import Llava16ChatHandler
@@ -281,33 +281,33 @@ def load_llava_model():
         # Auto-detect downloaded GGUF model in HuggingFace cache
         cache_dir = Path.home() / ".cache/huggingface/hub"
         
-        # LLaVA-1.6-vicuna-13B-Q4_K_M
-        model_pattern = "models--cjpais--llava-v1.6-vicuna-13b-gguf/**/llava-v1.6-vicuna-13b.Q4_K_M.gguf"
-        mmproj_pattern = "models--cjpais--llava-v1.6-vicuna-13b-gguf/**/mmproj-model-f16.gguf"
+        # Qwen2.5-VL-7B-Q4_K_M
+        model_pattern = "models--unsloth--Qwen2.5-VL-7B-Instruct-GGUF/**/Qwen2.5-VL-7B-Instruct-Q4_K_M.gguf"
+        mmproj_pattern = "models--unsloth--Qwen2.5-VL-7B-Instruct-GGUF/**/mmproj-F16.gguf"
         
         model_matches = list(cache_dir.glob(model_pattern))
         mmproj_matches = list(cache_dir.glob(mmproj_pattern))
         
         if not model_matches or not mmproj_matches:
-            print("   ⚠️  LLaVA model not found. Download with:")
-            print('   python -c "from huggingface_hub import hf_hub_download; hf_hub_download(repo_id=\'cjpais/llava-v1.6-vicuna-13b-gguf\', filename=\'llava-v1.6-vicuna-13b.Q4_K_M.gguf\'); hf_hub_download(repo_id=\'cjpais/llava-v1.6-vicuna-13b-gguf\', filename=\'mmproj-model-f16.gguf\')"')
+            print("   ⚠️  Qwen2.5-VL model not found. Download with:")
+            print('   python -c "from huggingface_hub import hf_hub_download; hf_hub_download(repo_id=\'unsloth/Qwen2.5-VL-7B-Instruct-GGUF\', filename=\'Qwen2.5-VL-7B-Instruct-Q4_K_M.gguf\'); hf_hub_download(repo_id=\'unsloth/Qwen2.5-VL-7B-Instruct-GGUF\', filename=\'mmproj-F16.gguf\')"')
             return None
         
         model_path = str(model_matches[0])
         mmproj_path = str(mmproj_matches[0])
         
-        print(f"   Model: LLaVA-1.6-vicuna-13B-Q4_K_M (13B parameters)")
+        print(f"   Model: Qwen2.5-VL-7B-Q4_K_M (7B parameters)")
         
         # Load with full GPU acceleration
         start = time.time()
         
-        # Load LLaVA model with vision projector
+        # Load Qwen2.5-VL model with vision projector (uses same handler as LLaVA)
         chat_handler = Llava16ChatHandler(clip_model_path=mmproj_path, verbose=False)
         llm = Llama(
             model_path=model_path,
             chat_handler=chat_handler,
             n_gpu_layers=-1,
-            n_ctx=3072,  # 3072 for LLaVA (images need ~2900 tokens)
+            n_ctx=4096,  # 4096 for Qwen2.5-VL
             n_threads=8,
             verbose=False,
             logits_all=False,
@@ -315,16 +315,16 @@ def load_llava_model():
         
         load_time = time.time() - start
         
-        print(f"   ✓ LLaVA-1.6-vicuna-13B GGUF loaded on GPU in {load_time:.1f}s")
-        print(f"   Context: 3072 tokens, All layers on GPU")
+        print(f"   ✓ Qwen2.5-VL-7B GGUF loaded on GPU in {load_time:.1f}s")
+        print(f"   Context: 4096 tokens, All layers on GPU")
         
         return {
             "model": llm,
-            "model_name": "LLaVA-1.6-vicuna-13B",
+            "model_name": "Qwen2.5-VL-7B",
             "device": "cuda",
         }
     except Exception as e:
-        print(f"   ⚠️  LLaVA failed to load: {e}")
+        print(f"   ⚠️  Qwen2.5-VL failed to load: {e}")
         import traceback
         traceback.print_exc()
         return None
@@ -384,8 +384,8 @@ def caption_all_frames_early(frames, llava_model, max_length=40, skip_duplicates
     
     start_time = time.time()
     
-    # Caption prompt optimized for scale model work
-    cap_prompt = "Describe exactly what is visible. Identify model car parts, tools, hands, and materials. Avoid guessing; if uncertain, say 'unclear'."
+    # Caption prompt optimized for keywords (fast, concise)
+    cap_prompt = "List comma-separated keywords only. NO sentences. Example: hands, blue gloves, red car, screwdriver, workbench"
     
     for idx, frame in enumerate(frames_to_caption):
         img = Image.open(frame["path"]).convert("RGB")
@@ -400,7 +400,7 @@ def caption_all_frames_early(frames, llava_model, max_length=40, skip_duplicates
         with suppress_cpp_output():
             output = model.create_chat_completion(
                 messages=[
-                    {"role": "system", "content": "You are a helpful assistant that describes images of hobby workshops and scale model building. Always describe what you see."},
+                    {"role": "system", "content": "You output ONLY comma-separated keywords describing visible objects, colors, and actions. NO full sentences. NO descriptions."},
                     {
                         "role": "user",
                         "content": [
@@ -499,7 +499,7 @@ def extract_frames_parallel(video_path, interval=2):
     
     def extract_frame(i, ts):
         output_path = frames_dir / f"frame_{i:04d}.jpg"
-        # Rotate 90° clockwise (transpose=2), then scale to 1280x720 for faster LLaVA processing
+        # Rotate 90° clockwise (transpose=2), then scale to 1280x720
         cmd = ['ffmpeg', '-y', '-ss', str(ts), '-i', str(video_path),
                '-vframes', '1', '-vf', 'transpose=2,scale=1280:720', '-q:v', '1', str(output_path)]
         subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
@@ -1171,8 +1171,8 @@ def save_results(scenes, frames, output_file, video_name):
     
     result = {
         'video': video_name,
-        'method': 'advanced_ai_v4_two_pass_llm',
-        'models': ['CLIP_ViT-B/32', 'ResNet50', 'LLaVA-1.6-vicuna-13B', 'LLM_Scene_Analysis'],
+        'method': 'advanced_ai_v5_two_pass_llm',
+        'models': ['CLIP_ViT-B/32', 'ResNet50', 'Qwen2.5-VL-7B', 'LLM_Scene_Analysis'],
         'total_frames': len(frames),
         'total_scenes': len(scenes),
         'scenes': scenes,
@@ -1199,7 +1199,7 @@ def print_summary(result):
     """Print analysis summary"""
     s = result['summary']
     print("\n" + "=" * 70)
-    print("📊 Advanced AI Analysis v4 - Two-Pass LLM Report")
+    print("📊 Advanced AI Analysis v5 - Two-Pass LLM Report")
     print("=" * 70)
     print(f"  Models: {', '.join(result['models'])}")
     print(f"  Interesting (1.0x):  {s['interesting']} scenes")
@@ -1242,8 +1242,8 @@ def process_video_two_pass(video_path, output_dir, sample_interval, skip_duplica
     frames, features = extract_features(frames, resnet_model)
     frames = detect_duplicates_and_repetition(frames, features)
     
-    # Release vision models, load LLaVA
-    print("\n🧹 Releasing vision models, loading LLaVA...")
+    # Release vision models, load Qwen2.5-VL
+    print("\n🧹 Releasing vision models, loading Qwen2.5-VL...")
     release_model_dict(clip_model)
     release_model_dict(resnet_model)
     clear_cuda_cache()
@@ -1251,7 +1251,7 @@ def process_video_two_pass(video_path, output_dir, sample_interval, skip_duplica
     llava_model = load_llava_model()
     
     # Caption ALL frames early (with optional duplicate skipping)
-    frames = caption_all_frames_early(frames, llava_model, max_length=40, skip_duplicates=skip_duplicate_captions)
+    frames = caption_all_frames_early(frames, llava_model, max_length=20, skip_duplicates=skip_duplicate_captions)
     
     # Extract caption features
     frames = extract_caption_features(frames)
@@ -1345,10 +1345,22 @@ def main():
         return
     
     output_files = []
+    skipped_videos = []
 
     for video_path in video_paths:
         if not video_path.exists():
             print(f"❌ Video not found: {video_path}")
+            continue
+        
+        # Check if both metadata and scene analysis already exist
+        metadata_file = output_dir / f"metadata_{video_path.stem}.json"
+        scene_analysis_file = output_dir / f"scene_analysis_{video_path.stem}.json"
+        
+        if metadata_file.exists() and scene_analysis_file.exists():
+            print(f"\n⏭️  Skipping {video_path.name} - analysis already complete")
+            print(f"   (Found: {metadata_file.name} + {scene_analysis_file.name})")
+            skipped_videos.append(video_path)
+            output_files.append(scene_analysis_file)
             continue
         
         output_file = process_video_two_pass(
@@ -1361,7 +1373,14 @@ def main():
         output_files.append(output_file)
     
     if output_files:
-        print("\n💡 Next: python extract_scenes.py --analysis-dir", output_dir)
+        print("\n" + "=" * 70)
+        print("📊 Batch Analysis Complete")
+        print("=" * 70)
+        print(f"  Processed: {len(output_files) - len(skipped_videos)} videos")
+        print(f"  Skipped: {len(skipped_videos)} videos (already analyzed)")
+        print(f"  Total: {len(output_files)} videos ready")
+        print("=" * 70)
+        print(f"\n💡 Next: python extract_scenes.py --analysis-dir {output_dir}")
 
 
 if __name__ == "__main__":
