@@ -345,11 +345,24 @@ def clear_cuda_cache():
 
 
 def release_model_dict(model_dict):
+    """Release model from memory, handling both PyTorch and llama-cpp-python models."""
     if not model_dict:
         return
     try:
         model = model_dict.get("model")
         if model is not None:
+            # Special handling for llama-cpp-python Llama objects
+            try:
+                # Check if it's a Llama object (has ctx attribute from llama.cpp)
+                if hasattr(model, 'ctx') and model.ctx is not None:
+                    # llama-cpp-python models need explicit context cleanup
+                    try:
+                        # Free the C++ context to prevent memory leaks
+                        model.close()
+                    except Exception:
+                        pass
+            except Exception:
+                pass
             del model
     except Exception:
         pass
@@ -1297,6 +1310,11 @@ def process_video_two_pass(video_path, output_dir, sample_interval, skip_duplica
         json.dump(result, f, indent=2)
     
     print_summary(result)
+    
+    # Release Qwen2.5-VL model to prevent memory leaks between videos
+    print("\n🧹 Releasing Qwen2.5-VL model...")
+    release_model_dict(llava_model)
+    clear_cuda_cache()
     
     return output_file
 

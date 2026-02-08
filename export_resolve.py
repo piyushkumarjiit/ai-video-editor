@@ -284,6 +284,12 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
     """Create FCP XML timeline for DaVinci Resolve"""
     config = config or {}
     timeline_config = config.get('timeline', config)
+    
+    # Read exclude_boring from config if not explicitly set via command-line
+    # Command-line argument (exclude_boring parameter) takes precedence over config
+    if not exclude_boring and timeline_config.get('exclude_boring', False):
+        exclude_boring = True
+    
     analyses = load_analyses(analysis_path, video_dir=video_dir, video_file=video_dir if video_dir and Path(video_dir).is_file() else None)
     if not analyses:
         raise ValueError("No analysis files found.")

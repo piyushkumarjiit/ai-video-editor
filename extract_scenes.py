@@ -98,7 +98,7 @@ def extract_scene(video_path, scene, output_path):
         print("✓")
 
 
-def process_analysis(analysis_file, video_dir, output_base_dir):
+def process_analysis(analysis_file, video_dir, output_base_dir, exclude_boring=False):
     with open(analysis_file, 'r') as f:
         analysis = json.load(f)
     
@@ -119,6 +119,13 @@ def process_analysis(analysis_file, video_dir, output_base_dir):
     scenes = analysis['scenes']
     showcases = analysis.get('showcases', [])
     summary = analysis.get('summary', {})
+    
+    # Filter out boring scenes if requested
+    if exclude_boring:
+        original_count = len(scenes)
+        scenes = [s for s in scenes if s.get('classification') != 'boring']
+        if len(scenes) < original_count:
+            print(f"\n🚫 Skipping {original_count - len(scenes)} boring scenes (exclude_boring=True)")
     
     output_dir = Path(output_base_dir) / Path(video_name).stem
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -226,12 +233,15 @@ def main():
     parser.add_argument("--analysis-dir", help="Directory of analysis JSON files")
     parser.add_argument("--video-dir", help="Directory containing source videos")
     parser.add_argument("--output-dir", default=None, help="Base output directory for clips")
+    parser.add_argument("--exclude-boring", action="store_true", help="Skip extraction of boring scenes")
     args = parser.parse_args()
 
     config = load_project_config(args.config)
     paths_cfg = config.get("paths", {})
+    pipeline_cfg = config.get("pipeline", {})
     output_dir = args.output_dir or paths_cfg.get("clips_dir") or OUTPUT_DIR
     video_dir = args.video_dir or paths_cfg.get("input_dir")
+    exclude_boring = args.exclude_boring or pipeline_cfg.get("exclude_boring", False)
     
     analysis_files = []
     if args.analysis_dir:
@@ -248,7 +258,7 @@ def main():
         return
     
     for analysis_file in analysis_files:
-        process_analysis(analysis_file, video_dir, output_dir)
+        process_analysis(analysis_file, video_dir, output_dir, exclude_boring=exclude_boring)
 
     print(f"\n💡 Next: run export_resolve.py to build the combined timeline.")
 
