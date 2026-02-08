@@ -212,67 +212,72 @@ def load_object_detection_model():
 
 
 def load_qwen_vl_model(model_name, device=None, torch_dtype=None, quantization=None):
-    """Load Qwen2.5-VL vision-language model for image understanding."""
-    print("\n🤖 Loading Qwen2.5-VL vision-language model...")
+    """Load Qwen2-VL GGUF model using llama-cpp-python with GPU acceleration."""
+    print("\n🤖 Loading Qwen2-VL 7B GGUF model (llama-cpp-python + GPU)...")
     try:
-        from transformers import AutoProcessor
-        try:
-            from transformers import Qwen2_5_VLForConditionalGeneration
-        except Exception:
-            Qwen2_5_VLForConditionalGeneration = None
-        try:
-            from transformers import BitsAndBytesConfig
-        except Exception:
-            BitsAndBytesConfig = None
+        from llama_cpp import Llama
+        from pathlib import Path
     except ImportError:
-        print("   ⚠️  transformers not installed")
-        print("   Install: pip install transformers sentencepiece")
+        print("   ⚠️  llama-cpp-python not installed")
+        print("   Install: pip install llama-cpp-python --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu124")
         return None
 
     try:
-        device = device or GPU_DEVICE
-        quantization = (quantization or "").lower().strip()
-        load_kwargs = {"low_cpu_mem_usage": True, "trust_remote_code": True}
-        use_quant = device == "cuda" and quantization in {"8bit", "4bit"} and BitsAndBytesConfig is not None
-        if use_quant:
-            if quantization == "8bit":
-                quant_config = BitsAndBytesConfig(load_in_8bit=True)
-            else:
-                quant_config = BitsAndBytesConfig(load_in_4bit=True)
-            load_kwargs.update({"quantization_config": quant_config, "device_map": {"": 0}})
-
-        if Qwen2_5_VLForConditionalGeneration is not None:
-            model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
-                model_name,
-                torch_dtype=torch_dtype,
-                **load_kwargs,
-            )
-        else:
-            from transformers import AutoModelForCausalLM
-            model = AutoModelForCausalLM.from_pretrained(
-                model_name,
-                torch_dtype=torch_dtype,
-                **load_kwargs,
-            )
-
-        processor = AutoProcessor.from_pretrained(model_name, trust_remote_code=True)
-
-        if not use_quant:
-            model = model.to(device)
-        model.eval()
-        mem = torch.cuda.memory_allocated(0) / 1024**3 if device == 'cuda' else 0
-        print(f"   ✓ Qwen2.5-VL loaded on {device.upper()} ({model_name})")
-        if device == 'cuda':
-            print(f"   GPU memory: {mem:.2f}GB")
-        return {"model": model, "processor": processor, "model_name": model_name, "device": device, "kind": "qwen2.5-vl"}
+        # Auto-detect downloaded GGUF model in HuggingFace cache
+        cache_dir = Path.home() / ".cache/huggingface/hub"
+        patterns = [
+            "models--bartowski--Qwen2-VL-7B-Instruct-GGUF/**/Qwen2-VL-7B-Instruct-Q4_K_M.gguf",
+            "models--Qwen--Qwen2-VL-7B-Instruct-GGUF/**/qwen2-vl-7b-instruct-q4_k_m.gguf",
+        ]
+        
+        model_path = None
+        for pattern in patterns:
+            matches = list(cache_dir.glob(pattern))
+            if matches:
+                model_path = str(matches[0])
+                break
+        
+        if not model_path:
+            print("   ⚠️  GGUF model not found. Download with:")
+            print('   python -c "from huggingface_hub import hf_hub_download; hf_hub_download(repo_id=\'bartowski/Qwen2-VL-7B-Instruct-GGUF\', filename=\'Qwen2-VL-7B-Instruct-Q4_K_M.gguf\')"')
+            return None
+        
+        print(f"   Model: {Path(model_path).name}")
+        
+        # Load with full GPU acceleration
+        import time
+        start = time.time()
+        llm = Llama(
+            model_path=model_path,
+            n_gpu_layers=-1,  # Offload all layers to GPU
+            n_ctx=4096,
+            n_threads=8,
+            verbose=False,
+        )
+        load_time = time.time() - start
+        
+        print(f"   ✓ Qwen2-VL-7B GGUF loaded on GPU in {load_time:.1f}s")
+        print(f"   Context: 4096 tokens, All layers on GPU")
+        
+        return {
+            "model": llm,
+            "processor": None,  # GGUF doesn't need separate processor
+            "model_name": "Qwen2-VL-7B-Instruct-GGUF-Q4_K_M",
+            "device": "cuda",
+            "kind": "qwen2-vl-gguf",
+            "model_path": model_path
+        }
     except Exception as e:
-        print(f"   ⚠️  Qwen2.5-VL failed to load: {e}")
+        print(f"   ⚠️  Qwen2-VL GGUF failed to load: {e}")
+        import traceback
+        traceback.print_exc()
         return None
 
 
 def load_caption_model(model_name="Salesforce/blip-image-captioning-large", device=None, torch_dtype=None, quantization=None):
-    """Load image captioning model (BLIP/BLIP-2/Qwen2.5-VL)."""
-    if "qwen2.5-vl" in (model_name or "").lower() or "qwen2-5-vl" in (model_name or "").lower():
+    """Load image captioning model (BLIP/BLIP-2/Qwen2.5-VL/Qwen2-VL-GGUF)."""
+    # Route to GGUF loader for Qwen VL models (default to GGUF for efficiency)
+    if "qwen" in (model_name or "").lower() and "vl" in (model_name or "").lower():
         return load_qwen_vl_model(model_name, device=device, torch_dtype=torch_dtype, quantization=quantization)
 
     print("\n🤖 Loading image captioning model (BLIP)...")
@@ -376,10 +381,69 @@ def caption_keyframes(frames, caption_model, max_length=40, num_beams=5, prompt=
     iterator = frames
     if tqdm is not None:
         iterator = tqdm(frames, desc="Captioning", unit="frame")
-    with torch.no_grad():
+    
+    # GGUF model doesn't need torch.no_grad()
+    use_torch_guard = model_kind not in {"qwen2-vl-gguf"}
+    
+    def process_frames():
         for idx, frame in enumerate(iterator):
             img = Image.open(frame["path"]).convert("RGB")
-            if model_kind == "qwen2.5-vl" or "qwen2.5-vl" in model_name or "qwen2-5-vl" in model_name:
+            
+            # GGUF model (llama-cpp-python)
+            if model_kind == "qwen2-vl-gguf":
+                import base64
+                
+                # Enhanced prompt for detailed model car building recognition
+                cap_prompt = prompt or """Describe this scale model car building scene with maximum detail and specificity:
+
+**1. IDENTIFY THE MAIN CAR PART** (be very specific):
+- Exterior: body shell, hood, fender, door, trunk, roof, bumper, grille, headlight, taillight, side mirror
+- Wheels/Suspension: wheel, tire, rim, brake disc, caliper, suspension arm, shock absorber, axle
+- Interior: dashboard, steering wheel, seat (driver/passenger), center console, door panel, gear shifter, instrument cluster, roll cage
+- Engine/Mechanical: engine block, transmission, exhaust pipe, radiator, battery, wiring harness
+- Small parts: decal sheet, photo-etch piece, clear parts (windows), chrome parts
+
+**2. DESCRIBE THE CURRENT ACTIVITY**:
+- Part preparation: removing from sprue with cutters, cleaning mold lines, test fitting
+- Surface work: sanding with sandpaper/file, filling gaps with putty, scribing details
+- Assembly: applying glue, clamping parts together, aligning components
+- Pre-paint: masking areas with tape, applying primer coat, cleaning surface
+- Painting: airbrushing color, brush painting details, applying base/top coat
+- Detailing: positioning decals, applying panel line wash, dry brushing, weathering with pigments
+- Finishing: applying clear coat, polishing, final assembly and inspection
+
+**3. WHAT'S IN THE HANDS** (if hands visible):
+Describe exactly what the hands are holding and manipulating
+
+**4. TOOLS & MATERIALS VISIBLE**:
+List any tools (airbrush, brushes, knives, files, tweezers, clamps) and materials (paint bottles, glue, tape, putty)
+
+Keep it factual and technical. If image is blurry/unclear, state "Image unclear - cannot identify specific details" and stop.
+                with open(frame["path"], "rb") as f:
+                    image_data = base64.b64encode(f.read()).decode("utf-8")
+                
+                # Use create_chat_completion with image_url (correct format for vision models)
+                output = model.create_chat_completion(
+                    messages=[
+                        {
+                            "role": "user",
+                            "content": [
+                                {"type": "text", "text": cap_prompt},
+                                {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_data}"}}
+                            ]
+                        }
+                    ],
+                    max_tokens=200,  # Allow longer, more detailed descriptions
+                    temperature=0.3,  # Lower temperature for more consistent, focused descriptions
+                )
+                
+                caption = output['choices'][0]['message']['content'].strip()
+                frame["caption"] = caption
+                frame["caption_model"] = caption_model.get("model_name")
+                frame["caption_prompt"] = cap_prompt
+                
+            # Transformers Qwen2.5-VL model
+            elif model_kind == "qwen2.5-vl" or "qwen2.5-vl" in model_name or "qwen2-5-vl" in model_name:
                 if max_image_size:
                     max_dim = max(img.size)
                     if max_dim > max_image_size:
@@ -414,6 +478,12 @@ def caption_keyframes(frames, caption_model, max_length=40, num_beams=5, prompt=
                     caption = caption.split("assistant")[-1].strip("\n :")
                 if caption.lower().startswith("you are a helpful assistant"):
                     caption = caption.split("\n", 1)[-1].strip()
+                    
+                frame["caption"] = caption
+                frame["caption_model"] = caption_model.get("model_name")
+                frame["caption_prompt"] = prompt
+                
+            # BLIP/BLIP-2 models
             else:
                 use_prompt = bool(prompt) and ("blip2" in model_name or use_prompt_for_blip)
                 if use_prompt:
@@ -429,11 +499,19 @@ def caption_keyframes(frames, caption_model, max_length=40, num_beams=5, prompt=
                 if use_prompt and caption.lower().startswith(prompt.lower()):
                     caption = caption[len(prompt):].lstrip(" :,-")
 
-            frame["caption"] = caption
-            frame["caption_model"] = caption_model.get("model_name")
-            frame["caption_prompt"] = prompt
+                frame["caption"] = caption
+                frame["caption_model"] = caption_model.get("model_name")
+                frame["caption_prompt"] = prompt
+            
             if tqdm is None and ((idx + 1) % 50 == 0 or (idx + 1) == len(frames)):
                 print(f"      {idx + 1}/{len(frames)} frames captioned")
+    
+    # Execute with or without torch.no_grad() based on model type
+    if use_torch_guard:
+        with torch.no_grad():
+            process_frames()
+    else:
+        process_frames()
 
     print("   ✓ Captioning complete")
     return frames
