@@ -1044,7 +1044,7 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
             'ref': watermark_asset_id,
             'start': '0/1s',
             'offset': '0/1s',
-            'duration': f"{timeline_duration_frac.numerator}/{timeline_duration_frac.denominator}s",
+            'duration': f"{timeline_pos_sec.numerator}/{timeline_pos_sec.denominator}s",
             'format': 'r2',
             'enabled': '1',
             'tcFormat': 'NDF',
