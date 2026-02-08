@@ -361,6 +361,12 @@ def release_model_dict(model_dict):
                         model.close()
                     except Exception:
                         pass
+                    # Also try to free the chat handler if it exists
+                    try:
+                        if hasattr(model, 'chat_handler') and model.chat_handler is not None:
+                            del model.chat_handler
+                    except Exception:
+                        pass
             except Exception:
                 pass
             del model
@@ -371,6 +377,8 @@ def release_model_dict(model_dict):
             model_dict[k] = None
     except Exception:
         pass
+    # Force garbage collection to ensure C++ objects are destroyed
+    gc.collect()
 
 
 def caption_all_frames_early(frames, llava_model, max_length=40, skip_duplicates=False):
@@ -410,23 +418,29 @@ def caption_all_frames_early(frames, llava_model, max_length=40, skip_duplicates
         image_data = base64.b64encode(buffered.getvalue()).decode('utf-8')
         
         # Single-frame captioning with LLaVA
-        with suppress_cpp_output():
-            output = model.create_chat_completion(
-                messages=[
-                    {"role": "system", "content": "You output ONLY comma-separated keywords describing visible objects, colors, and actions. NO full sentences. NO descriptions."},
-                    {
-                        "role": "user",
-                        "content": [
-                            {"type": "text", "text": cap_prompt},
-                            {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_data}"}}
-                        ]
-                    }
-                ],
-                max_tokens=max_length,
-                temperature=0.3,
-            )
-        
-        caption = output['choices'][0]['message']['content'].strip()
+        try:
+            with suppress_cpp_output():
+                output = model.create_chat_completion(
+                    messages=[
+                        {"role": "system", "content": "You output ONLY comma-separated keywords describing visible objects, colors, and actions. NO full sentences. NO descriptions."},
+                        {
+                            "role": "user",
+                            "content": [
+                                {"type": "text", "text": cap_prompt},
+                                {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_data}"}}
+                            ]
+                        }
+                    ],
+                    max_tokens=max_length,
+                    temperature=0.3,
+                )
+            
+            caption = output['choices'][0]['message']['content'].strip()
+        except Exception as e:
+            print(f"\n   ⚠️  Caption failed for frame {idx+1}: {e}")
+            import traceback
+            traceback.print_exc()
+            caption = "error"
         frame["caption"] = caption
         frame["caption_model"] = model_name
         frame["caption_prompt"] = cap_prompt
@@ -1227,10 +1241,11 @@ def print_summary(result):
     print("=" * 70)
 
 
-def process_video_two_pass(video_path, output_dir, sample_interval, skip_duplicate_captions=False, max_scene_length=None):
+def process_video_two_pass(video_path, output_dir, sample_interval, llava_model, skip_duplicate_captions=False, max_scene_length=None):
     """Two-pass workflow: metadata collection + LLM analysis
     
     Args:
+        llava_model: Pre-loaded Qwen2.5-VL model (passed from main, reused across videos)
         skip_duplicate_captions: Skip captioning duplicate frames (saves ~10-15% time)
         max_scene_length: Maximum scene duration in seconds (e.g., 40). Splits longer scenes.
     """
@@ -1256,12 +1271,19 @@ def process_video_two_pass(video_path, output_dir, sample_interval, skip_duplica
     frames = detect_duplicates_and_repetition(frames, features)
     
     # Release vision models, load Qwen2.5-VL
-    print("\n🧹 Releasing vision models, loading Qwen2.5-VL...")
+    print("\n🧹 Releasing vision models...")
     release_model_dict(clip_model)
     release_model_dict(resnet_model)
     clear_cuda_cache()
     
-    llava_model = load_llava_model()
+    # Model is already loaded and passed in - no need to reload!
+    # Just verify it's available
+    if llava_model is None:
+        print("⚠️ Warning: No LLM model provided, loading fresh...")
+        import gc
+        gc.collect()
+        time.sleep(0.5)
+        llava_model = load_llava_model()
     
     # Caption ALL frames early (with optional duplicate skipping)
     frames = caption_all_frames_early(frames, llava_model, max_length=20, skip_duplicates=skip_duplicate_captions)
@@ -1311,10 +1333,10 @@ def process_video_two_pass(video_path, output_dir, sample_interval, skip_duplica
     
     print_summary(result)
     
-    # Release Qwen2.5-VL model to prevent memory leaks between videos
-    print("\n🧹 Releasing Qwen2.5-VL model...")
-    release_model_dict(llava_model)
+    # Don't release the model - it will be reused for next video!
+    # Just clear GPU cache to free up temp memory
     clear_cuda_cache()
+    gc.collect()
     
     return output_file
 
@@ -1364,13 +1386,14 @@ def main():
     
     output_files = []
     skipped_videos = []
-
+    
+    # Count videos that need processing
+    videos_to_process = []
     for video_path in video_paths:
         if not video_path.exists():
             print(f"❌ Video not found: {video_path}")
             continue
         
-        # Check if both metadata and scene analysis already exist
         metadata_file = output_dir / f"metadata_{video_path.stem}.json"
         scene_analysis_file = output_dir / f"scene_analysis_{video_path.stem}.json"
         
@@ -1379,16 +1402,51 @@ def main():
             print(f"   (Found: {metadata_file.name} + {scene_analysis_file.name})")
             skipped_videos.append(video_path)
             output_files.append(scene_analysis_file)
+        else:
+            videos_to_process.append(video_path)
+    
+    # Load LLM model once for all videos (avoid repeated disk reads)
+    llava_model = None
+    if videos_to_process:
+        print("\n" + "=" * 70)
+        print(f"🤖 Loading Qwen2.5-VL-7B model (will be reused for {len(videos_to_process)} video(s))")
+        print("=" * 70)
+        llava_model = load_llava_model()
+        if llava_model is None:
+            print("❌ Failed to load LLM model. Cannot proceed with analysis.")
+            return
+
+    for video_path in videos_to_process:
+        try:
+            output_file = process_video_two_pass(
+                video_path, 
+                output_dir, 
+                sample_interval,
+                llava_model,  # Pass the pre-loaded model
+                skip_duplicate_captions=args.skip_duplicate_captions,
+                max_scene_length=args.max_scene_length
+            )
+            output_files.append(output_file)
+        except Exception as e:
+            print(f"\n❌ Failed to process {video_path.name}: {e}")
+            import traceback
+            traceback.print_exc()
+            print("\n🔄 Continuing with next video...")
             continue
-        
-        output_file = process_video_two_pass(
-            video_path, 
-            output_dir, 
-            sample_interval,
-            skip_duplicate_captions=args.skip_duplicate_captions,
-            max_scene_length=args.max_scene_length
-        )
-        output_files.append(output_file)
+        finally:
+            # Just clear GPU cache between videos, keep model loaded
+            clear_cuda_cache()
+            gc.collect()
+    
+    # Release the model only after ALL videos are processed
+    if llava_model:
+        print("\n" + "=" * 70)
+        print("🧹 Releasing Qwen2.5-VL model (all videos complete)")
+        print("=" * 70)
+        release_model_dict(llava_model)
+        llava_model = None
+        clear_cuda_cache()
+        gc.collect()
     
     if output_files:
         print("\n" + "=" * 70)
