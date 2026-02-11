@@ -956,14 +956,20 @@ def llm_classify_scenes(scenes, frames_by_scene, llava_model):
         dup_ratio = scene.get('duplicate_ratio', 0)
         
         # Ask LLM to rate this scene
-        prompt = f"""Rate this {scene['duration']:.0f}s video scene from scale model building on interest level (1-10):
+        prompt = f"""Rate this {scene['duration']:.0f}s video scene from scale model building on interest level (1-10).
+
+IMPORTANT: For model building content, highly value:
+- Close-up detail shots showing parts, interiors, or intricate work
+- Hands-on assembly, painting, or construction work
+- Clear focus on specific components (steering wheels, dashboards, etc.)
+- "Lack of environmental context" is FINE for detail showcases
 
 Sample descriptions:
 {captions_text}
 
 Metrics: interest={avg_interest:.2f}, duplication={dup_ratio:.0%}
 
-Rate 1-10 and explain briefly why. Format: "Rating: X/10 - reason"."""
+Rate 1-10 based on craftsmanship value and detail shown. Format: "Rating: X/10 - reason"."""
         
         try:
             with suppress_cpp_output():
@@ -1280,7 +1286,6 @@ def process_video_two_pass(video_path, output_dir, sample_interval, llava_model,
     # Just verify it's available
     if llava_model is None:
         print("⚠️ Warning: No LLM model provided, loading fresh...")
-        import gc
         gc.collect()
         time.sleep(0.5)
         llava_model = load_llava_model()

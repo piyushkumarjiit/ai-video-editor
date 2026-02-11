@@ -39,45 +39,64 @@ def extract_scene(video_path, scene, output_path):
     duration = scene['duration']
     speed = scene['speed']
     
+    # Check if video has audio stream
+    probe_cmd = ['ffprobe', '-v', 'error', '-select_streams', 'a', '-show_entries', 'stream=codec_type', '-of', 'default=noprint_wrappers=1:nokey=1', str(video_path)]
+    result = subprocess.run(probe_cmd, capture_output=True, text=True)
+    has_audio = 'audio' in result.stdout.lower()
+    
     # Build ffmpeg command
     cmd = [
         'ffmpeg', '-y',
         '-ss', str(start_time),
         '-t', str(duration),
         '-i', str(video_path),
-        '-map', '0:v', '-map', '0:a',  # Video and audio only
+        '-map', '0:v',
     ]
+    
+    # Add audio mapping only if audio stream exists
+    if has_audio:
+        cmd.extend(['-map', '0:a'])
     
     # Apply speed filter if needed
     if speed > 1.0:
         speed_filter = f"setpts=PTS/{speed},fps=24"
         
-        def build_atempo_chain(factor):
-            parts = []
-            remaining = factor
-            while remaining > 2.0:
-                parts.append(2.0)
-                remaining /= 2.0
-            parts.append(remaining)
-            return ",".join(f"atempo={p:.3f}".rstrip('0').rstrip('.') for p in parts)
-        
-        audio_filter = build_atempo_chain(speed)
-        
         cmd.extend([
             '-vf', speed_filter,
-            '-af', audio_filter,
         ])
+        
+        # Apply audio speed filter only if audio exists
+        if has_audio:
+            def build_atempo_chain(factor):
+                parts = []
+                remaining = factor
+                while remaining > 2.0:
+                    parts.append(2.0)
+                    remaining /= 2.0
+                parts.append(remaining)
+                return ",".join(f"atempo={p:.3f}".rstrip('0').rstrip('.') for p in parts)
+            
+            audio_filter = build_atempo_chain(speed)
+            cmd.extend([
+                '-af', audio_filter,
+            ])
     
     # GPU encoding with NVENC
     cmd.extend([
         '-c:v', 'hevc_nvenc',
         '-preset', 'p4',
         '-cq', '23',
-        '-c:a', 'pcm_s16le',
-        '-ar', '48000',
-        '-ac', '2',
-        str(output_path)
     ])
+    
+    # Add audio encoding only if audio exists
+    if has_audio:
+        cmd.extend([
+            '-c:a', 'pcm_s16le',
+            '-ar', '48000',
+            '-ac', '2',
+        ])
+    
+    cmd.append(str(output_path))
     
     print(f"   Extracting {output_path.name} ({duration:.1f}s @ {speed}x)...", end=' ')
     
@@ -91,8 +110,12 @@ def extract_scene(video_path, scene, output_path):
         # Replace NVENC with CPU encoder
         nvenc_idx = cmd_cpu.index('hevc_nvenc')
         cmd_cpu[nvenc_idx] = 'libx265'
-        cmd_cpu.insert(nvenc_idx + 1, '-preset')
-        cmd_cpu.insert(nvenc_idx + 2, 'medium')
+        # Replace GPU preset with CPU preset
+        preset_idx = cmd_cpu.index('-preset', nvenc_idx)
+        cmd_cpu[preset_idx + 1] = 'medium'
+        # Remove GPU-specific -cq option and replace with -crf
+        cq_idx = cmd_cpu.index('-cq')
+        cmd_cpu[cq_idx] = '-crf'
         
         subprocess.run(cmd_cpu, capture_output=True, check=True)
         print("✓")
