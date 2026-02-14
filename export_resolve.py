@@ -383,7 +383,22 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
         if after < before:
             print(f"🔁 Deduped scenes: {before} → {after} (threshold={hash_threshold})")
 
-    if exclude_boring:
+    # Filter scenes based on classification
+    # Option 1: exclude_boring (legacy support - excludes only boring)
+    # Option 2: include_classifications (explicit list of classifications to include)
+    include_classifications = timeline_config.get('include_classifications')
+    
+    if include_classifications:
+        # Use explicit inclusion list
+        before = len(clip_infos)
+        clip_infos = [info for info in clip_infos if info['scene'].get('classification') in include_classifications]
+        after = len(clip_infos)
+        if after < before:
+            excluded_count = before - after
+            included = ', '.join(include_classifications)
+            print(f"🎬 Filtered scenes by classification: {before} → {after} (included: {included})")
+    elif exclude_boring:
+        # Legacy behavior: exclude only boring
         before = len(clip_infos)
         clip_infos = [info for info in clip_infos if info['scene'].get('classification') != 'boring']
         after = len(clip_infos)
@@ -1122,7 +1137,9 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
                 clip_duration = track['duration'] if track['duration'] <= remaining else remaining
                 if clip_duration <= 0:
                     break
-                clip_start = music_pos
+                # Simplify fractions to avoid precision issues with large numbers
+                clip_start = music_pos.limit_denominator(10000)
+                clip_duration = clip_duration.limit_denominator(10000)
                 attributes = {
                     'name': Path(track['path']).name,
                     'ref': track['asset_id'],
@@ -1195,21 +1212,8 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
                             'time': _fmt_time(clip_duration),
                             'value': fade_full_value
                         })
-                transition_duration = fade_out_duration or fade_duration
-                if transition_duration:
-                    if transition_duration > clip_duration:
-                        transition_duration = clip_duration
-                    transition_start = clip_start + clip_duration - transition_duration
-                    if transition_start < clip_start:
-                        transition_start = clip_start
-                    transition_end = clip_start + clip_duration
-                    if transition_end > transition_start:
-                        SubElement(spine, 'transition', {
-                            'start': _fmt_time(transition_start),
-                            'end': _fmt_time(transition_end),
-                            'type': 'audioCrossfade'
-                        })
-                music_pos += clip_duration
+                # Use simplified duration to update position for consistency
+                music_pos = (music_pos + clip_duration).limit_denominator(10000)
                 music_index += 1
     
     # Add teaser music to A1 track
@@ -1393,15 +1397,21 @@ if __name__ == '__main__':
         print(f'❌ Analysis path not found: {analysis_path}')
         sys.exit(1)
     
+    # Load config and get paths
+    config = load_project_config(args.config)
+    paths_cfg = config.get('paths', {})
+    video_dir = args.video_dir or paths_cfg.get('video_dir') or paths_cfg.get('video') or paths_cfg.get('input_dir') or '.'
+    clips_dir = args.clips_dir or paths_cfg.get('clips_dir') or './ai_clips'
+    
     create_fcpxml_timeline(
         analysis_path,
-        args.video_dir,
+        video_dir,
         args.output,
-        clip_base_dir=args.clips_dir,
+        clip_base_dir=clips_dir,
         dedupe=args.dedupe,
         hash_threshold=args.hash_threshold,
         use_rendered=args.use_rendered,
         resolve_format=not args.legacy_asset_format,
         exclude_boring=args.exclude_boring,
-        config=load_project_config(args.config)
+        config=config
     )

@@ -263,7 +263,7 @@ def main():
     paths_cfg = config.get("paths", {})
     pipeline_cfg = config.get("pipeline", {})
     output_dir = args.output_dir or paths_cfg.get("clips_dir") or OUTPUT_DIR
-    video_dir = args.video_dir or paths_cfg.get("input_dir")
+    video_dir = args.video_dir or paths_cfg.get("video_dir") or paths_cfg.get("input_dir")
     exclude_boring = args.exclude_boring or pipeline_cfg.get("exclude_boring", False)
     
     analysis_files = []

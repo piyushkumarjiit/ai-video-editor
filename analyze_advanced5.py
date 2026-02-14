@@ -1296,8 +1296,8 @@ def process_video_two_pass(video_path, output_dir, sample_interval, llava_model,
     # Extract caption features
     frames = extract_caption_features(frames)
     
-    # Save metadata
-    metadata_path = output_dir / f"metadata_{video_path.stem}.json"
+    # Save metadata in the same directory as the video
+    metadata_path = video_path.parent / f"metadata_{video_path.stem}.json"
     save_metadata_json(frames, metadata_path, video_path.name)
     
     # ========== PASS 2: LLM SCENE ANALYSIS ==========
@@ -1327,8 +1327,8 @@ def process_video_two_pass(video_path, output_dir, sample_interval, llava_model,
     # LLM select showcases
     showcases = llm_select_showcases(frames, llava_model, num_showcases=3)
     
-    # Save final results
-    output_file = output_dir / f"scene_analysis_{video_path.stem}.json"
+    # Save final results in the same directory as the video
+    output_file = video_path.parent / f"scene_analysis_{video_path.stem}.json"
     result = save_results(scenes, frames, output_file, video_path.name)
     
     # Add showcases to result
@@ -1378,7 +1378,7 @@ def main():
     if video_arg:
         video_paths = [Path(video_arg)]
     else:
-        input_dir = Path(args.input_dir or paths_cfg.get("input_dir") or ".")
+        input_dir = Path(args.input_dir or paths_cfg.get("video_dir") or paths_cfg.get("input_dir") or ".")
         video_paths = [
             p for p in input_dir.iterdir()
             if p.is_file() and p.suffix.lower() in {".mov", ".mp4", ".mkv"}
@@ -1399,8 +1399,8 @@ def main():
             print(f"❌ Video not found: {video_path}")
             continue
         
-        metadata_file = output_dir / f"metadata_{video_path.stem}.json"
-        scene_analysis_file = output_dir / f"scene_analysis_{video_path.stem}.json"
+        metadata_file = video_path.parent / f"metadata_{video_path.stem}.json"
+        scene_analysis_file = video_path.parent / f"scene_analysis_{video_path.stem}.json"
         
         if metadata_file.exists() and scene_analysis_file.exists():
             print(f"\n⏭️  Skipping {video_path.name} - analysis already complete")

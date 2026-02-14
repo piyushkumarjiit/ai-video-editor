@@ -102,15 +102,19 @@ def main():
 	args = parser.parse_args()
 
 	base_dir = Path(__file__).resolve().parent
-	python = sys.executable
+	# Use venv Python if running from system Python
+	venv_python = base_dir / ".venv" / "bin" / "python"
+	python = str(venv_python) if venv_python.exists() else sys.executable
 
 	config = load_project_config(args.config)
 	paths_cfg = config.get("paths", {})
 	analysis_cfg = config.get("analysis", {})
 	pipeline_cfg = config.get("pipeline", {})
 
-	input_dir = Path(args.input_dir or paths_cfg.get("input_dir") or ".").resolve()
-	output_dir = Path(args.output_dir or paths_cfg.get("output_dir") or ".").resolve()
+	# video_dir is where videos AND analysis files are located
+	video_dir_cfg = paths_cfg.get("video_dir") or paths_cfg.get("input_dir") or "."
+	input_dir = Path(args.input_dir or video_dir_cfg).resolve()
+	output_dir = Path(args.output_dir or video_dir_cfg).resolve()
 	clips_dir = Path(args.clips_dir or paths_cfg.get("clips_dir") or "ai_clips").resolve()
 	timeline_path = Path(args.timeline or paths_cfg.get("timeline") or "timeline_davinci_resolve.fcpxml").resolve()
 
