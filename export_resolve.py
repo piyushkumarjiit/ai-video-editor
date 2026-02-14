@@ -10,6 +10,7 @@ import sys
 import subprocess
 import shutil
 import random
+import functools
 from pathlib import Path
 from xml.etree.ElementTree import Element, SubElement, ElementTree
 from fractions import Fraction
@@ -76,6 +77,7 @@ def compute_watermark_position(position, image_size, margin=DEFAULT_WATERMARK_MA
         return "0 0"
     return f"{offset_x} {-offset_y}"
 
+@functools.lru_cache(maxsize=4096)
 def get_video_duration_frac(video_path, fps=24):
     result = subprocess.run([
         'ffprobe', '-v', 'error', '-select_streams', 'v:0',
@@ -84,6 +86,26 @@ def get_video_duration_frac(video_path, fps=24):
     ], capture_output=True, text=True, check=True)
     total_frames = int(result.stdout.strip().rstrip(','))
     return Fraction(total_frames, fps)
+
+
+@functools.lru_cache(maxsize=4096)
+def get_media_duration_frac(media_path, fps=24):
+    """Prefer container duration; fall back to frame count."""
+    try:
+        result = subprocess.run([
+            'ffprobe', '-v', 'error',
+            '-show_entries', 'format=duration',
+            '-of', 'default=noprint_wrappers=1:nokey=1',
+            media_path
+        ], capture_output=True, text=True, check=True, timeout=2)
+        value = (result.stdout or '').strip()
+        if value:
+            duration_sec = float(value)
+            if duration_sec > 0:
+                return Fraction(duration_sec).limit_denominator(10000)
+    except Exception:
+        pass
+    return get_video_duration_frac(media_path, fps=fps)
 
 
 def get_audio_info(audio_path):
@@ -319,16 +341,30 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
             classification = scene.get('classification', 'unknown')
             rendered_path = find_rendered_clip(rendered_dir, video_stem, i, classification, speed)
             use_rendered_clip = use_rendered and rendered_path is not None
+            rendered_duration_frac = None
+            if use_rendered_clip:
+                try:
+                    rendered_duration_frac = get_media_duration_frac(str(rendered_path), fps=fps)
+                except Exception:
+                    rendered_duration_frac = None
+            if rendered_duration_frac and rendered_duration_frac < output_duration_frac:
+                effective_output_duration = rendered_duration_frac
+            else:
+                effective_output_duration = output_duration_frac
+            if use_rendered_clip:
+                effective_src_duration = rendered_duration_frac or output_duration_frac
+            else:
+                effective_src_duration = video_duration_frac
             
             clip_infos.append({
                 'scene': scene,
                 'video_name': video_name,
                 'video_path': str(video_path),
-                'output_duration_frac': output_duration_frac,
+                'output_duration_frac': effective_output_duration,
                 'use_rendered': use_rendered_clip,
                 'src_path': str(rendered_path) if use_rendered_clip else str(video_path),
                 'src_name': rendered_path.name if use_rendered_clip else video_name,
-                'src_duration_frac': output_duration_frac if use_rendered_clip else video_duration_frac,
+                'src_duration_frac': effective_src_duration,
                 'rotation': video_rotations.get(video_name, 0)
             })
 
@@ -357,6 +393,12 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
         video_rotations[video_name] = rotation
         duration_frac = get_video_duration_frac(str(preferred_path), fps=fps)
         duration_sec = float(duration_frac)
+        
+        # For static images (photos), use default 5-second duration
+        if duration_sec <= 0 and label in ('closing_photo',):
+            duration_sec = 5.0
+            duration_frac = Fraction(5, 1)
+        
         scene = {
             'start_time': 0.0,
             'end_time': duration_sec,
@@ -422,7 +464,10 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
     teaser_max_duration = timeline_config.get('teaser_max_duration', 45.0)  # 30-50 seconds
     
     if teaser_enabled and clip_base_dir:
-        for analysis in analyses:
+        # First, collect showcases organized by video index (for beginning/mid/end selection)
+        video_showcases = []  # List of (video_index, showcase_data)
+        
+        for video_index, analysis in enumerate(analyses):
             data = analysis['data']
             video_name = analysis['video_name']
             video_stem = Path(video_name).stem
@@ -430,19 +475,39 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
             
             # Collect showcase moments
             showcases = data.get('showcases', [])
-            for showcase in showcases:
+            
+            # Calculate video quality score based on interesting scenes
+            total_scenes = len(data.get('scenes', []))
+            interesting_scenes = sum(1 for s in data.get('scenes', []) if s.get('classification') == 'interesting')
+            video_quality_ratio = interesting_scenes / max(total_scenes, 1)
+            video_quality_bonus = video_quality_ratio * 3  # 0-3 bonus
+            
+            # Only include showcases from videos with some interesting content
+            # Skip videos with 0 interesting scenes unless they have very few total scenes
+            if interesting_scenes == 0 and total_scenes > 3:
+                continue  # Skip boring videos entirely
+            
+            for idx, showcase in enumerate(showcases):
                 timestamp = showcase['timestamp']
                 # Showcase clips are named: {stem}_showcase_{num}_{timestamp}s_1.00x.mkv
                 showcase_pattern = f"{video_stem}_showcase_*_{timestamp}s_1.00x.mkv"
                 matches = list(render_dir.glob(showcase_pattern)) if render_dir.exists() else []
                 if matches:
                     clip_path = matches[0]
-                    teaser_clips.append({
+                    # Rate showcases: earlier showcases get higher rating (first is best)
+                    # Base rating 10, minus position penalty, plus video quality bonus
+                    showcase_rating = 10.0 - (idx * 1.0) + video_quality_bonus
+                    
+                    # Only include high-quality showcases (rating >= 9.0) or first showcase from good videos
+                    if showcase_rating < 9.0 and video_quality_ratio < 0.15:
+                        continue  # Skip low-rated showcases from mediocre videos
+                    
+                    video_showcases.append((video_index, {
                         'path': clip_path,
                         'type': 'showcase',
-                        'rating': 10,  # Showcases are highest priority
+                        'rating': showcase_rating,
                         'video': video_name
-                    })
+                    }))
             
             # Collect interesting scenes
             scenes = data.get('scenes', [])
@@ -453,63 +518,195 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
                     rendered_path = find_rendered_clip(render_dir, video_stem, scene_num, 'interesting', speed)
                     if rendered_path and rendered_path.exists():
                         llm_rating = scene.get('llm_rating', 8)
-                        teaser_clips.append({
+                        video_showcases.append((video_index, {
                             'path': rendered_path,
                             'type': 'interesting',
                             'rating': llm_rating,
                             'video': video_name
-                        })
+                        }))
         
-        # Sort by rating (highest first) and limit to teaser_max_duration
-        teaser_clips.sort(key=lambda x: x['rating'], reverse=True)
+        # Add teaser-videos to the pool BEFORE selecting
+        paths_cfg = config.get('paths', {})
+        teaser_videos_dir = paths_cfg.get('teaser_videos')
         
-        # Select clips that fit within max duration
+        if teaser_videos_dir:
+            teaser_videos_path = Path(teaser_videos_dir).expanduser().resolve()
+            if teaser_videos_path.exists() and teaser_videos_path.is_dir():
+                video_extensions = {'.mov', '.mp4', '.mkv', '.avi', '.m4v'}
+                teaser_video_files = sorted([
+                    f for f in teaser_videos_path.iterdir()
+                    if f.is_file() and f.suffix.lower() in video_extensions
+                ], key=lambda p: p.name.lower())
+                
+                for teaser_video_file in teaser_video_files:
+                    # Add to video_showcases with high rating and video_index 0 (beginning)
+                    clip_duration_frac = get_video_duration_frac(str(teaser_video_file), fps=fps)
+                    video_showcases.append((0, {
+                        'path': teaser_video_file,
+                        'type': 'teaser_video',
+                        'rating': 11.0,  # HIGHER than showcase rating (10) to sort first
+                        'video': teaser_video_file.name
+                    }))
+        
+        # Divide videos into 3 sections: beginning, middle, end
+        total_videos = len(analyses)
+        section_size = max(1, total_videos // 3)
+        
+        beginning_indices = set(range(0, section_size))
+        middle_indices = set(range(section_size, 2 * section_size))
+        end_indices = set(range(2 * section_size, total_videos))
+        
+        # Organize showcases by section
+        section_showcases = {
+            'beginning': [],
+            'middle': [],
+            'end': []
+        }
+        
+        for video_index, showcase_data in video_showcases:
+            if video_index in beginning_indices:
+                section_showcases['beginning'].append(showcase_data)
+            elif video_index in middle_indices:
+                section_showcases['middle'].append(showcase_data)
+            else:
+                section_showcases['end'].append(showcase_data)
+        
+        # Sort each section by rating, with optional shuffle jitter for variety
+        teaser_shuffle_seed = timeline_config.get('teaser_shuffle_seed')
+        teaser_shuffle_jitter = timeline_config.get('teaser_shuffle_jitter', 0.4)
+        try:
+            teaser_shuffle_jitter = float(teaser_shuffle_jitter)
+        except (TypeError, ValueError):
+            teaser_shuffle_jitter = 0.4
+        rng = random.Random(teaser_shuffle_seed) if teaser_shuffle_seed is not None else random.Random()
+
+        def _sort_key(item):
+            if item.get('type') == 'teaser_video':
+                return item['rating']
+            return item['rating'] + rng.uniform(-teaser_shuffle_jitter, teaser_shuffle_jitter)
+
+        for section in section_showcases:
+            section_showcases[section].sort(key=_sort_key, reverse=True)
+        
+        # Select clips from each section proportionally
         selected_teasers = []
         total_duration = 0.0
-        for clip in teaser_clips:
-            clip_duration_frac = get_video_duration_frac(str(clip['path']), fps=fps)
+        used_showcase_videos = set()
+        
+        # Allocate duration budget: 40% beginning, 30% middle, 30% end
+        budget_beginning = teaser_max_duration * 0.4
+        budget_middle = teaser_max_duration * 0.3
+        budget_end = teaser_max_duration * 0.3
+        
+        # Select from beginning
+        for clip in section_showcases['beginning']:
+            if total_duration >= budget_beginning:
+                break
+            clip_video = clip.get('video')
+            if clip.get('type') != 'teaser_video' and clip_video in used_showcase_videos:
+                continue
+            clip_duration_frac = get_media_duration_frac(str(clip['path']), fps=fps)
+            clip_duration_sec = float(clip_duration_frac)
+            
+            if total_duration + clip_duration_sec <= budget_beginning:
+                selected_teasers.append(clip)
+                if clip.get('type') != 'teaser_video' and clip_video:
+                    used_showcase_videos.add(clip_video)
+                total_duration += clip_duration_sec
+        
+        # Select from middle
+        for clip in section_showcases['middle']:
+            if total_duration >= budget_beginning + budget_middle:
+                break
+            clip_video = clip.get('video')
+            if clip.get('type') != 'teaser_video' and clip_video in used_showcase_videos:
+                continue
+            clip_duration_frac = get_media_duration_frac(str(clip['path']), fps=fps)
+            clip_duration_sec = float(clip_duration_frac)
+            
+            if total_duration + clip_duration_sec <= budget_beginning + budget_middle:
+                selected_teasers.append(clip)
+                if clip.get('type') != 'teaser_video' and clip_video:
+                    used_showcase_videos.add(clip_video)
+                total_duration += clip_duration_sec
+        
+        # Select from end
+        for clip in section_showcases['end']:
+            if total_duration >= teaser_max_duration:
+                break
+            clip_video = clip.get('video')
+            if clip.get('type') != 'teaser_video' and clip_video in used_showcase_videos:
+                continue
+            clip_duration_frac = get_media_duration_frac(str(clip['path']), fps=fps)
             clip_duration_sec = float(clip_duration_frac)
             
             if total_duration + clip_duration_sec <= teaser_max_duration:
                 selected_teasers.append(clip)
+                if clip.get('type') != 'teaser_video' and clip_video:
+                    used_showcase_videos.add(clip_video)
                 total_duration += clip_duration_sec
-            
-            if total_duration >= teaser_max_duration * 0.8:  # Stop at 80% of max
-                break
         
         if selected_teasers:
-            print(f"\n🎬 Building teaser: {len(selected_teasers)} clips ({total_duration:.1f}s)")
+            teaser_videos_count = sum(1 for c in selected_teasers if c.get('type') == 'teaser_video')
+            showcases_count = len(selected_teasers) - teaser_videos_count
+            print(f"\n🎬 Building teaser: {len(selected_teasers)} clips ({total_duration:.1f}s) - {showcases_count} showcases + {teaser_videos_count} teaser-videos (highest-ranked first)")
     
     # Insert teaser clips first (before intro)
     teaser_insert_pos = 0
     if teaser_enabled and selected_teasers:
         for teaser in selected_teasers:
+            teaser_type = teaser.get('type', 'showcase')
             teaser_path = teaser['path']
-            # Get rotation from original video, not from extracted showcase clip
-            # (FFmpeg extraction doesn't preserve rotation metadata)
-            original_video_name = teaser['video']
-            rotation = video_rotations.get(original_video_name, 0)
-            video_rotations[teaser_path.name] = rotation
-            duration_frac = get_video_duration_frac(str(teaser_path), fps=fps)
-            teaser_info = {
-                'scene': {
-                    'start_time': 0.0,
-                    'end_time': float(duration_frac),
-                    'duration': float(duration_frac),
-                    'speed': 1.0,
-                    'classification': 'teaser'
-                },
-                'video_name': teaser_path.name,
-                'video_path': str(teaser_path),
-                'output_duration_frac': duration_frac,
-                'use_rendered': True,
-                'src_path': str(teaser_path),
-                'src_name': teaser_path.name,
-                'src_duration_frac': duration_frac,
-                'rotation': rotation
-            }
-            clip_infos.insert(teaser_insert_pos, teaser_info)
-            teaser_insert_pos += 1
+            
+            if teaser_type == 'teaser_video':
+                # For teaser videos, process them like static clips but with teaser classification
+                rotation = video_rotations.get(teaser['video'], 0)
+                video_rotations[teaser_path.name] = rotation
+                duration_frac = get_media_duration_frac(str(teaser_path), fps=fps)
+                teaser_info = {
+                    'scene': {
+                        'start_time': 0.0,
+                        'end_time': float(duration_frac),
+                        'duration': float(duration_frac),
+                        'speed': 1.0,
+                        'classification': 'teaser'
+                    },
+                    'video_name': teaser_path.name,
+                    'video_path': str(teaser_path),
+                    'output_duration_frac': duration_frac,
+                    'use_rendered': True,
+                    'src_path': str(teaser_path),
+                    'src_name': teaser_path.name,
+                    'src_duration_frac': duration_frac,
+                    'rotation': rotation
+                }
+                clip_infos.insert(teaser_insert_pos, teaser_info)
+                teaser_insert_pos += 1
+            else:
+                # For showcase/interesting clips, use direct timeline info
+                original_video_name = teaser['video']
+                rotation = video_rotations.get(original_video_name, 0)
+                video_rotations[teaser_path.name] = rotation
+                duration_frac = get_media_duration_frac(str(teaser_path), fps=fps)
+                teaser_info = {
+                    'scene': {
+                        'start_time': 0.0,
+                        'end_time': float(duration_frac),
+                        'duration': float(duration_frac),
+                        'speed': 1.0,
+                        'classification': 'teaser'
+                    },
+                    'video_name': teaser_path.name,
+                    'video_path': str(teaser_path),
+                    'output_duration_frac': duration_frac,
+                    'use_rendered': True,
+                    'src_path': str(teaser_path),
+                    'src_name': teaser_path.name,
+                    'src_duration_frac': duration_frac,
+                    'rotation': rotation
+                }
+                clip_infos.insert(teaser_insert_pos, teaser_info)
+                teaser_insert_pos += 1
     
     # Insert intro after teaser
     if intro_path:
@@ -525,6 +722,67 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
             clip_infos.insert(teaser_insert_pos, intro_info)
     
     if outro_path:
+        # Before adding outro, scan for photos and teaser-videos
+        paths_cfg = config.get('paths', {})
+        photos_dir = paths_cfg.get('photos')
+        teaser_videos_dir = paths_cfg.get('teaser_videos')
+        
+        closing_section_clips = []
+        
+        # Scan teaser-videos directory FIRST (before photos)
+        if teaser_videos_dir:
+            teaser_videos_path = Path(teaser_videos_dir).expanduser().resolve()
+            if teaser_videos_path.exists() and teaser_videos_path.is_dir():
+                # Look for video files
+                video_extensions = {'.mov', '.mp4', '.mkv', '.avi', '.m4v'}
+                teaser_video_files = sorted([
+                    f for f in teaser_videos_path.iterdir()
+                    if f.is_file() and f.suffix.lower() in video_extensions
+                ], key=lambda p: p.name.lower())
+                
+                for teaser_video_file in teaser_video_files:
+                    teaser_info = build_static_clip_info(
+                        teaser_video_file,
+                        'closing_teaser',
+                        clip_base_dir,
+                        preferred_dir=primary_render_dir,
+                        copy_to_clips_dir=copy_intro_outro
+                    )
+                    if teaser_info:
+                        closing_section_clips.append(teaser_info)
+        
+        # Scan photos directory (after teaser-videos)
+        if photos_dir:
+            photos_path = Path(photos_dir).expanduser().resolve()
+            if photos_path.exists() and photos_path.is_dir():
+                # Look for image files (jpg, jpeg, png, etc.)
+                photo_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.tiff', '.tif'}
+                photo_files = sorted([
+                    f for f in photos_path.iterdir()
+                    if f.is_file() and f.suffix.lower() in photo_extensions
+                ], key=lambda p: p.name.lower())
+                
+                for photo_file in photo_files:
+                    photo_info = build_static_clip_info(
+                        photo_file,
+                        'closing_photo',
+                        clip_base_dir,
+                        preferred_dir=primary_render_dir,
+                        copy_to_clips_dir=copy_intro_outro
+                    )
+                    if photo_info:
+                        # Set default duration for photos from config
+                        closing_photo_config = timeline_config.get('closing_photos', {})
+                        photo_duration = closing_photo_config.get('duration_seconds', 3)
+                        photo_info['output_duration_frac'] = Fraction(photo_duration, 1)
+                        closing_section_clips.append(photo_info)
+        
+        # Add all closing section clips before outro
+        if closing_section_clips:
+            print(f"🎬 Adding closing section: {len(closing_section_clips)} photos/teaser-videos")
+            clip_infos.extend(closing_section_clips)
+        
+        # Now add the outro
         outro_info = build_static_clip_info(
             outro_path,
             'outro',
@@ -535,6 +793,64 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
         if outro_info:
             outro_used_path = outro_info['src_path']
             clip_infos.append(outro_info)
+    else:
+        # No outro, just add closing section if any
+        paths_cfg = config.get('paths', {})
+        photos_dir = paths_cfg.get('photos')
+        teaser_videos_dir = paths_cfg.get('teaser_videos')
+        
+        closing_section_clips = []
+        
+        # Scan teaser-videos directory FIRST (before photos)
+        if teaser_videos_dir:
+            teaser_videos_path = Path(teaser_videos_dir).expanduser().resolve()
+            if teaser_videos_path.exists() and teaser_videos_path.is_dir():
+                video_extensions = {'.mov', '.mp4', '.mkv', '.avi', '.m4v'}
+                teaser_video_files = sorted([
+                    f for f in teaser_videos_path.iterdir()
+                    if f.is_file() and f.suffix.lower() in video_extensions
+                ], key=lambda p: p.name.lower())
+                
+                for teaser_video_file in teaser_video_files:
+                    teaser_info = build_static_clip_info(
+                        teaser_video_file,
+                        'closing_teaser',
+                        clip_base_dir,
+                        preferred_dir=primary_render_dir,
+                        copy_to_clips_dir=copy_intro_outro
+                    )
+                    if teaser_info:
+                        closing_section_clips.append(teaser_info)
+        
+        # Scan photos directory (after teaser-videos)
+        if photos_dir:
+            photos_path = Path(photos_dir).expanduser().resolve()
+            if photos_path.exists() and photos_path.is_dir():
+                photo_extensions = {'.jpg', '.jpeg', '.png', '.bmp', '.tiff', '.tif'}
+                photo_files = sorted([
+                    f for f in photos_path.iterdir()
+                    if f.is_file() and f.suffix.lower() in photo_extensions
+                ], key=lambda p: p.name.lower())
+                
+                for photo_file in photo_files:
+                    photo_info = build_static_clip_info(
+                        photo_file,
+                        'closing_photo',
+                        clip_base_dir,
+                        preferred_dir=primary_render_dir,
+                        copy_to_clips_dir=copy_intro_outro
+                    )
+                    if photo_info:
+                        # Set default duration for photos from config
+                        closing_photo_config = timeline_config.get('closing_photos', {})
+                        photo_duration = closing_photo_config.get('duration_seconds', 3)
+                        photo_info['output_duration_frac'] = Fraction(photo_duration, 1)
+                        closing_section_clips.append(photo_info)
+        
+        if closing_section_clips:
+            print(f"🎬 Adding closing section: {len(closing_section_clips)} photos/teaser-videos")
+            clip_infos.extend(closing_section_clips)
+
     
     use_rendered_any = any(info['use_rendered'] for info in clip_infos)
     use_rendered_all = all(info['use_rendered'] for info in clip_infos)
@@ -954,7 +1270,7 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
             SubElement(clip, 'adjust-conform', {'type': 'fit'})
         else:
             asset_ref = legacy_asset_map[id(clip_info)]
-            clip = SubElement(spine, 'asset-clip', {
+            clip_attrs = {
                 'name': clip_name,
                 'ref': asset_ref,
                 'start': f'{clip_start_frac.numerator}/{clip_start_frac.denominator}s',
@@ -966,7 +1282,8 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
                 'lane': str(main_video_lane),
                 'audioStart': f'{audio_start_frac.numerator}/{audio_start_frac.denominator}s',
                 'audioDuration': f'{audio_duration_frac.numerator}/{audio_duration_frac.denominator}s'
-            })
+            }
+            clip = SubElement(spine, 'asset-clip', clip_attrs)
             SubElement(clip, 'conform-rate', {'srcFrameRate': '24'})
             if not clip_info['use_rendered'] and abs(speed - 1.0) > 0.01:
                 timemap = SubElement(clip, 'timeMap', {'frameSampling': 'floor'})
@@ -998,6 +1315,11 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
             clip_transform['rotation'] = str(clip_info['rotation'])
             zoom = timeline_config.get('rotation_zoom', 1.78)
             clip_transform['scale'] = f"{zoom} {zoom}"
+        # Add zoom for photos
+        if classification == 'closing_photo':
+            closing_photo_config = timeline_config.get('closing_photos', {})
+            photo_zoom = closing_photo_config.get('zoom', 1.350)
+            clip_transform['scale'] = f"{photo_zoom} {photo_zoom}"
         SubElement(clip, 'adjust-transform', clip_transform)
 
         
@@ -1116,15 +1438,26 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
             music_end = timeline_duration_frac
             intro_end = None
             outro_start = None
+            closing_section_start = None
+            closing_section_end = None
+            
             for info, (clip_start, clip_end) in zip(clip_infos, clip_timeline_ranges):
                 classification = info['scene'].get('classification')
                 if classification == 'intro' and intro_end is None:
                     intro_end = clip_end
+                if classification in ('closing_photo', 'closing_teaser') and closing_section_start is None:
+                    closing_section_start = clip_start
+                if classification in ('closing_photo', 'closing_teaser'):
+                    closing_section_end = clip_end
                 if classification == 'outro' and outro_start is None:
                     outro_start = clip_start
+            
             if intro_end is not None:
                 music_start = intro_end
-            if outro_start is not None:
+            if closing_section_start is not None:
+                # Background music ends when closing section starts
+                music_end = closing_section_start
+            elif outro_start is not None:
                 music_end = outro_start
             if music_end < music_start:
                 music_end = music_start
@@ -1213,6 +1546,132 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
                             'value': fade_full_value
                         })
                 # Use simplified duration to update position for consistency
+                music_pos = (music_pos + clip_duration).limit_denominator(10000)
+                music_index += 1
+    
+    # Add teaser music for closing section (photos/teaser-videos)
+    if teaser_music_assets and closing_section_start is not None and closing_section_end is not None:
+        try:
+            teaser_music_lane = int(teaser_music_config.get('audio_lane', 1))
+        except (TypeError, ValueError):
+            teaser_music_lane = 1
+        fade_seconds = teaser_music_config.get('fade_duration', 1.0)
+        fade_in_seconds = teaser_music_config.get('fade_in_duration', fade_seconds)
+        fade_out_seconds = teaser_music_config.get('fade_out_duration', fade_seconds)
+        fade_silence_db = teaser_music_config.get('fade_silence_db', -96.0)
+
+        def _to_duration_closing(value):
+            try:
+                value = float(value)
+            except (TypeError, ValueError):
+                return None
+            if value <= 0:
+                return None
+            return Fraction(value).limit_denominator(10000)
+
+        fade_duration = _to_duration_closing(fade_seconds)
+        fade_in_duration = _to_duration_closing(fade_in_seconds)
+        fade_out_duration = _to_duration_closing(fade_out_seconds)
+        
+        seed = teaser_music_config.get('random_seed')
+        rng = random.Random(seed) if seed is not None else random.Random()
+        shuffled_teaser_music = teaser_music_assets[:]
+        rng.shuffle(shuffled_teaser_music)
+        
+        def _fmt_time_closing(value):
+            if value is None:
+                return None
+            return f"{value.numerator}/{value.denominator}s"
+        
+        if shuffled_teaser_music:
+            music_pos = closing_section_start
+            music_index = 0
+            
+            while music_pos < closing_section_end:
+                track = shuffled_teaser_music[music_index % len(shuffled_teaser_music)]
+                remaining = closing_section_end - music_pos
+                clip_duration = track['duration'] if track['duration'] <= remaining else remaining
+                if clip_duration <= 0:
+                    break
+                
+                clip_start = music_pos.limit_denominator(10000)
+                clip_duration = clip_duration.limit_denominator(10000)
+                
+                attributes = {
+                    'name': Path(track['path']).name,
+                    'ref': track['asset_id'],
+                    'start': '0/1s',
+                    'offset': f"{clip_start.numerator}/{clip_start.denominator}s",
+                    'duration': f"{clip_duration.numerator}/{clip_duration.denominator}s",
+                    'enabled': '1',
+                    'tcFormat': 'NDF',
+                    'lane': str(teaser_music_lane),
+                    'audioStart': '0/1s',
+                    'audioDuration': f"{clip_duration.numerator}/{clip_duration.denominator}s"
+                }
+                
+                if fade_in_duration:
+                    fade_in = fade_in_duration if fade_in_duration <= clip_duration else clip_duration
+                    attributes['audioFadeIn'] = _fmt_time_closing(fade_in)
+                if fade_out_duration:
+                    fade_out = fade_out_duration if fade_out_duration <= clip_duration else clip_duration
+                    attributes['audioFadeOut'] = _fmt_time_closing(fade_out)
+                
+                teaser_music_clip = SubElement(spine, 'asset-clip', attributes)
+                SubElement(teaser_music_clip, 'adjust-volume', {
+                    'amount': '0dB'
+                })
+                
+                if fade_in_duration or fade_out_duration:
+                    fade_in = fade_in_duration if fade_in_duration else None
+                    fade_out = fade_out_duration if fade_out_duration else None
+                    if fade_in and fade_in > clip_duration:
+                        fade_in = clip_duration
+                    if fade_out and fade_out > clip_duration:
+                        fade_out = clip_duration
+                    fade_out_start = clip_duration - fade_out if fade_out else None
+                    if fade_out_start is not None and fade_out_start < Fraction(0, 1):
+                        fade_out_start = Fraction(0, 1)
+
+                    try:
+                        fade_silence_value = f"{float(fade_silence_db)}dB"
+                    except (TypeError, ValueError):
+                        fade_silence_value = "-96.0dB"
+                    fade_full_value = "0dB"
+
+                    audio_automation = SubElement(teaser_music_clip, 'audio-automation', {
+                        'lane': 'volume'
+                    })
+                    if fade_in:
+                        SubElement(audio_automation, 'keyframe', {
+                            'time': '0/1s',
+                            'value': fade_silence_value
+                        })
+                        SubElement(audio_automation, 'keyframe', {
+                            'time': _fmt_time_closing(fade_in),
+                            'value': fade_full_value
+                        })
+                    else:
+                        SubElement(audio_automation, 'keyframe', {
+                            'time': '0/1s',
+                            'value': fade_full_value
+                        })
+
+                    if fade_out and fade_out_start is not None:
+                        SubElement(audio_automation, 'keyframe', {
+                            'time': _fmt_time_closing(fade_out_start),
+                            'value': fade_full_value
+                        })
+                        SubElement(audio_automation, 'keyframe', {
+                            'time': _fmt_time_closing(clip_duration),
+                            'value': fade_silence_value
+                        })
+                    else:
+                        SubElement(audio_automation, 'keyframe', {
+                            'time': _fmt_time_closing(clip_duration),
+                            'value': fade_full_value
+                        })
+                
                 music_pos = (music_pos + clip_duration).limit_denominator(10000)
                 music_index += 1
     

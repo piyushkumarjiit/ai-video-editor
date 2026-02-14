@@ -13,6 +13,15 @@ from pathlib import Path
 OUTPUT_DIR = "ai_clips"
 
 
+def get_export_settings(config):
+    export_cfg = config.get("export", {}) if isinstance(config, dict) else {}
+    clip_format = export_cfg.get("clip_format", "mkv")
+    clip_format = str(clip_format).lower().lstrip('.')
+    if clip_format not in {"mkv", "mov", "mp4"}:
+        clip_format = "mkv"
+    return clip_format, export_cfg
+
+
 def load_project_config(config_path):
     if not config_path:
         return {}
@@ -33,8 +42,9 @@ def format_speed_label(speed):
     return f"{speed:.2f}x"
 
 
-def extract_scene(video_path, scene, output_path):
+def extract_scene(video_path, scene, output_path, clip_format="mkv", export_cfg=None):
     """Extract and optionally speed up a scene"""
+    export_cfg = export_cfg or {}
     start_time = scene['start_time']
     duration = scene['duration']
     speed = scene['speed']
@@ -81,12 +91,29 @@ def extract_scene(video_path, scene, output_path):
                 '-af', audio_filter,
             ])
     
-    # GPU encoding with NVENC
-    cmd.extend([
-        '-c:v', 'hevc_nvenc',
-        '-preset', 'p4',
-        '-cq', '23',
-    ])
+    # Video encoding settings
+    use_nvenc = False
+    if clip_format == 'mov':
+        video_codec = export_cfg.get('video_codec', 'prores_ks')
+        pix_fmt = export_cfg.get('pixel_format', 'yuv422p10le')
+        prores_profile = export_cfg.get('prores_profile', 3)
+        cmd.extend([
+            '-c:v', video_codec,
+        ])
+        if video_codec == 'prores_ks':
+            cmd.extend(['-profile:v', str(prores_profile)])
+        if pix_fmt:
+            cmd.extend(['-pix_fmt', pix_fmt])
+    else:
+        video_codec = export_cfg.get('video_codec', 'hevc_nvenc')
+        preset = export_cfg.get('video_preset', 'p4')
+        cq = export_cfg.get('video_cq', 23)
+        cmd.extend([
+            '-c:v', video_codec,
+            '-preset', str(preset),
+            '-cq', str(cq),
+        ])
+        use_nvenc = (video_codec == 'hevc_nvenc')
     
     # Add audio encoding only if audio exists
     if has_audio:
@@ -104,6 +131,8 @@ def extract_scene(video_path, scene, output_path):
         subprocess.run(cmd, capture_output=True, check=True)
         print("✓")
     except subprocess.CalledProcessError:
+        if not use_nvenc:
+            raise
         # Try CPU encoding if GPU fails
         print("GPU failed, trying CPU...", end=' ')
         cmd_cpu = cmd.copy()
@@ -121,7 +150,7 @@ def extract_scene(video_path, scene, output_path):
         print("✓")
 
 
-def process_analysis(analysis_file, video_dir, output_base_dir, exclude_boring=False):
+def process_analysis(analysis_file, video_dir, output_base_dir, exclude_boring=False, clip_format="mkv", export_cfg=None):
     with open(analysis_file, 'r') as f:
         analysis = json.load(f)
     
@@ -186,7 +215,7 @@ def process_analysis(analysis_file, video_dir, output_base_dir, exclude_boring=F
         classification = scene['classification']
         speed = scene['speed']
 
-        output_name = f"{video_path.stem}_scene_{scene_num:02d}_{classification}_{format_speed_label(speed)}.mkv"
+        output_name = f"{video_path.stem}_scene_{scene_num:02d}_{classification}_{format_speed_label(speed)}.{clip_format}"
         output_path = output_dir / output_name
 
         if output_path.exists():
@@ -194,7 +223,7 @@ def process_analysis(analysis_file, video_dir, output_base_dir, exclude_boring=F
             skipped_count += 1
             continue
 
-        extract_scene(video_path, scene, output_path)
+        extract_scene(video_path, scene, output_path, clip_format=clip_format, export_cfg=export_cfg)
         extracted_count += 1
     
     # Extract showcase moments (short clips at 1x speed)
@@ -207,7 +236,7 @@ def process_analysis(analysis_file, video_dir, output_base_dir, exclude_boring=F
             start_time = max(0, timestamp - 2)
             duration = 5
             
-            output_name = f"{video_path.stem}_showcase_{idx:02d}_{timestamp}s_1.00x.mkv"
+            output_name = f"{video_path.stem}_showcase_{idx:02d}_{timestamp}s_1.00x.{clip_format}"
             output_path = output_dir / output_name
             
             if output_path.exists():
@@ -222,7 +251,7 @@ def process_analysis(analysis_file, video_dir, output_base_dir, exclude_boring=F
                 'speed': 1.0
             }
             
-            extract_scene(video_path, showcase_scene, output_path)
+            extract_scene(video_path, showcase_scene, output_path, clip_format=clip_format, export_cfg=export_cfg)
             extracted_count += 1
     
     print()
@@ -265,6 +294,7 @@ def main():
     output_dir = args.output_dir or paths_cfg.get("clips_dir") or OUTPUT_DIR
     video_dir = args.video_dir or paths_cfg.get("video_dir") or paths_cfg.get("input_dir")
     exclude_boring = args.exclude_boring or pipeline_cfg.get("exclude_boring", False)
+    clip_format, export_cfg = get_export_settings(config)
     
     analysis_files = []
     if args.analysis_dir:
@@ -281,7 +311,14 @@ def main():
         return
     
     for analysis_file in analysis_files:
-        process_analysis(analysis_file, video_dir, output_dir, exclude_boring=exclude_boring)
+        process_analysis(
+            analysis_file,
+            video_dir,
+            output_dir,
+            exclude_boring=exclude_boring,
+            clip_format=clip_format,
+            export_cfg=export_cfg
+        )
 
     print(f"\n💡 Next: run export_resolve.py to build the combined timeline.")
 
