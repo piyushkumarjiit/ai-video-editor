@@ -4,7 +4,7 @@ An intelligent video editing automation system that uses computer vision and lar
 
 ## Overview
 
-This pipeline transforms lengthy raw footage (30-60+ minutes) into polished, watchable videos (10-15 minutes) by automatically detecting scene quality, adjusting playback speeds, extracting highlight moments, and generating professional timelines with music, transitions, and watermarks.
+This pipeline transforms lengthy raw footage (30-60+ minutes) into polished, watchable videos by automatically detecting scene quality, adjusting playback speeds, extracting highlight moments, generating professional timelines with music/transitions/watermarks, rendering in DaVinci Resolve, and uploading to YouTube.
 
 **Key Features:**
 - AI-powered scene classification (boring, low, moderate, interesting)
@@ -12,6 +12,9 @@ This pipeline transforms lengthy raw footage (30-60+ minutes) into polished, wat
 - Showcase moment extraction for teaser sections
 - Intelligent duplicate scene detection across multiple videos
 - DaVinci Resolve FCPXML timeline generation
+- Optional LUT application in Resolve Media Pool
+- YouTube rendering (H.265, 4K, bitrate control)
+- YouTube upload with OAuth 2.0, playlist support, and thumbnails
 - Multi-track audio with background music and teaser soundtracks
 - Configurable watermarks with opacity and positioning
 - GPU-accelerated video processing (NVENC)
@@ -111,14 +114,33 @@ OUTPUT: ai_clips/
          |
          v
 OUTPUT: timeline.fcpxml
-         |
-         v
+     |
+     v
 +-------------------------+
 | DaVinci Resolve Import  |
 +-------------------------+
-         |
-         v
-   Final Video
+     |
+     v
++-------------------------+
+| Optional LUT Apply      |
+| (apply_lut_resolve.py)  |
++-------------------------+
+     |
+     v
++-------------------------+
+| Render (render_youtube) |
++-------------------------+
+     |
+     v
+OUTPUT: MP4 (4K, H.265)
+     |
+     v
++-------------------------+
+| Upload (upload_youtube) |
++-------------------------+
+     |
+     v
+   YouTube Video
 ```
 
 ## Scene Classification System
@@ -196,6 +218,19 @@ Final Timeline:    14.7 minutes     (64% compression)
 - FFmpeg with NVENC support
 - DaVinci Resolve (for final editing)
 
+### Required Environment (Verified)
+
+- **OS**: Fedora 43 (Workstation)
+- **GPU**: NVIDIA GPU with NVENC support
+- **RAM**: 32 GB+ recommended (16 GB minimum)
+- **Storage**: SSD recommended (20 GB+ free for cache and outputs)
+- **DaVinci Resolve**: 20.x (automation verified on 20.0.1)
+
+**Downloads:**
+- DaVinci Resolve: https://www.blackmagicdesign.com/support/family/davinci-resolve-and-fusion
+- Filmic LUT Pack (iPhone): https://www.filmicpro.com/products/luts/
+- Filmic LUT Pack direct download: https://www.filmicpro.com/downloads/Filmic_Pro_deLOG_LUT_Pack_May_2022.zip
+
 ### Setup
 
 ```bash
@@ -207,14 +242,14 @@ python3 -m venv .venv
 source .venv/bin/activate
 
 # Install dependencies
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-pip install transformers accelerate
-pip install opencv-python pillow
-pip install clip-anytorch
-pip install llama-cpp-python
+pip install -r requirements.txt
 
 # Download AI models (automatic on first run)
 # Models will be cached to ~/.cache/huggingface/ and ~/.cache/clip/
+
+### Python Requirements
+
+All Python dependencies are pinned in [requirements.txt](requirements.txt).
 ```
 
 ### Directory Structure
@@ -226,17 +261,20 @@ pip install llama-cpp-python
 ├── extract_scenes.py              # Stage 2: Scene extraction
 ├── export_resolve.py              # Stage 3: Timeline export
 ├── run_pipeline.py                # Master orchestrator
+├── apply_lut_resolve.py            # Optional LUT application in Resolve
+├── render_youtube.py               # Render timeline to MP4 (Resolve API)
+├── upload_youtube.py               # Upload to YouTube + thumbnail
 ├── project_config.json            # Configuration file
 ├── assets/
-│   ├── Start-Intro-V3.mkv        # Intro video
-│   ├── Finish-Intro-V3.mkv       # Outro video
+│   ├── Start-Intro-V3.mov        # Intro video (10-bit)
+│   ├── Finish-Intro-V3.mov       # Outro video (10-bit)
 │   ├── qr-code.jpg                # Watermark image
 │   ├── music-background/          # Background music (WAV)
 │   └── music-teaser/              # Teaser music (WAV)
 ├── ai_clips/                      # Extracted scene clips
 │   ├── {video_stem}/
-│   │   ├── *_scene_*.mkv
-│   │   └── *_showcase_*.mkv
+│   │   ├── *_scene_*.mov
+│   │   └── *_showcase_*.mov
 └── timeline_davinci_resolve.fcpxml # Final timeline
 ```
 
@@ -252,6 +290,19 @@ python run_pipeline.py
 # 1. Analyze videos
 # 2. Extract scenes
 # 3. Export timeline
+```
+
+### Render and Upload
+
+```bash
+# Apply LUTs (optional)
+python apply_lut_resolve.py --config project_config.json
+
+# Render from DaVinci Resolve
+python render_youtube.py --output /home/mazsola/Videos/output.mp4
+
+# Upload to YouTube (uses project_config.json defaults)
+python upload_youtube.py --video /home/mazsola/Videos/output.mp4
 ```
 
 ### Individual Stages
@@ -361,6 +412,16 @@ python export_resolve.py --config project_config.json \
       "audio_lane": 1,
       "fade_duration": 1.0
     }
+  },
+  "youtube": {
+    "channel_url": "https://www.youtube.com/@modernhackers",
+    "upload_title": "Scale Model Car Build",
+    "default_description": "...",
+    "category_id": "26",
+    "default_privacy": "unlisted",
+    "made_for_kids": false,
+    "altered_content": false,
+    "default_playlist_id": "PLxxxxxxxxxxxxxxxxx"
   }
 }
 ```
@@ -488,6 +549,18 @@ Total:             ~19GB per project
 ```bash
 # Solution: Set transparency in config (0.0-1.0)
 # 0.3 transparency = 70% opaque
+```
+
+**Issue**: YouTube upload fails or shows 0% in Studio
+```bash
+# Solution: Use resumable upload (default) and keep the terminal open
+# Large files take time to process in Studio after upload completes
+```
+
+**Issue**: Thumbnail rejected or stretched
+```bash
+# Solution: Use upload_youtube.py thumbnail support (auto-resize to 1280x720)
+# Provide --thumbnail or place images in assets/photos/
 ```
 
 **Issue**: Timeline too long/short

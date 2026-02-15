@@ -95,6 +95,7 @@ from pathlib import Path
 import http.client
 import httplib2
 import random
+import tempfile
 
 # YouTube API imports
 try:
@@ -248,10 +249,13 @@ def initialize_upload(youtube, video_file, metadata):
         body["snippet"]["playlistId"] = metadata["playlist_id"]
     
     # Call the API's videos.insert method to create and upload the video.
+    # Use 10MB chunks for large file uploads (better progress tracking and reliability)
+    CHUNK_SIZE = 10 * 1024 * 1024  # 10 MB
+    
     insert_request = youtube.videos().insert(
         part=",".join(body.keys()),
         body=body,
-        media_body=MediaFileUpload(video_file, chunksize=-1, resumable=True)
+        media_body=MediaFileUpload(video_file, chunksize=CHUNK_SIZE, resumable=True)
     )
     
     return resumable_upload(insert_request)
@@ -271,9 +275,9 @@ def resumable_upload(request):
     error = None
     retry = 0
     
+    print("Uploading file...")
     while response is None:
         try:
-            print("Uploading file...")
             status, response = request.next_chunk()
             if response is not None:
                 if "id" in response:
@@ -283,11 +287,15 @@ def resumable_upload(request):
                     print(f"URL: https://www.youtube.com/watch?v={video_id}")
                     return video_id
                 else:
-                    print(f"ERROR: Upload failed with response: {response}")
+                    print(f"\nERROR: Upload failed with response: {response}")
                     return None
             elif status:
                 progress = int(status.progress() * 100)
-                print(f"  Upload progress: {progress}%", end="\r")
+                bytes_uploaded = status.resumable_progress
+                total_size = status.total_size
+                mb_uploaded = bytes_uploaded / (1024 * 1024)
+                mb_total = total_size / (1024 * 1024)
+                print(f"  Upload progress: {progress}% ({mb_uploaded:.1f} MB / {mb_total:.1f} MB)", end="\r")
         
         except HttpError as e:
             if e.resp.status in RETRIABLE_STATUS_CODES:
@@ -351,6 +359,72 @@ def load_config(config_path):
     return {}
 
 
+def find_asset_thumbnail():
+    """Find a thumbnail image from assets/photos (newest by mtime)."""
+    base_dir = Path(__file__).resolve().parent
+    assets_dir = base_dir / "assets" / "photos"
+    if not assets_dir.exists():
+        return None
+
+    candidates = []
+    for ext in ("*.jpg", "*.jpeg", "*.png", "*.JPG", "*.JPEG", "*.PNG"):
+        candidates.extend(assets_dir.glob(ext))
+
+    if not candidates:
+        return None
+
+    return max(candidates, key=lambda p: p.stat().st_mtime)
+
+
+def set_thumbnail(youtube, video_id, thumbnail_path):
+    """Set a custom thumbnail for a YouTube video."""
+    try:
+        prepared_path = prepare_thumbnail(thumbnail_path)
+        youtube.thumbnails().set(
+            videoId=video_id,
+            media_body=MediaFileUpload(str(prepared_path))
+        ).execute()
+        print(f"✓ Thumbnail set: {prepared_path}")
+        return True
+    except HttpError as e:
+        print(f"ERROR: Failed to set thumbnail: {e}")
+        return False
+
+
+def prepare_thumbnail(thumbnail_path):
+    """Resize and stretch thumbnail to 1280x720 and keep under 2MB."""
+    try:
+        from PIL import Image
+    except ImportError:
+        print("ERROR: Pillow is required for thumbnail processing. Install with: pip install pillow")
+        raise
+
+    img = Image.open(thumbnail_path).convert("RGB")
+    # Resize to cover 1280x720 while preserving aspect ratio, then center-crop
+    target_w, target_h = 1280, 720
+    src_w, src_h = img.size
+    scale = max(target_w / src_w, target_h / src_h)
+    new_w = int(src_w * scale)
+    new_h = int(src_h * scale)
+    img = img.resize((new_w, new_h), Image.LANCZOS)
+
+    left = (new_w - target_w) // 2
+    top = (new_h - target_h) // 2
+    right = left + target_w
+    bottom = top + target_h
+    img = img.crop((left, top, right, bottom))
+
+    tmp_dir = Path(tempfile.gettempdir())
+    out_path = tmp_dir / "youtube_thumbnail_upload.jpg"
+    img.save(out_path, format="JPEG", quality=85, optimize=True)
+
+    # If still too large, reduce quality
+    if out_path.stat().st_size > 2 * 1024 * 1024:
+        img.save(out_path, format="JPEG", quality=70, optimize=True)
+
+    return out_path
+
+
 def main():
     """Main entry point."""
     parser = argparse.ArgumentParser(
@@ -359,7 +433,7 @@ def main():
     parser.add_argument(
         "--video",
         type=str,
-        required=True,
+        required=False,
         help="Path to video file to upload"
     )
     parser.add_argument(
@@ -411,14 +485,52 @@ def main():
         default="youtube_credentials.json",
         help="Stored credentials file (default: youtube_credentials.json)"
     )
+    parser.add_argument(
+        "--thumbnail",
+        type=str,
+        help="Path to thumbnail image (JPG/PNG). If omitted, uses assets/photos"
+    )
+    parser.add_argument(
+        "--set-thumbnail",
+        type=str,
+        help="Set thumbnail for an existing video ID (no upload)"
+    )
     
     args = parser.parse_args()
     
     # Load config
     config = load_config(args.config)
     youtube_cfg = config.get("youtube", {})
+
+    # Resolve thumbnail (optional)
+    thumbnail_path = Path(args.thumbnail) if args.thumbnail else find_asset_thumbnail()
+    if thumbnail_path and not thumbnail_path.exists():
+        print(f"ERROR: Thumbnail file not found: {thumbnail_path}")
+        sys.exit(1)
+
+    # Thumbnail-only mode
+    if args.set_thumbnail:
+        try:
+            youtube = get_authenticated_service(args.client_secrets, args.credentials)
+            print("✓ Authenticated with YouTube API\n")
+        except Exception as e:
+            print(f"ERROR: Authentication failed: {e}")
+            sys.exit(1)
+
+        if not thumbnail_path:
+            print("ERROR: No thumbnail found. Provide --thumbnail or place images in assets/photos")
+            sys.exit(1)
+
+        if set_thumbnail(youtube, args.set_thumbnail, thumbnail_path):
+            print("✅ Thumbnail updated")
+            sys.exit(0)
+        sys.exit(1)
     
     # Check video file exists
+    if not args.video:
+        print("ERROR: --video is required unless using --set-thumbnail")
+        sys.exit(1)
+
     video_path = Path(args.video)
     if not video_path.exists():
         print(f"ERROR: Video file not found: {video_path}")
@@ -426,13 +538,14 @@ def main():
     
     # Prepare metadata
     metadata = {
-        "title": args.title or youtube_cfg.get("default_title") or video_path.stem,
+        "title": args.title or youtube_cfg.get("upload_title") or youtube_cfg.get("default_title") or video_path.stem,
         "description": args.description or youtube_cfg.get("default_description", ""),
         "tags": (args.tags.split(",") if args.tags else youtube_cfg.get("default_tags", [])),
         "category_id": args.category or youtube_cfg.get("category_id", "22"),
         "privacy_status": args.privacy or youtube_cfg.get("default_privacy", "private"),
         "made_for_kids": youtube_cfg.get("made_for_kids", False),
         "playlist_id": args.playlist or youtube_cfg.get("default_playlist_id"),
+        "altered_content": youtube_cfg.get("altered_content", False),
     }
     
     print("\n" + "=" * 72)
@@ -443,6 +556,9 @@ def main():
     print(f"Privacy:     {metadata['privacy_status']}")
     print(f"Category:    {metadata['category_id']}")
     print(f"Tags:        {', '.join(metadata['tags'][:5])}{'...' if len(metadata['tags']) > 5 else ''}")
+    if thumbnail_path:
+        print(f"Thumbnail:  {thumbnail_path}")
+    print(f"Altered:     {'Yes' if metadata['altered_content'] else 'No'}")
     
     size_mb = video_path.stat().st_size / (1024 * 1024)
     print(f"Size:        {size_mb:.1f} MB")
@@ -464,6 +580,10 @@ def main():
             # Add to playlist if specified and not already added during upload
             if metadata["playlist_id"] and "playlistId" not in metadata.get("snippet", {}):
                 add_to_playlist(youtube, video_id, metadata["playlist_id"])
+
+            # Set thumbnail if available
+            if thumbnail_path:
+                set_thumbnail(youtube, video_id, thumbnail_path)
             
             print("\n" + "=" * 72)
             print("✅ Upload Complete")
@@ -472,6 +592,9 @@ def main():
             print(f"Watch URL:   https://www.youtube.com/watch?v={video_id}")
             print(f"Studio URL:  https://studio.youtube.com/video/{video_id}/edit")
             print("=" * 72)
+
+            if metadata.get("altered_content") is not None:
+                print("\nNote: 'Altered content' cannot be set via API. Set it in YouTube Studio if needed.")
         else:
             print("\n❌ Upload failed")
             sys.exit(1)
