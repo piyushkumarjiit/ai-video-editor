@@ -5,8 +5,11 @@ End-to-end workflow: analyze -> extract clips -> export Resolve timeline.
 
 import argparse
 import json
+import os
+import shlex
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 
@@ -28,6 +31,10 @@ def list_videos(input_dir):
 
 def analysis_output_path(video_path, output_dir):
 	return output_dir / f"scene_analysis_{video_path.stem}.json"
+
+
+def analysis_failed_marker(video_path, output_dir):
+	return output_dir / f"scene_analysis_{video_path.stem}.failed"
 
 
 def analysis_exists(video_path, output_dir):
@@ -81,6 +88,91 @@ def load_project_config(config_path):
 	except Exception:
 		return {}
 	return {}
+
+
+def _add_resolve_module_path():
+	for path in [
+		"/opt/resolve/Developer/Scripting/Modules",
+		"/opt/resolve/Developer/Scripting/Modules/Resolve",
+		"/opt/resolve/Developer/Scripting/Modules/DaVinciResolveScript",
+		os.path.expanduser("~/DaVinciResolve/Developer/Scripting/Modules"),
+	]:
+		if os.path.isdir(path) and path not in sys.path:
+			sys.path.append(path)
+
+
+def _connect_resolve(retries=30, delay_seconds=2):
+	_add_resolve_module_path()
+	try:
+		import DaVinciResolveScript as dvr  # type: ignore
+	except Exception:
+		return None
+	for _ in range(retries):
+		resolve = dvr.scriptapp("Resolve")
+		if resolve:
+			return resolve
+		time.sleep(delay_seconds)
+	return None
+
+
+def _launch_resolve(launch_cmd, launch_env):
+	cmd = launch_cmd
+	if isinstance(cmd, str):
+		cmd = shlex.split(cmd)
+	if not cmd:
+		return None
+	env = os.environ.copy()
+	if isinstance(launch_env, dict):
+		for key, value in launch_env.items():
+			env[str(key)] = str(value)
+	return subprocess.Popen(cmd, env=env, cwd=str(Path(__file__).resolve().parent))
+
+
+def _import_timeline(resolve, timeline_path, timeline_name=None):
+	pm = resolve.GetProjectManager()
+	project = pm.GetCurrentProject()
+	if not project:
+		return False
+	media_pool = project.GetMediaPool()
+	if not media_pool:
+		return False
+	options = None
+	if timeline_name:
+		options = {"timelineName": timeline_name}
+	try:
+		result = media_pool.ImportTimelineFromFile(str(timeline_path), options) if options else media_pool.ImportTimelineFromFile(str(timeline_path))
+		return bool(result)
+	except Exception:
+		pass
+	try:
+		result = project.ImportTimelineFromFile(str(timeline_path), options) if options else project.ImportTimelineFromFile(str(timeline_path))
+		return bool(result)
+	except Exception:
+		return False
+
+
+def _create_or_load_project(resolve, base_name, create_new=True):
+	pm = resolve.GetProjectManager()
+	if not pm:
+		return None
+	if not base_name:
+		base_name = "AI Pipeline"
+	if create_new:
+		timestamp = time.strftime("%Y%m%d_%H%M%S")
+		project_name = f"{base_name}_{timestamp}"
+		project = pm.CreateProject(project_name)
+		if project:
+			return project
+		# Fallback to loading the base name if create failed
+		project = pm.LoadProject(base_name)
+		if project:
+			return project
+		return None
+	# If not creating new, try load first, else create
+	project = pm.LoadProject(base_name)
+	if project:
+		return project
+	return pm.CreateProject(base_name)
 
 
 def main():
@@ -146,12 +238,26 @@ def main():
 	try:
 		if not skip_analysis:
 			videos_to_analyze = []
+			failed_before = []
 			if video_path:
-				if args.force_analysis or not analysis_exists(video_path, output_dir):
+				if args.force_analysis:
 					videos_to_analyze = [video_path]
+				else:
+					failed_marker = analysis_failed_marker(video_path, output_dir)
+					if failed_marker.exists():
+						failed_before.append(video_path)
+					elif not analysis_exists(video_path, output_dir):
+						videos_to_analyze = [video_path]
 			else:
 				for vid in list_videos(input_dir):
-					if args.force_analysis or not analysis_exists(vid, output_dir):
+					if args.force_analysis:
+						videos_to_analyze.append(vid)
+						continue
+					failed_marker = analysis_failed_marker(vid, output_dir)
+					if failed_marker.exists():
+						failed_before.append(vid)
+						continue
+					if not analysis_exists(vid, output_dir):
 						videos_to_analyze.append(vid)
 
 			if not videos_to_analyze:
@@ -161,6 +267,12 @@ def main():
 				cmd = [
 					python,
 					str(base_dir / "analyze_advanced5.py"),
+					"--config",
+					str(Path(args.config).resolve()),
+					"--input-dir",
+					str(input_dir),
+					"--output-dir",
+					str(output_dir),
 					"--sample-interval",
 					str(sample_interval),
 					"--skip-duplicate-captions",
@@ -170,6 +282,20 @@ def main():
 				if video_path:
 					cmd.extend(["--video", str(video_path)])
 				run_stage("[1/3] Analyze videos with Qwen2.5-VL-7B", cmd, base_dir)
+				# Mark any still-missing analyses to avoid repeated attempts
+				still_missing = [v for v in videos_to_analyze if not analysis_exists(v, output_dir)]
+				for v in still_missing:
+					marker = analysis_failed_marker(v, output_dir)
+					marker.write_text("analysis failed or did not produce JSON\n")
+				if still_missing:
+					print("\n⚠️  Some analyses did not produce JSON and were marked as failed:")
+					for v in still_missing:
+						print(f"   - {v.name}")
+					print("   (Delete the .failed file or use --force-analysis to retry.)")
+				if failed_before:
+					print("\nℹ️  Skipped previously failed analyses:")
+					for v in failed_before:
+						print(f"   - {v.name}")
 		else:
 			print("\n▶ [1/3] Analyze videos (skipped)")
 
@@ -212,6 +338,47 @@ def main():
 			run_stage("[3/3] Export Resolve timeline", cmd, base_dir)
 		else:
 			print("\n▶ [3/3] Export Resolve timeline (skipped)")
+
+		resolve_cfg = config.get("resolve", {})
+		if resolve_cfg.get("auto_start"):
+			print("\n▶ [4/5] Launch/attach DaVinci Resolve")
+			resolve = _connect_resolve(retries=3, delay_seconds=1)
+			process = None
+			if not resolve:
+				process = _launch_resolve(
+					resolve_cfg.get("launch_cmd", "/opt/resolve/bin/resolve"),
+					resolve_cfg.get("launch_env", {}),
+				)
+				startup_wait = resolve_cfg.get("startup_wait_seconds", 20)
+				time.sleep(startup_wait)
+				resolve = _connect_resolve(retries=60, delay_seconds=2)
+			if not resolve:
+				raise RuntimeError("Resolve is not available via scripting API.")
+			print("✔ Resolve connected")
+
+			print("\n▶ [5/5] Import timeline and apply LUT")
+			project_name = resolve_cfg.get("project_name", "AI Pipeline")
+			create_new_project = resolve_cfg.get("create_new_project", True)
+			project = _create_or_load_project(resolve, project_name, create_new=create_new_project)
+			if not project:
+				raise RuntimeError("Failed to create or load Resolve project.")
+			print(f"Project ready: {project.GetName()}")
+			imported = _import_timeline(resolve, timeline_path, resolve_cfg.get("timeline_name"))
+			print(f"Import timeline: {'ok' if imported else 'failed'}")
+			import_wait = resolve_cfg.get("import_wait_seconds", 10)
+			time.sleep(import_wait)
+			if resolve_cfg.get("apply_lut_after_import", True):
+				cmd = [
+					python,
+					str(base_dir / "apply_lut_resolve.py"),
+					"--config",
+					str(Path(args.config).resolve()),
+					"--mode",
+					resolve_cfg.get("apply_lut_mode", "mediapool"),
+					"--property-key",
+					resolve_cfg.get("lut_property_key", "Input LUT"),
+				]
+				run_stage("Apply LUT", cmd, base_dir)
 
 		print("\n✅ Pipeline complete")
 		print("Import all clips to Resolve Media Pool before importing the XML.")
