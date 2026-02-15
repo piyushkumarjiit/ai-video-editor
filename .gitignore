@@ -53,6 +53,7 @@
 !.gitignore
 !*.md
 !*.sh
+!.gitkeep
 
 
 # OAuth credentials - keep private
