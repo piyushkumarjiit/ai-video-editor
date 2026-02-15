@@ -379,6 +379,75 @@ def main():
 					resolve_cfg.get("lut_property_key", "Input LUT"),
 				]
 				run_stage("Apply LUT", cmd, base_dir)
+			
+			# Render final output
+			if resolve_cfg.get("render_youtube_4k", False):
+				youtube_output = resolve_cfg.get("youtube_output_path", "timeline_output_4k_youtube.mp4")
+				youtube_output_path = base_dir / youtube_output
+				
+				print("\n" + "=" * 72)
+				print("📌 TIMELINE VALIDATION REQUIRED")
+				print("=" * 72)
+				print("\n✓ Pipeline stages complete:")
+				print("  [1/5] Analysis - DONE")
+				print("  [2/5] Scene Extraction - DONE")
+				print("  [3/5] Timeline Export - DONE")
+				print("  [4/5] Resolve Import - DONE")
+				print("  [5/5] LUT Applied - DONE")
+				print("\n📺 In DaVinci Resolve:")
+				print("   - Review the timeline with LUT applied")
+				print("   - Verify all clips, transitions, and effects")
+				print("   - Check audio levels and sync")
+				print("   - Confirm 4K resolution (3840x2160)")
+				print("\n📤 Ready for YouTube 4K render:")
+				print("   - Format: MP4 (H.265 HEVC)")
+				print("   - Bitrate: 45 Mbps (optimized for YouTube)")
+				print("   - Output: " + str(youtube_output_path))
+				print("\n" + "=" * 72)
+				
+				# Prompt user to validate
+				print("\n⏸️  Waiting for validation...")
+				while True:
+					response = input("Proceed with YouTube 4K render? (y/N): ").strip().lower()
+					if response in ('y', 'yes'):
+						print("✓ Starting render...")
+						break
+					elif response in ('n', 'no', ''):
+						print("✗ Render cancelled")
+						print("\nTimeline ready in Resolve for manual export if needed.")
+						print(f"When ready, run: python3 render_youtube.py --output {youtube_output_path}")
+						return
+					else:
+						print("Please enter 'y' or 'n'")
+				
+				print("\n")
+				cmd = [
+					python,
+					str(base_dir / "render_youtube.py"),
+					"--output",
+					str(youtube_output_path),
+					"--timeline-index",
+					str(resolve_cfg.get("timeline_index", 1)),
+				]
+				
+				# Try to run render, but handle API issues gracefully
+				print(f"\n▶ [6/5] Render YouTube 4K MP4")
+				print("-" * 72)
+				print(" ".join(cmd))
+				print("-" * 72)
+				
+				try:
+					result = subprocess.run(cmd, cwd=base_dir, timeout=600)
+					if result.returncode == 0:
+						print(f"✔ YouTube render completed successfully")
+						print(f"   Output: {youtube_output_path}")
+					else:
+						print(f"\n⚠️  Render script reported issues (exit code {result.returncode})")
+						print("   Check the output above for manual render instructions")
+				except subprocess.TimeoutExpired:
+					print(f"\n⚠️  Render script timeout")
+					print("   The render may still be processing in Resolve.")
+					print("   Check Resolve's Deliver page for status.")
 
 		print("\n✅ Pipeline complete")
 		print("Import all clips to Resolve Media Pool before importing the XML.")
