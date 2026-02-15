@@ -147,31 +147,20 @@ Final Timeline:    14.7 minutes     (64% compression)
 
 ### Computer Vision Models
 
-```
-+-------------------------------------+
-| Qwen2.5-VL-7B (Vision-Language)     |
-| - Frame captions                    |
-| - Quality rating (1-10)             |
-| - Scene classification              |
-| - Cache: ~/.cache/huggingface/      |
-| - Size: ~4.7GB (Q4_K_M GGUF)        |
-+-------------------------------------+
-              |
-              v
-+-------------------------------------+
-| CLIP ViT-B/32 (Contrastive)         |
-| - Semantic embeddings               |
-| - Text-image matching               |
-| - Cache: ~/.cache/clip/             |
-+-------------------------------------+
-              |
-              v
-+-------------------------------------+
-| ResNet-50 (Feature Extraction)      |
-| - Visual features (2048-dim)        |
-| - Perceptual similarity             |
-| - Cache: ~/.cache/torch/hub/        |
-+-------------------------------------+
+```mermaid
+graph TB
+    QWEN["🧠 Qwen2.5-VL-7B<br/>(Vision-Language Model)<br/>━━━━━━━━━━━━━━━━━━━━<br/>• Frame captions<br/>• Quality rating 1-10<br/>• Scene classification<br/>━━━━━━━━━━━━━━━━━━━━<br/>📦 Cache: ~/.cache/huggingface/<br/>💾 Size: ~4.7GB Q4_K_M GGUF"]
+    
+    CLIP["🎨 CLIP ViT-B/32<br/>(Contrastive Learning)<br/>━━━━━━━━━━━━━━━━━━━━<br/>• Semantic embeddings<br/>• Text-image matching<br/>• Cross-modal similarity<br/>━━━━━━━━━━━━━━━━━━━━<br/>📦 Cache: ~/.cache/clip/"]
+    
+    RESNET["🔍 ResNet-50<br/>(Feature Extraction)<br/>━━━━━━━━━━━━━━━━━━━━<br/>• Visual features 2048-dim<br/>• Perceptual similarity<br/>• Scene detection<br/>━━━━━━━━━━━━━━━━━━━━<br/>📦 Cache: ~/.cache/torch/hub/"]
+    
+    QWEN --> CLIP
+    CLIP --> RESNET
+    
+    style QWEN fill:#fff3e0,stroke:#f57c00,stroke-width:3px
+    style CLIP fill:#e8f5e9,stroke:#388e3c,stroke-width:3px
+    style RESNET fill:#e3f2fd,stroke:#1976d2,stroke-width:3px
 ```
 
 ### Analysis Workflow
@@ -230,28 +219,49 @@ All Python dependencies are pinned in [requirements.txt](requirements.txt).
 
 ### Directory Structure
 
-
-```
-/home/mazsola/video/
-├── analyze_advanced5.py          # Stage 1: AI video analysis
-├── extract_scenes.py              # Stage 2: Scene extraction
-├── export_resolve.py              # Stage 3: Timeline export
-├── run_pipeline.py                # Master orchestrator
-├── apply_lut_resolve.py            # Optional LUT application in Resolve
-├── render_youtube.py               # Render timeline to MP4 (Resolve API)
-├── upload_youtube.py               # Upload to YouTube + thumbnail
-├── project_config.json            # Configuration file
-├── assets/
-│   ├── Start-Intro-V3.mov        # Intro video (10-bit)
-│   ├── Finish-Intro-V3.mov       # Outro video (10-bit)
-│   ├── qr-code.jpg                # Watermark image
-│   ├── music-background/          # Background music (WAV)
-│   └── music-teaser/              # Teaser music (WAV)
-├── ai_clips/                      # Extracted scene clips
-│   ├── {video_stem}/
-│   │   ├── *_scene_*.mov
-│   │   └── *_showcase_*.mov
-└── timeline_davinci_resolve.fcpxml # Final timeline
+```mermaid
+graph TB
+    ROOT["📁 /home/mazsola/video/"]
+    
+    subgraph SCRIPTS[" 🐍 Python Scripts "]
+        A1["analyze_advanced5.py<br/>Stage 1: AI analysis"]
+        A2["extract_scenes.py<br/>Stage 2: Clip extraction"]
+        A3["export_resolve.py<br/>Stage 3: Timeline export"]
+        A4["run_pipeline.py<br/>Master orchestrator"]
+        A5["apply_lut_resolve.py<br/>LUT application"]
+        A6["render_youtube.py<br/>Resolve rendering"]
+        A7["upload_youtube.py<br/>YouTube upload"]
+    end
+    
+    subgraph ASSETS[" 🎬 Assets "]
+        B1["Start-Intro-V3.mov<br/>Intro video 10-bit"]
+        B2["Finish-Intro-V3.mov<br/>Outro video 10-bit"]
+        B3["qr-code.jpg<br/>Watermark image"]
+        B4["music-background/<br/>Background music WAV"]
+        B5["music-teaser/<br/>Teaser music WAV"]
+    end
+    
+    subgraph OUTPUT[" 📤 Outputs "]
+        C1["ai_clips/<br/>{video_stem}/<br/>*_scene_*.mov<br/>*_showcase_*.mov"]
+        C2["timeline_davinci_resolve.fcpxml<br/>Final timeline"]
+    end
+    
+    CONFIG["⚙️ project_config.json<br/>Configuration file"]
+    
+    ROOT --> SCRIPTS
+    ROOT --> ASSETS
+    ROOT --> OUTPUT
+    ROOT --> CONFIG
+    
+    style ROOT fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    style CONFIG fill:#fff9c4,stroke:#f9a825,stroke-width:2px
+    style A1 fill:#fff3e0,stroke:#f57c00
+    style A2 fill:#f3e5f5,stroke:#7b1fa2
+    style A3 fill:#e8f5e9,stroke:#388e3c
+    style A4 fill:#e3f2fd,stroke:#1976d2
+    style A5 fill:#fce4ec,stroke:#c2185b
+    style A6 fill:#fce4ec,stroke:#c2185b
+    style A7 fill:#ffebee,stroke:#d32f2f
 ```
 
 ## Usage
@@ -420,27 +430,47 @@ python export_resolve.py --config project_config.json \
 
 ### Timeline Structure
 
-```
-Timeline: timeline_davinci_resolve.fcpxml (FCPXML 1.13)
-
-Video Tracks:
-├─ V1 (Lane 0): Main video clips
-│   ├─ Teaser clips (showcase moments)
-│   ├─ Intro video
-│   ├─ Scene clips (classified and speed-adjusted)
-│   └─ Outro video
-└─ V2 (Lane 1): Watermark overlay
-
-Audio Tracks:
-├─ A1 (Lane 1): Teaser music (one random track)
-├─ A2 (Lane 2): Background music (shuffled, crossfaded)
-└─ Video audio: -96dB (muted)
-
-Effects:
-├─ Cross-dissolve transitions (1 second overlap)
-├─ Rotation transforms (270° for portrait videos)
-├─ Zoom adjustments (1.78x for rotated clips)
-└─ Audio fades (1s teaser, 3s background)
+```mermaid
+graph TB
+    TIMELINE["📹 timeline_davinci_resolve.fcpxml<br/>FCPXML 1.13 Format"]
+    
+    subgraph VIDEO[" 🎥 Video Tracks "]
+        V1["V1 Lane 0: Main Video<br/>━━━━━━━━━━━━━━━━━━━━━━"]
+        V1_1["1️⃣ Teaser clips<br/>Showcase moments"]
+        V1_2["2️⃣ Intro video<br/>Start-Intro-V3.mov"]
+        V1_3["3️⃣ Scene clips<br/>Classified & speed-adjusted"]
+        V1_4["4️⃣ Outro video<br/>Finish-Intro-V3.mov"]
+        V2["V2 Lane 1: Watermark<br/>qr-code.jpg @ 70% opacity"]
+    end
+    
+    subgraph AUDIO[" 🔊 Audio Tracks "]
+        A1["A1 Lane 1: Teaser Music<br/>One random track<br/>Fade: 1s in/out"]
+        A2["A2 Lane 2: Background Music<br/>Shuffled & crossfaded<br/>Fade: 3s in/out"]
+        A3["Video Audio<br/>-96dB (muted)"]
+    end
+    
+    subgraph EFFECTS[" ✨ Effects "]
+        E1["Cross-dissolve<br/>1s overlap"]
+        E2["Rotation transform<br/>270° portrait"]
+        E3["Zoom adjust<br/>1.78x for rotated"]
+        E4["Audio fades<br/>1s/3s"]
+    end
+    
+    TIMELINE --> VIDEO
+    TIMELINE --> AUDIO
+    TIMELINE --> EFFECTS
+    
+    V1 --> V1_1
+    V1_1 --> V1_2
+    V1_2 --> V1_3
+    V1_3 --> V1_4
+    
+    style TIMELINE fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
+    style V1 fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style V2 fill:#e3f2fd,stroke:#1976d2,stroke-width:2px
+    style A1 fill:#fff9c4,stroke:#f9a825,stroke-width:2px
+    style A2 fill:#fff9c4,stroke:#f9a825,stroke-width:2px
+    style A3 fill:#efebe9,stroke:#5d4037,stroke-width:2px
 ```
 
 ### Import to DaVinci Resolve
