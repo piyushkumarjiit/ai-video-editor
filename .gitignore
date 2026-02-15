@@ -42,6 +42,7 @@
 # Keep folder structure placeholders
 !/ai_clips/.gitkeep
 !/assets/.gitkeep
+!/assets/**/.gitkeep
 
 # Temporary/output folders
 /tmp_advanced3_frames/
