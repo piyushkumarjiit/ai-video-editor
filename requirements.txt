@@ -1,0 +1,19 @@
+# Core ML/vision
+numpy
+opencv-python
+pillow
+scikit-learn
+
+torch
+torchvision
+torchaudio
+transformers
+accelerate
+clip-anytorch
+llama-cpp-python
+
+# YouTube upload
+google-api-python-client
+google-auth-oauthlib
+google-auth-httplib2
+httplib2

@@ -1,0 +1,1908 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE fcpxml>
+<fcpxml version="1.13">
+    <resources>
+        <format name="FFVideoFormat3840x2160p2398" height="2160" id="r0" frameDuration="1001/24000s" width="3840" />
+        <format name="FFVideoFormatRateUndefined" height="2160" id="r2" frameDuration="1/24s" width="3840" />
+        <effect name="Cross Dissolve" id="r1" uid="FxPlug:4731E73A-8DAC-4113-9A30-AE85B1761265" />
+        <asset name="IMG_4071.MOV" start="0/1s" hasAudio="1" id="r3" uid="file:///home/mazsola/video/assets/teaser-videos/IMG_4071.MOV" duration="18/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/teaser-videos/IMG_4071.MOV" kind="original-media" />
+        </asset>
+        <asset name="IMG_3524_showcase_01_12s_1.00x.mov" start="0/1s" hasAudio="1" id="r4" uid="file:///home/mazsola/video/ai_clips/IMG_3524/IMG_3524_showcase_01_12s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3524/IMG_3524_showcase_01_12s_1.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3751_showcase_01_14s_1.00x.mov" start="0/1s" hasAudio="1" id="r5" uid="file:///home/mazsola/video/ai_clips/IMG_3751/IMG_3751_showcase_01_14s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3751/IMG_3751_showcase_01_14s_1.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3698_showcase_01_6s_1.00x.mov" start="0/1s" hasAudio="1" id="r6" uid="file:///home/mazsola/video/ai_clips/IMG_3698/IMG_3698_showcase_01_6s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3698/IMG_3698_showcase_01_6s_1.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3839_showcase_01_54s_1.00x.mov" start="0/1s" hasAudio="1" id="r7" uid="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_showcase_01_54s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_showcase_01_54s_1.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3702_showcase_01_6s_1.00x.mov" start="0/1s" hasAudio="1" id="r8" uid="file:///home/mazsola/video/ai_clips/IMG_3702/IMG_3702_showcase_01_6s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3702/IMG_3702_showcase_01_6s_1.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="Start-Intro-V3.mkv" start="0/1s" hasAudio="1" id="r9" uid="file:///home/mazsola/video/assets/Start-Intro-V3.mkv" duration="187/8s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/Start-Intro-V3.mkv" kind="original-media" />
+        </asset>
+        <asset name="IMG_3521_scene_02_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r10" uid="file:///home/mazsola/video/ai_clips/IMG_3521/IMG_3521_scene_02_moderate_2.00x.mov" duration="10/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3521/IMG_3521_scene_02_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3521_scene_03_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r11" uid="file:///home/mazsola/video/ai_clips/IMG_3521/IMG_3521_scene_03_moderate_2.00x.mov" duration="10/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3521/IMG_3521_scene_03_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3529_scene_13_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r12" uid="file:///home/mazsola/video/ai_clips/IMG_3529/IMG_3529_scene_13_moderate_2.00x.mov" duration="18/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3529/IMG_3529_scene_13_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3531_scene_08_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r13" uid="file:///home/mazsola/video/ai_clips/IMG_3531/IMG_3531_scene_08_moderate_2.00x.mov" duration="1691/169s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3531/IMG_3531_scene_08_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3531_scene_14_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r14" uid="file:///home/mazsola/video/ai_clips/IMG_3531/IMG_3531_scene_14_moderate_2.00x.mov" duration="42023/4000s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3531/IMG_3531_scene_14_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3535_scene_04_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r15" uid="file:///home/mazsola/video/ai_clips/IMG_3535/IMG_3535_scene_04_moderate_2.00x.mov" duration="98938/9889s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3535/IMG_3535_scene_04_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3535_scene_09_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r16" uid="file:///home/mazsola/video/ai_clips/IMG_3535/IMG_3535_scene_09_moderate_2.00x.mov" duration="16344/817s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3535/IMG_3535_scene_09_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3535_scene_25_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r17" uid="file:///home/mazsola/video/ai_clips/IMG_3535/IMG_3535_scene_25_moderate_2.00x.mov" duration="93113/4733s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3535/IMG_3535_scene_25_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3535_scene_27_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r18" uid="file:///home/mazsola/video/ai_clips/IMG_3535/IMG_3535_scene_27_moderate_2.00x.mov" duration="157349/8000s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3535/IMG_3535_scene_27_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3535_scene_29_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r19" uid="file:///home/mazsola/video/ai_clips/IMG_3535/IMG_3535_scene_29_moderate_2.00x.mov" duration="59/3s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3535/IMG_3535_scene_29_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3535_scene_33_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r20" uid="file:///home/mazsola/video/ai_clips/IMG_3535/IMG_3535_scene_33_moderate_2.00x.mov" duration="157349/8000s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3535/IMG_3535_scene_33_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3535_scene_35_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r21" uid="file:///home/mazsola/video/ai_clips/IMG_3535/IMG_3535_scene_35_moderate_2.00x.mov" duration="120128/6107s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3535/IMG_3535_scene_35_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3535_scene_36_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r22" uid="file:///home/mazsola/video/ai_clips/IMG_3535/IMG_3535_scene_36_moderate_2.00x.mov" duration="76967/3913s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3535/IMG_3535_scene_36_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3535_scene_38_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r23" uid="file:///home/mazsola/video/ai_clips/IMG_3535/IMG_3535_scene_38_moderate_2.00x.mov" duration="59/3s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3535/IMG_3535_scene_38_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3537_scene_05_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r24" uid="file:///home/mazsola/video/ai_clips/IMG_3537/IMG_3537_scene_05_moderate_2.00x.mov" duration="95441/6362s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3537/IMG_3537_scene_05_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3537_scene_11_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r25" uid="file:///home/mazsola/video/ai_clips/IMG_3537/IMG_3537_scene_11_moderate_2.00x.mov" duration="20/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3537/IMG_3537_scene_11_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3575_scene_03_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r26" uid="file:///home/mazsola/video/ai_clips/IMG_3575/IMG_3575_scene_03_moderate_2.00x.mov" duration="83861/5030s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3575/IMG_3575_scene_03_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3575_scene_07_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r27" uid="file:///home/mazsola/video/ai_clips/IMG_3575/IMG_3575_scene_07_moderate_2.00x.mov" duration="10/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3575/IMG_3575_scene_07_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3578_scene_02_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r28" uid="file:///home/mazsola/video/ai_clips/IMG_3578/IMG_3578_scene_02_moderate_2.00x.mov" duration="20/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3578/IMG_3578_scene_02_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3578_scene_04_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r29" uid="file:///home/mazsola/video/ai_clips/IMG_3578/IMG_3578_scene_04_moderate_2.00x.mov" duration="10/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3578/IMG_3578_scene_04_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3578_scene_05_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r30" uid="file:///home/mazsola/video/ai_clips/IMG_3578/IMG_3578_scene_05_moderate_2.00x.mov" duration="20/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3578/IMG_3578_scene_05_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3578_scene_12_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r31" uid="file:///home/mazsola/video/ai_clips/IMG_3578/IMG_3578_scene_12_moderate_2.00x.mov" duration="160060/9603s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3578/IMG_3578_scene_12_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3578_scene_21_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r32" uid="file:///home/mazsola/video/ai_clips/IMG_3578/IMG_3578_scene_21_moderate_2.00x.mov" duration="158472/8579s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3578/IMG_3578_scene_21_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3578_scene_24_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r33" uid="file:///home/mazsola/video/ai_clips/IMG_3578/IMG_3578_scene_24_moderate_2.00x.mov" duration="443/24s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3578/IMG_3578_scene_24_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3579_scene_07_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r34" uid="file:///home/mazsola/video/ai_clips/IMG_3579/IMG_3579_scene_07_moderate_2.00x.mov" duration="20/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3579/IMG_3579_scene_07_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3682_scene_02_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r35" uid="file:///home/mazsola/video/ai_clips/IMG_3682/IMG_3682_scene_02_moderate_2.00x.mov" duration="469/24s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3682/IMG_3682_scene_02_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3682_scene_03_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r36" uid="file:///home/mazsola/video/ai_clips/IMG_3682/IMG_3682_scene_03_moderate_2.00x.mov" duration="49610/4723s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3682/IMG_3682_scene_03_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3682_scene_06_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r37" uid="file:///home/mazsola/video/ai_clips/IMG_3682/IMG_3682_scene_06_moderate_2.00x.mov" duration="397/24s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3682/IMG_3682_scene_06_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3682_scene_11_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r38" uid="file:///home/mazsola/video/ai_clips/IMG_3682/IMG_3682_scene_11_moderate_2.00x.mov" duration="27/2s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3682/IMG_3682_scene_11_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3682_scene_17_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r39" uid="file:///home/mazsola/video/ai_clips/IMG_3682/IMG_3682_scene_17_moderate_2.00x.mov" duration="481/24s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3682/IMG_3682_scene_17_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3682_scene_18_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r40" uid="file:///home/mazsola/video/ai_clips/IMG_3682/IMG_3682_scene_18_moderate_2.00x.mov" duration="12/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3682/IMG_3682_scene_18_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3683_scene_02_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r41" uid="file:///home/mazsola/video/ai_clips/IMG_3683/IMG_3683_scene_02_moderate_2.00x.mov" duration="98877/9887s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3683/IMG_3683_scene_02_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3684_scene_10_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r42" uid="file:///home/mazsola/video/ai_clips/IMG_3684/IMG_3684_scene_10_moderate_2.00x.mov" duration="13702/913s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3684/IMG_3684_scene_10_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3684_scene_11_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r43" uid="file:///home/mazsola/video/ai_clips/IMG_3684/IMG_3684_scene_11_moderate_2.00x.mov" duration="161728/9701s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3684/IMG_3684_scene_11_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3687_scene_05_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r44" uid="file:///home/mazsola/video/ai_clips/IMG_3687/IMG_3687_scene_05_moderate_2.00x.mov" duration="15/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3687/IMG_3687_scene_05_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3687_scene_07_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r45" uid="file:///home/mazsola/video/ai_clips/IMG_3687/IMG_3687_scene_07_moderate_2.00x.mov" duration="130951/8727s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3687/IMG_3687_scene_07_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3688_scene_03_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r46" uid="file:///home/mazsola/video/ai_clips/IMG_3688/IMG_3688_scene_03_moderate_2.00x.mov" duration="89231/8921s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3688/IMG_3688_scene_03_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3688_scene_05_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r47" uid="file:///home/mazsola/video/ai_clips/IMG_3688/IMG_3688_scene_05_moderate_2.00x.mov" duration="62707/8953s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3688/IMG_3688_scene_05_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3689_scene_02_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r48" uid="file:///home/mazsola/video/ai_clips/IMG_3689/IMG_3689_scene_02_moderate_2.00x.mov" duration="120113/8000s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3689/IMG_3689_scene_02_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3689_scene_04_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r49" uid="file:///home/mazsola/video/ai_clips/IMG_3689/IMG_3689_scene_04_moderate_2.00x.mov" duration="135405/9022s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3689/IMG_3689_scene_04_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3689_scene_08_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r50" uid="file:///home/mazsola/video/ai_clips/IMG_3689/IMG_3689_scene_08_moderate_2.00x.mov" duration="80003/4000s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3689/IMG_3689_scene_08_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3689_scene_18_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r51" uid="file:///home/mazsola/video/ai_clips/IMG_3689/IMG_3689_scene_18_moderate_2.00x.mov" duration="119/6s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3689/IMG_3689_scene_18_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3689_scene_19_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r52" uid="file:///home/mazsola/video/ai_clips/IMG_3689/IMG_3689_scene_19_moderate_2.00x.mov" duration="119/6s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3689/IMG_3689_scene_19_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3689_scene_20_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r53" uid="file:///home/mazsola/video/ai_clips/IMG_3689/IMG_3689_scene_20_moderate_2.00x.mov" duration="119/6s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3689/IMG_3689_scene_20_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3689_scene_21_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r54" uid="file:///home/mazsola/video/ai_clips/IMG_3689/IMG_3689_scene_21_moderate_2.00x.mov" duration="119/6s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3689/IMG_3689_scene_21_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3689_scene_22_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r55" uid="file:///home/mazsola/video/ai_clips/IMG_3689/IMG_3689_scene_22_moderate_2.00x.mov" duration="119/6s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3689/IMG_3689_scene_22_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3689_scene_32_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r56" uid="file:///home/mazsola/video/ai_clips/IMG_3689/IMG_3689_scene_32_moderate_2.00x.mov" duration="119/6s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3689/IMG_3689_scene_32_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3689_scene_40_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r57" uid="file:///home/mazsola/video/ai_clips/IMG_3689/IMG_3689_scene_40_moderate_2.00x.mov" duration="119/6s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3689/IMG_3689_scene_40_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3689_scene_42_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r58" uid="file:///home/mazsola/video/ai_clips/IMG_3689/IMG_3689_scene_42_moderate_2.00x.mov" duration="119/6s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3689/IMG_3689_scene_42_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3690_scene_03_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r59" uid="file:///home/mazsola/video/ai_clips/IMG_3690/IMG_3690_scene_03_moderate_2.00x.mov" duration="101807/6107s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3690/IMG_3690_scene_03_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3690_scene_09_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r60" uid="file:///home/mazsola/video/ai_clips/IMG_3690/IMG_3690_scene_09_moderate_2.00x.mov" duration="166783/8335s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3690/IMG_3690_scene_09_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3690_scene_10_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r61" uid="file:///home/mazsola/video/ai_clips/IMG_3690/IMG_3690_scene_10_moderate_2.00x.mov" duration="20/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3690/IMG_3690_scene_10_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3690_scene_27_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r62" uid="file:///home/mazsola/video/ai_clips/IMG_3690/IMG_3690_scene_27_moderate_2.00x.mov" duration="59/3s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3690/IMG_3690_scene_27_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3692_scene_02_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r63" uid="file:///home/mazsola/video/ai_clips/IMG_3692/IMG_3692_scene_02_moderate_2.00x.mov" duration="48981/4895s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3692/IMG_3692_scene_02_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3692_scene_06_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r64" uid="file:///home/mazsola/video/ai_clips/IMG_3692/IMG_3692_scene_06_moderate_2.00x.mov" duration="199726/9985s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3692/IMG_3692_scene_06_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3692_scene_13_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r65" uid="file:///home/mazsola/video/ai_clips/IMG_3692/IMG_3692_scene_13_moderate_2.00x.mov" duration="45679/7601s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3692/IMG_3692_scene_13_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3693_scene_01_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r66" uid="file:///home/mazsola/video/ai_clips/IMG_3693/IMG_3693_scene_01_moderate_2.00x.mov" duration="10/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3693/IMG_3693_scene_01_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3694_scene_02_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r67" uid="file:///home/mazsola/video/ai_clips/IMG_3694/IMG_3694_scene_02_moderate_2.00x.mov" duration="99902/9985s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3694/IMG_3694_scene_02_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3696_scene_02_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r68" uid="file:///home/mazsola/video/ai_clips/IMG_3696/IMG_3696_scene_02_moderate_2.00x.mov" duration="197717/9882s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3696/IMG_3696_scene_02_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3696_scene_07_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r69" uid="file:///home/mazsola/video/ai_clips/IMG_3696/IMG_3696_scene_07_moderate_2.00x.mov" duration="104621/5811s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3696/IMG_3696_scene_07_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3696_scene_13_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r70" uid="file:///home/mazsola/video/ai_clips/IMG_3696/IMG_3696_scene_13_moderate_2.00x.mov" duration="192107/9934s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3696/IMG_3696_scene_13_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3696_scene_21_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r71" uid="file:///home/mazsola/video/ai_clips/IMG_3696/IMG_3696_scene_21_moderate_2.00x.mov" duration="154723/8000s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3696/IMG_3696_scene_21_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3697_scene_06_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r72" uid="file:///home/mazsola/video/ai_clips/IMG_3697/IMG_3697_scene_06_moderate_2.00x.mov" duration="3753/250s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3697/IMG_3697_scene_06_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3697_scene_21_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r73" uid="file:///home/mazsola/video/ai_clips/IMG_3697/IMG_3697_scene_21_moderate_2.00x.mov" duration="115/6s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3697/IMG_3697_scene_21_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3698_scene_01_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r74" uid="file:///home/mazsola/video/ai_clips/IMG_3698/IMG_3698_scene_01_moderate_2.00x.mov" duration="10/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3698/IMG_3698_scene_01_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3698_scene_02_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r75" uid="file:///home/mazsola/video/ai_clips/IMG_3698/IMG_3698_scene_02_moderate_2.00x.mov" duration="22650/4529s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3698/IMG_3698_scene_02_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3702_scene_01_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r76" uid="file:///home/mazsola/video/ai_clips/IMG_3702/IMG_3702_scene_01_moderate_2.00x.mov" duration="10/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3702/IMG_3702_scene_01_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3703_scene_05_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r77" uid="file:///home/mazsola/video/ai_clips/IMG_3703/IMG_3703_scene_05_moderate_2.00x.mov" duration="20/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3703/IMG_3703_scene_05_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3703_scene_13_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r78" uid="file:///home/mazsola/video/ai_clips/IMG_3703/IMG_3703_scene_13_moderate_2.00x.mov" duration="174625/9974s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3703/IMG_3703_scene_13_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3703_scene_14_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r79" uid="file:///home/mazsola/video/ai_clips/IMG_3703/IMG_3703_scene_14_moderate_2.00x.mov" duration="150955/9053s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3703/IMG_3703_scene_14_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3703_scene_16_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r80" uid="file:///home/mazsola/video/ai_clips/IMG_3703/IMG_3703_scene_16_moderate_2.00x.mov" duration="50/3s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3703/IMG_3703_scene_16_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3703_scene_24_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r81" uid="file:///home/mazsola/video/ai_clips/IMG_3703/IMG_3703_scene_24_moderate_2.00x.mov" duration="159/8s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3703/IMG_3703_scene_24_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3703_scene_25_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r82" uid="file:///home/mazsola/video/ai_clips/IMG_3703/IMG_3703_scene_25_moderate_2.00x.mov" duration="159/8s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3703/IMG_3703_scene_25_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3704_scene_04_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r83" uid="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_04_moderate_2.00x.mov" duration="55/3s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_04_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3704_scene_08_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r84" uid="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_08_moderate_2.00x.mov" duration="200001/10000s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_08_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3704_scene_09_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r85" uid="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_09_moderate_2.00x.mov" duration="20/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_09_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3704_scene_10_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r86" uid="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_10_moderate_2.00x.mov" duration="20/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_10_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3704_scene_11_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r87" uid="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_11_moderate_2.00x.mov" duration="43777/2917s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_11_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3704_scene_12_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r88" uid="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_12_moderate_2.00x.mov" duration="56449/3763s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_12_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3704_scene_13_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r89" uid="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_13_moderate_2.00x.mov" duration="461/24s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_13_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3704_scene_14_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r90" uid="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_14_moderate_2.00x.mov" duration="461/24s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_14_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3704_scene_15_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r91" uid="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_15_moderate_2.00x.mov" duration="461/24s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_15_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3704_scene_18_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r92" uid="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_18_moderate_2.00x.mov" duration="461/24s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_18_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3704_scene_19_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r93" uid="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_19_moderate_2.00x.mov" duration="461/24s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_19_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3704_scene_21_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r94" uid="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_21_moderate_2.00x.mov" duration="461/24s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_21_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3704_scene_22_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r95" uid="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_22_moderate_2.00x.mov" duration="461/24s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3704/IMG_3704_scene_22_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3705_scene_02_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r96" uid="file:///home/mazsola/video/ai_clips/IMG_3705/IMG_3705_scene_02_moderate_2.00x.mov" duration="150001/10000s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3705/IMG_3705_scene_02_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3705_scene_09_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r97" uid="file:///home/mazsola/video/ai_clips/IMG_3705/IMG_3705_scene_09_moderate_2.00x.mov" duration="20/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3705/IMG_3705_scene_09_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3705_scene_10_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r98" uid="file:///home/mazsola/video/ai_clips/IMG_3705/IMG_3705_scene_10_moderate_2.00x.mov" duration="20/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3705/IMG_3705_scene_10_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3705_scene_13_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r99" uid="file:///home/mazsola/video/ai_clips/IMG_3705/IMG_3705_scene_13_moderate_2.00x.mov" duration="40019/2000s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3705/IMG_3705_scene_13_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3705_scene_14_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r100" uid="file:///home/mazsola/video/ai_clips/IMG_3705/IMG_3705_scene_14_moderate_2.00x.mov" duration="122891/7371s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3705/IMG_3705_scene_14_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3705_scene_15_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r101" uid="file:///home/mazsola/video/ai_clips/IMG_3705/IMG_3705_scene_15_moderate_2.00x.mov" duration="133363/8000s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3705/IMG_3705_scene_15_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3705_scene_30_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r102" uid="file:///home/mazsola/video/ai_clips/IMG_3705/IMG_3705_scene_30_moderate_2.00x.mov" duration="157/8s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3705/IMG_3705_scene_30_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3706_scene_04_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r103" uid="file:///home/mazsola/video/ai_clips/IMG_3706/IMG_3706_scene_04_moderate_2.00x.mov" duration="9/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3706/IMG_3706_scene_04_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3710_scene_10_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r104" uid="file:///home/mazsola/video/ai_clips/IMG_3710/IMG_3710_scene_10_moderate_2.00x.mov" duration="181985/9096s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3710/IMG_3710_scene_10_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3710_scene_11_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r105" uid="file:///home/mazsola/video/ai_clips/IMG_3710/IMG_3710_scene_11_moderate_2.00x.mov" duration="10/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3710/IMG_3710_scene_11_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3710_scene_16_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r106" uid="file:///home/mazsola/video/ai_clips/IMG_3710/IMG_3710_scene_16_moderate_2.00x.mov" duration="24209/1210s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3710/IMG_3710_scene_16_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3710_scene_20_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r107" uid="file:///home/mazsola/video/ai_clips/IMG_3710/IMG_3710_scene_20_moderate_2.00x.mov" duration="475/24s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3710/IMG_3710_scene_20_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3711_scene_12_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r108" uid="file:///home/mazsola/video/ai_clips/IMG_3711/IMG_3711_scene_12_moderate_2.00x.mov" duration="120019/8000s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3711/IMG_3711_scene_12_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3711_scene_14_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r109" uid="file:///home/mazsola/video/ai_clips/IMG_3711/IMG_3711_scene_14_moderate_2.00x.mov" duration="35955/7186s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3711/IMG_3711_scene_14_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3713_scene_02_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r110" uid="file:///home/mazsola/video/ai_clips/IMG_3713/IMG_3713_scene_02_moderate_2.00x.mov" duration="51003/5096s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3713/IMG_3713_scene_02_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3713_scene_08_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r111" uid="file:///home/mazsola/video/ai_clips/IMG_3713/IMG_3713_scene_08_moderate_2.00x.mov" duration="10/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3713/IMG_3713_scene_08_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3713_scene_09_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r112" uid="file:///home/mazsola/video/ai_clips/IMG_3713/IMG_3713_scene_09_moderate_2.00x.mov" duration="10/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3713/IMG_3713_scene_09_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3713_scene_15_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r113" uid="file:///home/mazsola/video/ai_clips/IMG_3713/IMG_3713_scene_15_moderate_2.00x.mov" duration="160021/8000s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3713/IMG_3713_scene_15_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3713_scene_17_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r114" uid="file:///home/mazsola/video/ai_clips/IMG_3713/IMG_3713_scene_17_moderate_2.00x.mov" duration="193498/9919s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3713/IMG_3713_scene_17_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3713_scene_28_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r115" uid="file:///home/mazsola/video/ai_clips/IMG_3713/IMG_3713_scene_28_moderate_2.00x.mov" duration="192887/9889s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3713/IMG_3713_scene_28_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3713_scene_30_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r116" uid="file:///home/mazsola/video/ai_clips/IMG_3713/IMG_3713_scene_30_moderate_2.00x.mov" duration="156087/8000s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3713/IMG_3713_scene_30_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3713_scene_31_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r117" uid="file:///home/mazsola/video/ai_clips/IMG_3713/IMG_3713_scene_31_moderate_2.00x.mov" duration="21087/1081s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3713/IMG_3713_scene_31_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3714_scene_12_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r118" uid="file:///home/mazsola/video/ai_clips/IMG_3714/IMG_3714_scene_12_moderate_2.00x.mov" duration="143014/7147s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3714/IMG_3714_scene_12_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3714_scene_20_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r119" uid="file:///home/mazsola/video/ai_clips/IMG_3714/IMG_3714_scene_20_moderate_2.00x.mov" duration="20/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3714/IMG_3714_scene_20_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3714_scene_28_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r120" uid="file:///home/mazsola/video/ai_clips/IMG_3714/IMG_3714_scene_28_moderate_2.00x.mov" duration="20/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3714/IMG_3714_scene_28_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3714_scene_30_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r121" uid="file:///home/mazsola/video/ai_clips/IMG_3714/IMG_3714_scene_30_moderate_2.00x.mov" duration="20/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3714/IMG_3714_scene_30_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3714_scene_34_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r122" uid="file:///home/mazsola/video/ai_clips/IMG_3714/IMG_3714_scene_34_moderate_2.00x.mov" duration="20/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3714/IMG_3714_scene_34_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3715_scene_05_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r123" uid="file:///home/mazsola/video/ai_clips/IMG_3715/IMG_3715_scene_05_moderate_2.00x.mov" duration="20/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3715/IMG_3715_scene_05_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3715_scene_12_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r124" uid="file:///home/mazsola/video/ai_clips/IMG_3715/IMG_3715_scene_12_moderate_2.00x.mov" duration="95975/9597s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3715/IMG_3715_scene_12_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3715_scene_21_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r125" uid="file:///home/mazsola/video/ai_clips/IMG_3715/IMG_3715_scene_21_moderate_2.00x.mov" duration="50933/2771s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3715/IMG_3715_scene_21_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3751_scene_01_interesting_1.00x.mov" start="0/1s" hasAudio="1" id="r126" uid="file:///home/mazsola/video/ai_clips/IMG_3751/IMG_3751_scene_01_interesting_1.00x.mov" duration="10/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3751/IMG_3751_scene_01_interesting_1.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3751_scene_02_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r127" uid="file:///home/mazsola/video/ai_clips/IMG_3751/IMG_3751_scene_02_moderate_2.00x.mov" duration="49/12s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3751/IMG_3751_scene_02_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3838_scene_04_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r128" uid="file:///home/mazsola/video/ai_clips/IMG_3838/IMG_3838_scene_04_moderate_2.00x.mov" duration="18/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3838/IMG_3838_scene_04_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3838_scene_07_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r129" uid="file:///home/mazsola/video/ai_clips/IMG_3838/IMG_3838_scene_07_moderate_2.00x.mov" duration="73/4s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3838/IMG_3838_scene_07_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3838_scene_09_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r130" uid="file:///home/mazsola/video/ai_clips/IMG_3838/IMG_3838_scene_09_moderate_2.00x.mov" duration="8053/441s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3838/IMG_3838_scene_09_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3838_scene_13_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r131" uid="file:///home/mazsola/video/ai_clips/IMG_3838/IMG_3838_scene_13_moderate_2.00x.mov" duration="20/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3838/IMG_3838_scene_13_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3838_scene_14_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r132" uid="file:///home/mazsola/video/ai_clips/IMG_3838/IMG_3838_scene_14_moderate_2.00x.mov" duration="169480/8471s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3838/IMG_3838_scene_14_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3838_scene_18_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r133" uid="file:///home/mazsola/video/ai_clips/IMG_3838/IMG_3838_scene_18_moderate_2.00x.mov" duration="20/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3838/IMG_3838_scene_18_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3838_scene_20_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r134" uid="file:///home/mazsola/video/ai_clips/IMG_3838/IMG_3838_scene_20_moderate_2.00x.mov" duration="108023/8000s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3838/IMG_3838_scene_20_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3838_scene_21_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r135" uid="file:///home/mazsola/video/ai_clips/IMG_3838/IMG_3838_scene_21_moderate_2.00x.mov" duration="122171/9048s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3838/IMG_3838_scene_21_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3839_scene_02_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r136" uid="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_02_moderate_2.00x.mov" duration="192392/9863s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_02_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3839_scene_05_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r137" uid="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_05_moderate_2.00x.mov" duration="27/2s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_05_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3839_scene_07_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r138" uid="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_07_moderate_2.00x.mov" duration="15/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_07_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3839_scene_09_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r139" uid="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_09_moderate_2.00x.mov" duration="182009/9970s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_09_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3839_scene_11_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r140" uid="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_11_moderate_2.00x.mov" duration="73/4s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_11_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3839_scene_12_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r141" uid="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_12_moderate_2.00x.mov" duration="119405/6541s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_12_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3839_scene_13_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r142" uid="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_13_moderate_2.00x.mov" duration="73/4s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_13_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3839_scene_14_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r143" uid="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_14_moderate_2.00x.mov" duration="27/2s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_14_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3839_scene_15_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r144" uid="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_15_moderate_2.00x.mov" duration="10803/800s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_15_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3839_scene_18_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r145" uid="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_18_moderate_2.00x.mov" duration="20/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_18_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3839_scene_20_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r146" uid="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_20_moderate_2.00x.mov" duration="47505/2879s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_20_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3839_scene_22_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r147" uid="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_22_moderate_2.00x.mov" duration="33/2s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_22_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3839_scene_26_interesting_1.00x.mov" start="0/1s" hasAudio="1" id="r148" uid="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_26_interesting_1.00x.mov" duration="319919/8265s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_26_interesting_1.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3839_scene_28_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r149" uid="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_28_moderate_2.00x.mov" duration="130819/6764s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_28_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3839_scene_29_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r150" uid="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_29_moderate_2.00x.mov" duration="77377/4000s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_29_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_3839_scene_30_moderate_2.00x.mov" start="0/1s" hasAudio="1" id="r151" uid="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_30_moderate_2.00x.mov" duration="170800/8831s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_3839/IMG_3839_scene_30_moderate_2.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_4071.MOV" start="0/1s" hasAudio="1" id="r152" uid="file:///home/mazsola/video/assets/teaser-videos/IMG_4071.MOV" duration="18/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/teaser-videos/IMG_4071.MOV" kind="original-media" />
+        </asset>
+        <asset name="IMG_4037.JPG" start="0/1s" hasAudio="1" id="r153" uid="file:///home/mazsola/video/assets/photos/IMG_4037.JPG" duration="1/24s" hasVideo="1" audioSources="1" format="r2" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/photos/IMG_4037.JPG" kind="original-media" />
+        </asset>
+        <asset name="IMG_4066.JPG" start="0/1s" hasAudio="1" id="r154" uid="file:///home/mazsola/video/assets/photos/IMG_4066.JPG" duration="1/24s" hasVideo="1" audioSources="1" format="r2" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/photos/IMG_4066.JPG" kind="original-media" />
+        </asset>
+        <asset name="Finish-Intro-V3.mkv" start="0/1s" hasAudio="1" id="r155" uid="file:///home/mazsola/video/assets/Finish-Intro-V3.mkv" duration="187/8s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/Finish-Intro-V3.mkv" kind="original-media" />
+        </asset>
+        <asset name="qr-code.jpg" start="0/1s" hasAudio="0" id="r156" uid="file:///home/mazsola/video/assets/watermark/qr-code.jpg" duration="59797/24s" hasVideo="1" audioSources="0" format="r2" audioChannels="0">
+            <media-rep src="file:///home/mazsola/video/assets/watermark/qr-code.jpg" kind="original-media" />
+        </asset>
+        <asset name="Alon Ohana - The Rainbow Train - Instrumental version.wav" start="0/1s" hasAudio="1" id="r157" uid="file:///home/mazsola/video/assets/music-background/Alon Ohana - The Rainbow Train - Instrumental version.wav" duration="1902439/10000s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-background/Alon Ohana - The Rainbow Train - Instrumental version.wav" kind="original-media" />
+        </asset>
+        <asset name="Alon Peretz - All the Way Through.wav" start="0/1s" hasAudio="1" id="r158" uid="file:///home/mazsola/video/assets/music-background/Alon Peretz - All the Way Through.wav" duration="1332821/8766s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-background/Alon Peretz - All the Way Through.wav" kind="original-media" />
+        </asset>
+        <asset name="BalloonPlanet - Steady Hearts Stronger Roads.wav" start="0/1s" hasAudio="1" id="r159" uid="file:///home/mazsola/video/assets/music-background/BalloonPlanet - Steady Hearts Stronger Roads.wav" duration="1758482/5559s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-background/BalloonPlanet - Steady Hearts Stronger Roads.wav" kind="original-media" />
+        </asset>
+        <asset name="BalloonPlanet - Write Your Own Story.wav" start="0/1s" hasAudio="1" id="r160" uid="file:///home/mazsola/video/assets/music-background/BalloonPlanet - Write Your Own Story.wav" duration="1788133/6346s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-background/BalloonPlanet - Write Your Own Story.wav" kind="original-media" />
+        </asset>
+        <asset name="Beò - For the Rest of My Life - Instrumental version.wav" start="0/1s" hasAudio="1" id="r161" uid="file:///home/mazsola/video/assets/music-background/Beò - For the Rest of My Life - Instrumental version.wav" duration="1574666/7831s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-background/Beò - For the Rest of My Life - Instrumental version.wav" kind="original-media" />
+        </asset>
+        <asset name="Doug Kaufman - Impossible Things.wav" start="0/1s" hasAudio="1" id="r162" uid="file:///home/mazsola/video/assets/music-background/Doug Kaufman - Impossible Things.wav" duration="489836/3305s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-background/Doug Kaufman - Impossible Things.wav" kind="original-media" />
+        </asset>
+        <asset name="Guy Manor - Longing.wav" start="0/1s" hasAudio="1" id="r163" uid="file:///home/mazsola/video/assets/music-background/Guy Manor - Longing.wav" duration="592/5s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-background/Guy Manor - Longing.wav" kind="original-media" />
+        </asset>
+        <asset name="Guy Manor - Tides.wav" start="0/1s" hasAudio="1" id="r164" uid="file:///home/mazsola/video/assets/music-background/Guy Manor - Tides.wav" duration="1841/12s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-background/Guy Manor - Tides.wav" kind="original-media" />
+        </asset>
+        <asset name="Roie Shpigler - Tranquility - No Backing Vocals.wav" start="0/1s" hasAudio="1" id="r165" uid="file:///home/mazsola/video/assets/music-background/Roie Shpigler - Tranquility - No Backing Vocals.wav" duration="1068551/9985s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-background/Roie Shpigler - Tranquility - No Backing Vocals.wav" kind="original-media" />
+        </asset>
+        <asset name="Rotem Cinamon - Heros Anthem.wav" start="0/1s" hasAudio="1" id="r166" uid="file:///home/mazsola/video/assets/music-background/Rotem Cinamon - Heros Anthem.wav" duration="2172817/9701s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-background/Rotem Cinamon - Heros Anthem.wav" kind="original-media" />
+        </asset>
+        <asset name="SHYLIFE - The Colors of Magic.wav" start="0/1s" hasAudio="1" id="r167" uid="file:///home/mazsola/video/assets/music-background/SHYLIFE - The Colors of Magic.wav" duration="623/5s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-background/SHYLIFE - The Colors of Magic.wav" kind="original-media" />
+        </asset>
+        <asset name="Tiko Tiko - Better Believe - Creative Cut - Chill.wav" start="0/1s" hasAudio="1" id="r168" uid="file:///home/mazsola/video/assets/music-background/Tiko Tiko - Better Believe - Creative Cut - Chill.wav" duration="1207518/6559s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-background/Tiko Tiko - Better Believe - Creative Cut - Chill.wav" kind="original-media" />
+        </asset>
+        <asset name="Tiko Tiko - Better Believe - No Backing Vocals.wav" start="0/1s" hasAudio="1" id="r169" uid="file:///home/mazsola/video/assets/music-background/Tiko Tiko - Better Believe - No Backing Vocals.wav" duration="871274/4001s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-background/Tiko Tiko - Better Believe - No Backing Vocals.wav" kind="original-media" />
+        </asset>
+        <asset name="AlexGrohl - Monster.wav" start="0/1s" hasAudio="1" id="r170" uid="file:///home/mazsola/video/assets/music-teaser/AlexGrohl - Monster.wav" duration="854239/9973s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-teaser/AlexGrohl - Monster.wav" kind="original-media" />
+        </asset>
+        <asset name="Captain Joz - Personal.wav" start="0/1s" hasAudio="1" id="r171" uid="file:///home/mazsola/video/assets/music-teaser/Captain Joz - Personal.wav" duration="60160/1079s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-teaser/Captain Joz - Personal.wav" kind="original-media" />
+        </asset>
+        <asset name="Ikoliks - Get That Feeling.wav" start="0/1s" hasAudio="1" id="r172" uid="file:///home/mazsola/video/assets/music-teaser/Ikoliks - Get That Feeling.wav" duration="1503721/9977s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-teaser/Ikoliks - Get That Feeling.wav" kind="original-media" />
+        </asset>
+        <asset name="Katrina Stone - I Dont Care.wav" start="0/1s" hasAudio="1" id="r173" uid="file:///home/mazsola/video/assets/music-teaser/Katrina Stone - I Dont Care.wav" duration="569587/3389s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-teaser/Katrina Stone - I Dont Care.wav" kind="original-media" />
+        </asset>
+        <asset name="Moon - Sky Is Falling.wav" start="0/1s" hasAudio="1" id="r174" uid="file:///home/mazsola/video/assets/music-teaser/Moon - Sky Is Falling.wav" duration="1281389/9659s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-teaser/Moon - Sky Is Falling.wav" kind="original-media" />
+        </asset>
+        <asset name="REPINA - Better Days.wav" start="0/1s" hasAudio="1" id="r175" uid="file:///home/mazsola/video/assets/music-teaser/REPINA - Better Days.wav" duration="421099/3025s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-teaser/REPINA - Better Days.wav" kind="original-media" />
+        </asset>
+        <asset name="Randy Sharp - Mr Garita.wav" start="0/1s" hasAudio="1" id="r176" uid="file:///home/mazsola/video/assets/music-teaser/Randy Sharp - Mr Garita.wav" duration="619108/4391s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-teaser/Randy Sharp - Mr Garita.wav" kind="original-media" />
+        </asset>
+        <asset name="Raz Burg - Sunny Days.wav" start="0/1s" hasAudio="1" id="r177" uid="file:///home/mazsola/video/assets/music-teaser/Raz Burg - Sunny Days.wav" duration="997142/6937s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-teaser/Raz Burg - Sunny Days.wav" kind="original-media" />
+        </asset>
+        <asset name="SLPSTRM - Roadside Rodeo.wav" start="0/1s" hasAudio="1" id="r178" uid="file:///home/mazsola/video/assets/music-teaser/SLPSTRM - Roadside Rodeo.wav" duration="1423692/8519s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-teaser/SLPSTRM - Roadside Rodeo.wav" kind="original-media" />
+        </asset>
+        <asset name="SOURWAH - Money Play.wav" start="0/1s" hasAudio="1" id="r179" uid="file:///home/mazsola/video/assets/music-teaser/SOURWAH - Money Play.wav" duration="1619488/9133s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-teaser/SOURWAH - Money Play.wav" kind="original-media" />
+        </asset>
+        <asset name="Yarin Primak - My Lord.wav" start="0/1s" hasAudio="1" id="r180" uid="file:///home/mazsola/video/assets/music-teaser/Yarin Primak - My Lord.wav" duration="629504/4909s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-teaser/Yarin Primak - My Lord.wav" kind="original-media" />
+        </asset>
+        <asset name="ZISO - Pour La Femme.wav" start="0/1s" hasAudio="1" id="r181" uid="file:///home/mazsola/video/assets/music-teaser/ZISO - Pour La Femme.wav" duration="184266/3563s" hasVideo="0" audioSources="1" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/assets/music-teaser/ZISO - Pour La Femme.wav" kind="original-media" />
+        </asset>
+    </resources>
+    <library>
+        <event name="Timeline 1 (Resolve)">
+            <project name="Timeline 1 (Resolve)">
+                <sequence tcStart="0/1s" duration="59797/24s" format="r0" tcFormat="NDF">
+                    <spine>
+                        <asset-clip name="IMG_4071.MOV" ref="r3" start="0/1s" offset="0/1s" duration="18/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="18/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0" />
+                        </asset-clip>
+                        <transition name="Transition" offset="35/2s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3524_showcase_01_12s_1.00x.mov" ref="r4" start="0/1s" offset="35/2s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="22/1s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3751_showcase_01_14s_1.00x.mov" ref="r5" start="0/1s" offset="22/1s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0" />
+                        </asset-clip>
+                        <transition name="Transition" offset="53/2s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3698_showcase_01_6s_1.00x.mov" ref="r6" start="0/1s" offset="53/2s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="31/1s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3839_showcase_01_54s_1.00x.mov" ref="r7" start="0/1s" offset="31/1s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="71/2s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3702_showcase_01_6s_1.00x.mov" ref="r8" start="0/1s" offset="71/2s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="40/1s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="Start-Intro-V3.mkv" ref="r9" start="0/1s" offset="40/1s" duration="187/8s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="187/8s">
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0" />
+                        </asset-clip>
+                        <transition name="Transition" offset="503/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3521_scene_02_moderate_2.00x.mov" ref="r10" start="0/1s" offset="503/8s" duration="10/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="10/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="579/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3521_scene_03_moderate_2.00x.mov" ref="r11" start="0/1s" offset="579/8s" duration="10/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="10/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="655/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3529_scene_13_moderate_2.00x.mov" ref="r12" start="0/1s" offset="655/8s" duration="18/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="18/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0" />
+                        </asset-clip>
+                        <transition name="Transition" offset="795/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3531_scene_08_moderate_2.00x.mov" ref="r13" start="0/1s" offset="795/8s" duration="10/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="10/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="871/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3531_scene_14_moderate_2.00x.mov" ref="r14" start="0/1s" offset="871/8s" duration="21/2s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="21/2s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="951/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3535_scene_04_moderate_2.00x.mov" ref="r15" start="0/1s" offset="951/8s" duration="10/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="10/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="1027/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3535_scene_09_moderate_2.00x.mov" ref="r16" start="0/1s" offset="1027/8s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="1183/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3535_scene_25_moderate_2.00x.mov" ref="r17" start="0/1s" offset="1183/8s" duration="59/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="59/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="4009/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3535_scene_27_moderate_2.00x.mov" ref="r18" start="0/1s" offset="4009/24s" duration="59/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="59/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="4469/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3535_scene_29_moderate_2.00x.mov" ref="r19" start="0/1s" offset="4469/24s" duration="59/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="59/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="1643/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3535_scene_33_moderate_2.00x.mov" ref="r20" start="0/1s" offset="1643/8s" duration="59/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="59/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="5389/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3535_scene_35_moderate_2.00x.mov" ref="r21" start="0/1s" offset="5389/24s" duration="59/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="59/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="5849/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3535_scene_36_moderate_2.00x.mov" ref="r22" start="0/1s" offset="5849/24s" duration="59/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="59/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="2103/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3535_scene_38_moderate_2.00x.mov" ref="r23" start="0/1s" offset="2103/8s" duration="59/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="59/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="6769/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3537_scene_05_moderate_2.00x.mov" ref="r24" start="0/1s" offset="6769/24s" duration="15/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="15/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="7117/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3537_scene_11_moderate_2.00x.mov" ref="r25" start="0/1s" offset="7117/24s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="7585/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3575_scene_03_moderate_2.00x.mov" ref="r26" start="0/1s" offset="7585/24s" duration="50/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="50/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="7973/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3575_scene_07_moderate_2.00x.mov" ref="r27" start="0/1s" offset="7973/24s" duration="10/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="10/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="8201/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3578_scene_02_moderate_2.00x.mov" ref="r28" start="0/1s" offset="8201/24s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="8669/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3578_scene_04_moderate_2.00x.mov" ref="r29" start="0/1s" offset="8669/24s" duration="10/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="10/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="8897/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3578_scene_05_moderate_2.00x.mov" ref="r30" start="0/1s" offset="8897/24s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="9365/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3578_scene_12_moderate_2.00x.mov" ref="r31" start="0/1s" offset="9365/24s" duration="50/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="50/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="3251/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3578_scene_21_moderate_2.00x.mov" ref="r32" start="0/1s" offset="3251/8s" duration="443/24s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="443/24s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="1273/3s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3578_scene_24_moderate_2.00x.mov" ref="r33" start="0/1s" offset="1273/3s" duration="443/24s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="443/24s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="10615/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3579_scene_07_moderate_2.00x.mov" ref="r34" start="0/1s" offset="10615/24s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="11083/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3682_scene_02_moderate_2.00x.mov" ref="r35" start="0/1s" offset="11083/24s" duration="39/2s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="39/2s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="11539/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3682_scene_03_moderate_2.00x.mov" ref="r36" start="0/1s" offset="11539/24s" duration="21/2s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="21/2s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="11779/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3682_scene_06_moderate_2.00x.mov" ref="r37" start="0/1s" offset="11779/24s" duration="33/2s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="33/2s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="12163/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3682_scene_11_moderate_2.00x.mov" ref="r38" start="0/1s" offset="12163/24s" duration="27/2s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="27/2s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="12475/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3682_scene_17_moderate_2.00x.mov" ref="r39" start="0/1s" offset="12475/24s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="12943/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3682_scene_18_moderate_2.00x.mov" ref="r40" start="0/1s" offset="12943/24s" duration="12/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="12/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="13219/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3683_scene_02_moderate_2.00x.mov" ref="r41" start="0/1s" offset="13219/24s" duration="10/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="10/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="13447/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3684_scene_10_moderate_2.00x.mov" ref="r42" start="0/1s" offset="13447/24s" duration="15/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="15/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="13795/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3684_scene_11_moderate_2.00x.mov" ref="r43" start="0/1s" offset="13795/24s" duration="50/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="50/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="14183/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3687_scene_05_moderate_2.00x.mov" ref="r44" start="0/1s" offset="14183/24s" duration="15/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="15/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="14531/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3687_scene_07_moderate_2.00x.mov" ref="r45" start="0/1s" offset="14531/24s" duration="15/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="15/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="14879/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3688_scene_03_moderate_2.00x.mov" ref="r46" start="0/1s" offset="14879/24s" duration="10/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="10/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="15107/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3688_scene_05_moderate_2.00x.mov" ref="r47" start="0/1s" offset="15107/24s" duration="7/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="7/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="15263/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3689_scene_02_moderate_2.00x.mov" ref="r48" start="0/1s" offset="15263/24s" duration="15/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="15/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="15611/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3689_scene_04_moderate_2.00x.mov" ref="r49" start="0/1s" offset="15611/24s" duration="15/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="15/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="15959/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3689_scene_08_moderate_2.00x.mov" ref="r50" start="0/1s" offset="15959/24s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="16427/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3689_scene_18_moderate_2.00x.mov" ref="r51" start="0/1s" offset="16427/24s" duration="475/24s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="475/24s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="2815/4s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3689_scene_19_moderate_2.00x.mov" ref="r52" start="0/1s" offset="2815/4s" duration="475/24s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="475/24s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="17353/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3689_scene_20_moderate_2.00x.mov" ref="r53" start="0/1s" offset="17353/24s" duration="475/24s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="475/24s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="2227/3s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3689_scene_21_moderate_2.00x.mov" ref="r54" start="0/1s" offset="2227/3s" duration="475/24s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="475/24s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="6093/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3689_scene_22_moderate_2.00x.mov" ref="r55" start="0/1s" offset="6093/8s" duration="475/24s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="475/24s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="9371/12s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3689_scene_32_moderate_2.00x.mov" ref="r56" start="0/1s" offset="9371/12s" duration="475/24s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="475/24s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="19205/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3689_scene_40_moderate_2.00x.mov" ref="r57" start="0/1s" offset="19205/24s" duration="475/24s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="475/24s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="1639/2s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3689_scene_42_moderate_2.00x.mov" ref="r58" start="0/1s" offset="1639/2s" duration="475/24s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="475/24s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="20131/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3690_scene_03_moderate_2.00x.mov" ref="r59" start="0/1s" offset="20131/24s" duration="50/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="50/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="20519/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3690_scene_09_moderate_2.00x.mov" ref="r60" start="0/1s" offset="20519/24s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="20987/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3690_scene_10_moderate_2.00x.mov" ref="r61" start="0/1s" offset="20987/24s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="21455/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3690_scene_27_moderate_2.00x.mov" ref="r62" start="0/1s" offset="21455/24s" duration="59/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="59/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="7305/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3692_scene_02_moderate_2.00x.mov" ref="r63" start="0/1s" offset="7305/8s" duration="10/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="10/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="7381/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3692_scene_06_moderate_2.00x.mov" ref="r64" start="0/1s" offset="7381/8s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="7537/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3692_scene_13_moderate_2.00x.mov" ref="r65" start="0/1s" offset="7537/8s" duration="6/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="6/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="7581/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3693_scene_01_moderate_2.00x.mov" ref="r66" start="0/1s" offset="7581/8s" duration="10/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="10/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="7657/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3694_scene_02_moderate_2.00x.mov" ref="r67" start="0/1s" offset="7657/8s" duration="10/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="10/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="7733/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3696_scene_02_moderate_2.00x.mov" ref="r68" start="0/1s" offset="7733/8s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="7889/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3696_scene_07_moderate_2.00x.mov" ref="r69" start="0/1s" offset="7889/8s" duration="18/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="18/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="8029/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3696_scene_13_moderate_2.00x.mov" ref="r70" start="0/1s" offset="8029/8s" duration="58/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="58/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="24539/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3696_scene_21_moderate_2.00x.mov" ref="r71" start="0/1s" offset="24539/24s" duration="58/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="58/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="24991/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3697_scene_06_moderate_2.00x.mov" ref="r72" start="0/1s" offset="24991/24s" duration="15/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="15/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="25339/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3697_scene_21_moderate_2.00x.mov" ref="r73" start="0/1s" offset="25339/24s" duration="115/6s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="115/6s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="25787/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3698_scene_01_moderate_2.00x.mov" ref="r74" start="0/1s" offset="25787/24s" duration="10/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="10/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="26015/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3698_scene_02_moderate_2.00x.mov" ref="r75" start="0/1s" offset="26015/24s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="26123/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3702_scene_01_moderate_2.00x.mov" ref="r76" start="0/1s" offset="26123/24s" duration="10/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="10/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="26351/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3703_scene_05_moderate_2.00x.mov" ref="r77" start="0/1s" offset="26351/24s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="26819/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3703_scene_13_moderate_2.00x.mov" ref="r78" start="0/1s" offset="26819/24s" duration="35/2s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="35/2s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="27227/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3703_scene_14_moderate_2.00x.mov" ref="r79" start="0/1s" offset="27227/24s" duration="50/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="50/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="9205/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3703_scene_16_moderate_2.00x.mov" ref="r80" start="0/1s" offset="9205/8s" duration="50/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="50/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="28003/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3703_scene_24_moderate_2.00x.mov" ref="r81" start="0/1s" offset="28003/24s" duration="159/8s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="159/8s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="7117/6s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3703_scene_25_moderate_2.00x.mov" ref="r82" start="0/1s" offset="7117/6s" duration="159/8s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="159/8s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="28933/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3704_scene_04_moderate_2.00x.mov" ref="r83" start="0/1s" offset="28933/24s" duration="55/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="55/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="9787/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3704_scene_08_moderate_2.00x.mov" ref="r84" start="0/1s" offset="9787/8s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="9943/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3704_scene_09_moderate_2.00x.mov" ref="r85" start="0/1s" offset="9943/8s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="10099/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3704_scene_10_moderate_2.00x.mov" ref="r86" start="0/1s" offset="10099/8s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="10255/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3704_scene_11_moderate_2.00x.mov" ref="r87" start="0/1s" offset="10255/8s" duration="15/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="15/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="10371/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3704_scene_12_moderate_2.00x.mov" ref="r88" start="0/1s" offset="10371/8s" duration="15/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="15/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="10487/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3704_scene_13_moderate_2.00x.mov" ref="r89" start="0/1s" offset="10487/8s" duration="115/6s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="115/6s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="31909/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3704_scene_14_moderate_2.00x.mov" ref="r90" start="0/1s" offset="31909/24s" duration="115/6s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="115/6s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="32357/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3704_scene_15_moderate_2.00x.mov" ref="r91" start="0/1s" offset="32357/24s" duration="115/6s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="115/6s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="10935/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3704_scene_18_moderate_2.00x.mov" ref="r92" start="0/1s" offset="10935/8s" duration="115/6s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="115/6s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="33253/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3704_scene_19_moderate_2.00x.mov" ref="r93" start="0/1s" offset="33253/24s" duration="115/6s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="115/6s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="33701/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3704_scene_21_moderate_2.00x.mov" ref="r94" start="0/1s" offset="33701/24s" duration="115/6s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="115/6s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="11383/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3704_scene_22_moderate_2.00x.mov" ref="r95" start="0/1s" offset="11383/8s" duration="115/6s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="115/6s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="34597/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3705_scene_02_moderate_2.00x.mov" ref="r96" start="0/1s" offset="34597/24s" duration="15/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="15/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="34945/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3705_scene_09_moderate_2.00x.mov" ref="r97" start="0/1s" offset="34945/24s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="35413/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3705_scene_10_moderate_2.00x.mov" ref="r98" start="0/1s" offset="35413/24s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="35881/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3705_scene_13_moderate_2.00x.mov" ref="r99" start="0/1s" offset="35881/24s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="36349/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3705_scene_14_moderate_2.00x.mov" ref="r100" start="0/1s" offset="36349/24s" duration="50/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="50/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="36737/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3705_scene_15_moderate_2.00x.mov" ref="r101" start="0/1s" offset="36737/24s" duration="50/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="50/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="12375/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3705_scene_30_moderate_2.00x.mov" ref="r102" start="0/1s" offset="12375/8s" duration="235/12s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="235/12s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="37583/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3706_scene_04_moderate_2.00x.mov" ref="r103" start="0/1s" offset="37583/24s" duration="9/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="9/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="37787/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3710_scene_10_moderate_2.00x.mov" ref="r104" start="0/1s" offset="37787/24s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="38255/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3710_scene_11_moderate_2.00x.mov" ref="r105" start="0/1s" offset="38255/24s" duration="10/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="10/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="38483/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3710_scene_16_moderate_2.00x.mov" ref="r106" start="0/1s" offset="38483/24s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="38951/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3710_scene_20_moderate_2.00x.mov" ref="r107" start="0/1s" offset="38951/24s" duration="79/4s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="79/4s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="39413/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3711_scene_12_moderate_2.00x.mov" ref="r108" start="0/1s" offset="39413/24s" duration="15/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="15/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="39761/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3711_scene_14_moderate_2.00x.mov" ref="r109" start="0/1s" offset="39761/24s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="39869/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3713_scene_02_moderate_2.00x.mov" ref="r110" start="0/1s" offset="39869/24s" duration="10/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="10/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="40097/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3713_scene_08_moderate_2.00x.mov" ref="r111" start="0/1s" offset="40097/24s" duration="10/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="10/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="40325/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3713_scene_09_moderate_2.00x.mov" ref="r112" start="0/1s" offset="40325/24s" duration="10/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="10/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="40553/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3713_scene_15_moderate_2.00x.mov" ref="r113" start="0/1s" offset="40553/24s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="41021/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3713_scene_17_moderate_2.00x.mov" ref="r114" start="0/1s" offset="41021/24s" duration="39/2s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="39/2s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="41477/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3713_scene_28_moderate_2.00x.mov" ref="r115" start="0/1s" offset="41477/24s" duration="39/2s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="39/2s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="41933/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3713_scene_30_moderate_2.00x.mov" ref="r116" start="0/1s" offset="41933/24s" duration="39/2s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="39/2s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="42389/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3713_scene_31_moderate_2.00x.mov" ref="r117" start="0/1s" offset="42389/24s" duration="39/2s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="39/2s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="42845/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3714_scene_12_moderate_2.00x.mov" ref="r118" start="0/1s" offset="42845/24s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="43313/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3714_scene_20_moderate_2.00x.mov" ref="r119" start="0/1s" offset="43313/24s" duration="479/24s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="479/24s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="10945/6s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3714_scene_28_moderate_2.00x.mov" ref="r120" start="0/1s" offset="10945/6s" duration="479/24s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="479/24s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="14749/8s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3714_scene_30_moderate_2.00x.mov" ref="r121" start="0/1s" offset="14749/8s" duration="479/24s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="479/24s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="22357/12s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3714_scene_34_moderate_2.00x.mov" ref="r122" start="0/1s" offset="22357/12s" duration="479/24s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="479/24s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="45181/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3715_scene_05_moderate_2.00x.mov" ref="r123" start="0/1s" offset="45181/24s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="45649/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3715_scene_12_moderate_2.00x.mov" ref="r124" start="0/1s" offset="45649/24s" duration="10/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="10/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="45877/24s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3715_scene_21_moderate_2.00x.mov" ref="r125" start="0/1s" offset="45877/24s" duration="147/8s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="147/8s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="23153/12s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3751_scene_01_interesting_1.00x.mov" ref="r126" start="0/1s" offset="23153/12s" duration="10/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="10/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0" />
+                        </asset-clip>
+                        <transition name="Transition" offset="23267/12s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3751_scene_02_moderate_2.00x.mov" ref="r127" start="0/1s" offset="23267/12s" duration="49/12s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="49/12s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0" />
+                        </asset-clip>
+                        <transition name="Transition" offset="3885/2s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3838_scene_04_moderate_2.00x.mov" ref="r128" start="0/1s" offset="3885/2s" duration="18/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="18/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="1960/1s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3838_scene_07_moderate_2.00x.mov" ref="r129" start="0/1s" offset="1960/1s" duration="73/4s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="73/4s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="7911/4s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3838_scene_09_moderate_2.00x.mov" ref="r130" start="0/1s" offset="7911/4s" duration="73/4s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="73/4s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="3991/2s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3838_scene_13_moderate_2.00x.mov" ref="r131" start="0/1s" offset="3991/2s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="2015/1s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3838_scene_14_moderate_2.00x.mov" ref="r132" start="0/1s" offset="2015/1s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="4069/2s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3838_scene_18_moderate_2.00x.mov" ref="r133" start="0/1s" offset="4069/2s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="2054/1s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3838_scene_20_moderate_2.00x.mov" ref="r134" start="0/1s" offset="2054/1s" duration="27/2s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="27/2s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="2067/1s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3838_scene_21_moderate_2.00x.mov" ref="r135" start="0/1s" offset="2067/1s" duration="27/2s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="27/2s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="2080/1s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3839_scene_02_moderate_2.00x.mov" ref="r136" start="0/1s" offset="2080/1s" duration="39/2s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="39/2s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="2099/1s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3839_scene_05_moderate_2.00x.mov" ref="r137" start="0/1s" offset="2099/1s" duration="27/2s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="27/2s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="2112/1s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3839_scene_07_moderate_2.00x.mov" ref="r138" start="0/1s" offset="2112/1s" duration="15/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="15/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="4253/2s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3839_scene_09_moderate_2.00x.mov" ref="r139" start="0/1s" offset="4253/2s" duration="73/4s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="73/4s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="8577/4s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3839_scene_11_moderate_2.00x.mov" ref="r140" start="0/1s" offset="8577/4s" duration="73/4s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="73/4s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="2162/1s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3839_scene_12_moderate_2.00x.mov" ref="r141" start="0/1s" offset="2162/1s" duration="73/4s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="73/4s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="8719/4s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3839_scene_13_moderate_2.00x.mov" ref="r142" start="0/1s" offset="8719/4s" duration="73/4s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="73/4s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="4395/2s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3839_scene_14_moderate_2.00x.mov" ref="r143" start="0/1s" offset="4395/2s" duration="27/2s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="27/2s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="4421/2s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3839_scene_15_moderate_2.00x.mov" ref="r144" start="0/1s" offset="4421/2s" duration="27/2s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="27/2s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="4447/2s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3839_scene_18_moderate_2.00x.mov" ref="r145" start="0/1s" offset="4447/2s" duration="20/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="20/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="2243/1s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3839_scene_20_moderate_2.00x.mov" ref="r146" start="0/1s" offset="2243/1s" duration="33/2s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="33/2s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="2259/1s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3839_scene_22_moderate_2.00x.mov" ref="r147" start="0/1s" offset="2259/1s" duration="33/2s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="33/2s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="2275/1s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3839_scene_26_interesting_1.00x.mov" ref="r148" start="0/1s" offset="2275/1s" duration="116/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="116/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="13879/6s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3839_scene_28_moderate_2.00x.mov" ref="r149" start="0/1s" offset="13879/6s" duration="58/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="58/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="2332/1s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3839_scene_29_moderate_2.00x.mov" ref="r150" start="0/1s" offset="2332/1s" duration="58/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="58/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="14105/6s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_3839_scene_30_moderate_2.00x.mov" ref="r151" start="0/1s" offset="14105/6s" duration="58/3s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="58/3s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
+                        </asset-clip>
+                        <transition name="Transition" offset="7109/3s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_4071.MOV" ref="r152" start="0/1s" offset="7109/3s" duration="18/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="18/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0" />
+                        </asset-clip>
+                        <transition name="Transition" offset="14323/6s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_4037.JPG" ref="r153" start="0/1s" offset="14323/6s" duration="3/1s" format="r2" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="3/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.35 1.35" anchor="0 0" />
+                        </asset-clip>
+                        <transition name="Transition" offset="7169/3s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="IMG_4066.JPG" ref="r154" start="0/1s" offset="7169/3s" duration="3/1s" format="r2" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="3/1s">
+                            <adjust-volume amount="-96.0dB" />
+                            <adjust-transform position="0 0" scale="1.35 1.35" anchor="0 0" />
+                        </asset-clip>
+                        <transition name="Transition" offset="14353/6s" duration="1/1s">
+                            <filter-video name="Transition" ref="r1" />
+                            <filter-audio name="Transition" ref="r1" />
+                        </transition>
+                        <asset-clip name="Finish-Intro-V3.mkv" ref="r155" start="0/1s" offset="14353/6s" duration="187/8s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="187/8s">
+                            <adjust-transform position="0 0" scale="1 1" anchor="0 0" />
+                        </asset-clip>
+                        <asset-clip name="qr-code.jpg" ref="r156" start="0/1s" offset="0/1s" duration="57973/24s" format="r2" enabled="1" tcFormat="NDF" lane="1">
+                            <adjust-transform position="141.58275600000002 -41.19276" scale="0.19 0.19" anchor="0 0" />
+                            <adjust-blend amount="0.700" opacity="0.700" />
+                        </asset-clip>
+                        <asset-clip name="SHYLIFE - The Colors of Magic.wav" ref="r167" start="0/1s" offset="507/8s" duration="623/5s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="623/5s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                            <adjust-volume amount="0dB" />
+                            <audio-automation lane="volume">
+                                <keyframe time="0/1s" value="-60.0dB" />
+                                <keyframe time="3/1s" value="0dB" />
+                                <keyframe time="608/5s" value="0dB" />
+                                <keyframe time="623/5s" value="-60.0dB" />
+                            </audio-automation>
+                        </asset-clip>
+                        <asset-clip name="Roie Shpigler - Tranquility - No Backing Vocals.wav" ref="r165" start="0/1s" offset="7519/40s" duration="1068551/9985s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1068551/9985s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                            <adjust-volume amount="0dB" />
+                            <audio-automation lane="volume">
+                                <keyframe time="0/1s" value="-60.0dB" />
+                                <keyframe time="3/1s" value="0dB" />
+                                <keyframe time="1038596/9985s" value="0dB" />
+                                <keyframe time="1068551/9985s" value="-60.0dB" />
+                            </audio-automation>
+                        </asset-clip>
+                        <asset-clip name="Alon Ohana - The Rainbow Train - Instrumental version.wav" ref="r157" start="0/1s" offset="1164033/3946s" duration="1902439/10000s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1902439/10000s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                            <adjust-volume amount="0dB" />
+                            <audio-automation lane="volume">
+                                <keyframe time="0/1s" value="-60.0dB" />
+                                <keyframe time="3/1s" value="0dB" />
+                                <keyframe time="1872439/10000s" value="0dB" />
+                                <keyframe time="1902439/10000s" value="-60.0dB" />
+                            </audio-automation>
+                        </asset-clip>
+                        <asset-clip name="Alon Peretz - All the Way Through.wav" ref="r158" start="0/1s" offset="1481421/3053s" duration="1332821/8766s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1332821/8766s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                            <adjust-volume amount="0dB" />
+                            <audio-automation lane="volume">
+                                <keyframe time="0/1s" value="-60.0dB" />
+                                <keyframe time="3/1s" value="0dB" />
+                                <keyframe time="1306523/8766s" value="0dB" />
+                                <keyframe time="1332821/8766s" value="-60.0dB" />
+                            </audio-automation>
+                        </asset-clip>
+                        <asset-clip name="Beò - For the Rest of My Life - Instrumental version.wav" ref="r161" start="0/1s" offset="3566850/5597s" duration="1574666/7831s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1574666/7831s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                            <adjust-volume amount="0dB" />
+                            <audio-automation lane="volume">
+                                <keyframe time="0/1s" value="-60.0dB" />
+                                <keyframe time="3/1s" value="0dB" />
+                                <keyframe time="1551173/7831s" value="0dB" />
+                                <keyframe time="1574666/7831s" value="-60.0dB" />
+                            </audio-automation>
+                        </asset-clip>
+                        <asset-clip name="Doug Kaufman - Impossible Things.wav" ref="r162" start="0/1s" offset="7978672/9517s" duration="489836/3305s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="489836/3305s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                            <adjust-volume amount="0dB" />
+                            <audio-automation lane="volume">
+                                <keyframe time="0/1s" value="-60.0dB" />
+                                <keyframe time="3/1s" value="0dB" />
+                                <keyframe time="479921/3305s" value="0dB" />
+                                <keyframe time="489836/3305s" value="-60.0dB" />
+                            </audio-automation>
+                        </asset-clip>
+                        <asset-clip name="Rotem Cinamon - Heros Anthem.wav" ref="r166" start="0/1s" offset="9107033/9231s" duration="2172817/9701s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="2172817/9701s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                            <adjust-volume amount="0dB" />
+                            <audio-automation lane="volume">
+                                <keyframe time="0/1s" value="-60.0dB" />
+                                <keyframe time="3/1s" value="0dB" />
+                                <keyframe time="2143714/9701s" value="0dB" />
+                                <keyframe time="2172817/9701s" value="-60.0dB" />
+                            </audio-automation>
+                        </asset-clip>
+                        <asset-clip name="Tiko Tiko - Better Believe - Creative Cut - Chill.wav" ref="r168" start="0/1s" offset="1511976/1249s" duration="1207518/6559s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1207518/6559s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                            <adjust-volume amount="0dB" />
+                            <audio-automation lane="volume">
+                                <keyframe time="0/1s" value="-60.0dB" />
+                                <keyframe time="3/1s" value="0dB" />
+                                <keyframe time="1187841/6559s" value="0dB" />
+                                <keyframe time="1207518/6559s" value="-60.0dB" />
+                            </audio-automation>
+                        </asset-clip>
+                        <asset-clip name="Tiko Tiko - Better Believe - No Backing Vocals.wav" ref="r169" start="0/1s" offset="11525389/8264s" duration="871274/4001s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="871274/4001s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                            <adjust-volume amount="0dB" />
+                            <audio-automation lane="volume">
+                                <keyframe time="0/1s" value="-60.0dB" />
+                                <keyframe time="3/1s" value="0dB" />
+                                <keyframe time="859271/4001s" value="0dB" />
+                                <keyframe time="871274/4001s" value="-60.0dB" />
+                            </audio-automation>
+                        </asset-clip>
+                        <asset-clip name="BalloonPlanet - Steady Hearts Stronger Roads.wav" ref="r159" start="0/1s" offset="13666823/8476s" duration="1758482/5559s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1758482/5559s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                            <adjust-volume amount="0dB" />
+                            <audio-automation lane="volume">
+                                <keyframe time="0/1s" value="-60.0dB" />
+                                <keyframe time="3/1s" value="0dB" />
+                                <keyframe time="1741805/5559s" value="0dB" />
+                                <keyframe time="1758482/5559s" value="-60.0dB" />
+                            </audio-automation>
+                        </asset-clip>
+                        <asset-clip name="Guy Manor - Tides.wav" ref="r164" start="0/1s" offset="15958435/8274s" duration="1841/12s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1841/12s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                            <adjust-volume amount="0dB" />
+                            <audio-automation lane="volume">
+                                <keyframe time="0/1s" value="-60.0dB" />
+                                <keyframe time="3/1s" value="0dB" />
+                                <keyframe time="1805/12s" value="0dB" />
+                                <keyframe time="1841/12s" value="-60.0dB" />
+                            </audio-automation>
+                        </asset-clip>
+                        <asset-clip name="Guy Manor - Longing.wav" ref="r163" start="0/1s" offset="11485203/5516s" duration="592/5s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="592/5s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                            <adjust-volume amount="0dB" />
+                            <audio-automation lane="volume">
+                                <keyframe time="0/1s" value="-60.0dB" />
+                                <keyframe time="3/1s" value="0dB" />
+                                <keyframe time="577/5s" value="0dB" />
+                                <keyframe time="592/5s" value="-60.0dB" />
+                            </audio-automation>
+                        </asset-clip>
+                        <asset-clip name="BalloonPlanet - Write Your Own Story.wav" ref="r160" start="0/1s" offset="16165325/7346s" duration="984361/5821s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="984361/5821s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                            <adjust-volume amount="0dB" />
+                            <audio-automation lane="volume">
+                                <keyframe time="0/1s" value="-60.0dB" />
+                                <keyframe time="3/1s" value="0dB" />
+                                <keyframe time="966898/5821s" value="0dB" />
+                                <keyframe time="984361/5821s" value="-60.0dB" />
+                            </audio-automation>
+                        </asset-clip>
+                        <asset-clip name="SLPSTRM - Roadside Rodeo.wav" ref="r178" start="0/1s" offset="7109/3s" duration="23/1s" enabled="1" tcFormat="NDF" lane="1" audioStart="0/1s" audioDuration="23/1s" audioFadeIn="1/1s" audioFadeOut="1/1s">
+                            <adjust-volume amount="0dB" />
+                            <audio-automation lane="volume">
+                                <keyframe time="0/1s" value="-60.0dB" />
+                                <keyframe time="1/1s" value="0dB" />
+                                <keyframe time="22/1s" value="0dB" />
+                                <keyframe time="23/1s" value="-60.0dB" />
+                            </audio-automation>
+                        </asset-clip>
+                        <asset-clip name="Randy Sharp - Mr Garita.wav" ref="r176" start="0/1s" offset="0/1s" duration="81/2s" enabled="1" tcFormat="NDF" lane="1" audioStart="0/1s" audioDuration="81/2s" audioFadeIn="1/1s" audioFadeOut="1/1s">
+                            <adjust-volume amount="0dB" />
+                        </asset-clip>
+                        <gap name="Gap" start="3600/1s" offset="57973/24s" duration="1001/2000s" />
+                    </spine>
+                </sequence>
+            </project>
+        </event>
+    </library>
+</fcpxml>
