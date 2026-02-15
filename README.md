@@ -199,8 +199,8 @@ graph TB
 ### Setup
 
 ```bash
-# Clone repository
-cd /home/mazsola/video
+# Clone repository and navigate to project directory
+cd ~/video
 
 # Create virtual environment
 python3 -m venv .venv
@@ -219,49 +219,27 @@ All Python dependencies are pinned in [requirements.txt](requirements.txt).
 
 ### Directory Structure
 
-```mermaid
-graph TB
-    ROOT["📁 /home/mazsola/video/"]
-    
-    subgraph SCRIPTS[" 🐍 Python Scripts "]
-        A1["analyze_advanced5.py<br/>Stage 1: AI analysis"]
-        A2["extract_scenes.py<br/>Stage 2: Clip extraction"]
-        A3["export_resolve.py<br/>Stage 3: Timeline export"]
-        A4["run_pipeline.py<br/>Master orchestrator"]
-        A5["apply_lut_resolve.py<br/>LUT application"]
-        A6["render_youtube.py<br/>Resolve rendering"]
-        A7["upload_youtube.py<br/>YouTube upload"]
-    end
-    
-    subgraph ASSETS[" 🎬 Assets "]
-        B1["Start-Intro-V3.mov<br/>Intro video 10-bit"]
-        B2["Finish-Intro-V3.mov<br/>Outro video 10-bit"]
-        B3["qr-code.jpg<br/>Watermark image"]
-        B4["music-background/<br/>Background music WAV"]
-        B5["music-teaser/<br/>Teaser music WAV"]
-    end
-    
-    subgraph OUTPUT[" 📤 Outputs "]
-        C1["ai_clips/<br/>{video_stem}/<br/>*_scene_*.mov<br/>*_showcase_*.mov"]
-        C2["timeline_davinci_resolve.fcpxml<br/>Final timeline"]
-    end
-    
-    CONFIG["⚙️ project_config.json<br/>Configuration file"]
-    
-    ROOT --> SCRIPTS
-    ROOT --> ASSETS
-    ROOT --> OUTPUT
-    ROOT --> CONFIG
-    
-    style ROOT fill:#f3e5f5,stroke:#7b1fa2,stroke-width:3px
-    style CONFIG fill:#fff9c4,stroke:#f9a825,stroke-width:2px
-    style A1 fill:#fff3e0,stroke:#f57c00
-    style A2 fill:#f3e5f5,stroke:#7b1fa2
-    style A3 fill:#e8f5e9,stroke:#388e3c
-    style A4 fill:#e3f2fd,stroke:#1976d2
-    style A5 fill:#fce4ec,stroke:#c2185b
-    style A6 fill:#fce4ec,stroke:#c2185b
-    style A7 fill:#ffebee,stroke:#d32f2f
+```
+~/video/
+├── analyze_advanced5.py          # Stage 1: AI video analysis
+├── extract_scenes.py              # Stage 2: Scene extraction
+├── export_resolve.py              # Stage 3: Timeline export
+├── run_pipeline.py                # Master orchestrator
+├── apply_lut_resolve.py           # Optional LUT application in Resolve
+├── render_youtube.py              # Render timeline to MP4 (Resolve API)
+├── upload_youtube.py              # Upload to YouTube + thumbnail
+├── project_config.json            # Configuration file
+├── assets/
+│   ├── Start-Intro-V3.mov        # Intro video (10-bit)
+│   ├── Finish-Intro-V3.mov       # Outro video (10-bit)
+│   ├── qr-code.jpg                # Watermark image
+│   ├── music-background/          # Background music (WAV)
+│   └── music-teaser/              # Teaser music (WAV)
+├── ai_clips/                      # Extracted scene clips
+│   └── {video_stem}/
+│       ├── *_scene_*.mov
+│       └── *_showcase_*.mov
+└── timeline_davinci_resolve.fcpxml # Final timeline
 ```
 
 ## Usage
@@ -285,10 +263,10 @@ python run_pipeline.py
 python apply_lut_resolve.py --config project_config.json
 
 # Render from DaVinci Resolve
-python render_youtube.py --output /home/mazsola/Videos/output.mp4
+python render_youtube.py --output ~/Videos/output.mp4
 
 # Upload to YouTube (uses project_config.json defaults)
-python upload_youtube.py --video /home/mazsola/Videos/output.mp4
+python upload_youtube.py --video ~/Videos/output.mp4
 ```
 
 ### Individual Stages
