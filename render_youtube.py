@@ -67,7 +67,10 @@ def render_timeline_youtube(output_path, timeline_index=1):
 		fps = timeline.GetSetting("timelineFrameRate")
 		print(f"Timeline FPS: {fps}")
 		
-		output_path_str = str(Path(output_path).resolve())
+		# Use Videos directory (media storage location) instead of video directory
+		output_path_obj = Path("/home/mazsola/Videos") / Path(output_path).name
+		output_path_obj.parent.mkdir(parents=True, exist_ok=True)
+		output_path_str = str(output_path_obj)
 		print(f"Output path: {output_path_str}\n")
 		
 		# Get available render presets (for reference)
@@ -79,21 +82,49 @@ def render_timeline_youtube(output_path, timeline_index=1):
 		print("Setting render parameters directly...")
 		print("  Format: mp4")
 		print("  Codec: H.265 HEVC")
-		print("  Bitrate: 45 Mbps (YouTube optimized)")
+		print("  Bitrate: 30 Mbps (5-10 GB target)")
 		print("  Resolution: 3840x2160 (4K)\n")
 		
 		# Step 1: Set Location
 		print("STEP 1: Set Location")
-		project.SetRenderSettings({
+		
+		# Parse output path
+		output_dir = output_path_str.rsplit('/', 1)[0]
+		output_file = output_path_str.rsplit('/', 1)[1]
+		
+		# Ensure directory exists and is accessible
+		import os
+		os.makedirs(output_dir, exist_ok=True)
+		print(f"  Output dir: {output_dir}")
+		print(f"  Dir exists: {os.path.isdir(output_dir)}")
+		print(f"  Dir writable: {os.access(output_dir, os.W_OK)}\n")
+		
+		# First, explicitly set format and codec using correct names from GetRenderCodecs
+		print("  Setting format and codec...")
+		format_result = project.SetCurrentRenderFormatAndCodec("mp4", "H265_NVIDIA")
+		print(f"  SetCurrentRenderFormatAndCodec('mp4', 'H265_NVIDIA') result: {format_result}")
+		
+		# Verify it was set
+		current_format = project.GetCurrentRenderFormatAndCodec()
+		print(f"  Current format: {current_format}")
+		
+		time.sleep(0.5)
+		
+		# Then set render settings
+		render_settings = {
 			"TargetFile": output_path_str,
-			"FormatName": "mp4",
-			"CodecName": "hevc_nvenc",
-			"BitRate": "45000",  # 45 Mbps - YouTube optimized, NOT high quality
-			"PresetName": "fast",  # Fast encoding, NOT best quality
-		})
+			"VideoQuality": 30000,  # 30 Mbps bitrate
+			"EncodingProfile": "Main",
+			"PresetName": "medium",
+		}
+		result = project.SetRenderSettings(render_settings)
+		print(f"  SetRenderSettings result: {result}")
+		
 		print("✓ Location and format set")
-		print("  ✓ Bitrate: 45 Mbps (not high quality)")
-		print("  ✓ Preset: fast (not best quality)\n")
+		print("  ✓ Format: MP4 (not QuickTime)")
+		print("  ✓ Codec: H.265 NVIDIA")
+		print("  ✓ VideoQuality: 30000 (30 Mbps)")
+		print("  ✓ Preset: medium\n")
 		time.sleep(0.5)
 		
 		# Step 2: Add to Render Queue
