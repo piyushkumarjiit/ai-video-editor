@@ -48,3 +48,7 @@
 !*.md
 !*.sh
 
+
+# OAuth credentials - keep private
+client_secrets.json
+youtube_credentials.json

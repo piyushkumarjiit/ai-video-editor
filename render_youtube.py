@@ -2,10 +2,12 @@
 """
 Render DaVinci Resolve timeline to 4K MP4 for YouTube.
 Uses working method: get presets → load preset → set format → add job → render.
-YouTube optimized: 45 Mbps H.265 HEVC codec.
+YouTube optimized: 30 Mbps H.265 HEVC codec.
+Reads configuration from project_config.json.
 """
 
 import argparse
+import json
 import sys
 import time
 from pathlib import Path
@@ -41,8 +43,29 @@ def _connect_resolve():
 		return None
 
 
-def render_timeline_youtube(output_path, timeline_index=1):
+def render_timeline_youtube(output_path, timeline_index=1, config=None):
 	"""Render Resolve timeline to YouTube 4K MP4 using working preset method."""
+	
+	# Load config if not provided
+	if config is None:
+		config_path = Path("project_config.json")
+		if config_path.exists():
+			with open(config_path, "r") as f:
+				config = json.load(f)
+		else:
+			config = {}
+	
+	# Get render settings from config
+	resolve_cfg = config.get("resolve", {})
+	render_cfg = resolve_cfg.get("render_settings", {})
+	
+	# Default render settings
+	format_name = render_cfg.get("format", "mp4")
+	codec_name = render_cfg.get("codec", "H265_NVIDIA")
+	video_quality = render_cfg.get("video_quality", 30000)
+	encoding_profile = render_cfg.get("encoding_profile", "Main")
+	preset_name = render_cfg.get("preset_name", "medium")
+	output_base_dir = render_cfg.get("output_dir", "/home/mazsola/Videos")
 	
 	resolve = _connect_resolve()
 	if not resolve:
@@ -67,8 +90,8 @@ def render_timeline_youtube(output_path, timeline_index=1):
 		fps = timeline.GetSetting("timelineFrameRate")
 		print(f"Timeline FPS: {fps}")
 		
-		# Use Videos directory (media storage location) instead of video directory
-		output_path_obj = Path("/home/mazsola/Videos") / Path(output_path).name
+		# Use configured output directory (media storage location)
+		output_path_obj = Path(output_base_dir) / Path(output_path).name
 		output_path_obj.parent.mkdir(parents=True, exist_ok=True)
 		output_path_str = str(output_path_obj)
 		print(f"Output path: {output_path_str}\n")
@@ -80,9 +103,9 @@ def render_timeline_youtube(output_path, timeline_index=1):
 		
 		# Don't load preset - just set all parameters directly
 		print("Setting render parameters directly...")
-		print("  Format: mp4")
-		print("  Codec: H.265 HEVC")
-		print("  Bitrate: 30 Mbps (5-10 GB target)")
+		print(f"  Format: {format_name}")
+		print(f"  Codec: {codec_name}")
+		print(f"  Bitrate: {video_quality // 1000} Mbps")
 		print("  Resolution: 3840x2160 (4K)\n")
 		
 		# Step 1: Set Location
@@ -101,8 +124,8 @@ def render_timeline_youtube(output_path, timeline_index=1):
 		
 		# First, explicitly set format and codec using correct names from GetRenderCodecs
 		print("  Setting format and codec...")
-		format_result = project.SetCurrentRenderFormatAndCodec("mp4", "H265_NVIDIA")
-		print(f"  SetCurrentRenderFormatAndCodec('mp4', 'H265_NVIDIA') result: {format_result}")
+		format_result = project.SetCurrentRenderFormatAndCodec(format_name, codec_name)
+		print(f"  SetCurrentRenderFormatAndCodec('{format_name}', '{codec_name}') result: {format_result}")
 		
 		# Verify it was set
 		current_format = project.GetCurrentRenderFormatAndCodec()
@@ -113,18 +136,18 @@ def render_timeline_youtube(output_path, timeline_index=1):
 		# Then set render settings
 		render_settings = {
 			"TargetFile": output_path_str,
-			"VideoQuality": 30000,  # 30 Mbps bitrate
-			"EncodingProfile": "Main",
-			"PresetName": "medium",
+			"VideoQuality": video_quality,
+			"EncodingProfile": encoding_profile,
+			"PresetName": preset_name,
 		}
 		result = project.SetRenderSettings(render_settings)
 		print(f"  SetRenderSettings result: {result}")
 		
 		print("✓ Location and format set")
-		print("  ✓ Format: MP4 (not QuickTime)")
-		print("  ✓ Codec: H.265 NVIDIA")
-		print("  ✓ VideoQuality: 30000 (30 Mbps)")
-		print("  ✓ Preset: medium\n")
+		print(f"  ✓ Format: {format_name.upper()}")
+		print(f"  ✓ Codec: {codec_name}")
+		print(f"  ✓ VideoQuality: {video_quality} ({video_quality // 1000} Mbps)")
+		print(f"  ✓ Preset: {preset_name}\n")
 		time.sleep(0.5)
 		
 		# Step 2: Add to Render Queue
@@ -211,13 +234,26 @@ def main():
 		default=1,
 		help="Timeline index to render (1-based, default: 1)",
 	)
+	parser.add_argument(
+		"--config",
+		type=str,
+		default="project_config.json",
+		help="Project configuration file (default: project_config.json)",
+	)
 	
 	args = parser.parse_args()
+	
+	# Load config
+	config = {}
+	config_path = Path(args.config)
+	if config_path.exists():
+		with open(config_path, "r") as f:
+			config = json.load(f)
 	
 	output_path = Path(args.output).resolve()
 	output_path.parent.mkdir(parents=True, exist_ok=True)
 	
-	success = render_timeline_youtube(str(output_path), args.timeline_index)
+	success = render_timeline_youtube(str(output_path), args.timeline_index, config)
 	
 	if success:
 		print(f"\n✅ YouTube render complete: {output_path}")

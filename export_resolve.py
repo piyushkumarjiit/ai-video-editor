@@ -1337,6 +1337,7 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
         # Add adjust-volume to clips that need audio adjustment
         if snippet_volume_db is not None:
             clip_class = scene.get('classification')
+            # Mute all clips except intro/outro (includes opening teaser/showcase clips before Start-Intro)
             if clip_class not in ('intro', 'outro'):
                 SubElement(clip, 'adjust-volume', {
                     'amount': f"{snippet_volume_db}dB"
@@ -1746,14 +1747,26 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
                 return None
             return f"{value.numerator}/{value.denominator}s"
         
-        # Calculate teaser section duration
+        # Calculate teaser section duration (only opening teaser clips BEFORE intro)
         teaser_start = Fraction(0, 1)
         teaser_end = Fraction(0, 1)
+        intro_start = None
+        
+        # Find where intro starts
         for info, (clip_start, clip_end) in zip(clip_infos, clip_timeline_ranges):
             classification = info['scene'].get('classification')
+            if classification == 'intro':
+                intro_start = clip_start
+                break
+        
+        # Calculate teaser duration only for clips BEFORE intro
+        for info, (clip_start, clip_end) in zip(clip_infos, clip_timeline_ranges):
+            classification = info['scene'].get('classification')
+            # Only include opening teaser clips (before intro)
             if classification == 'teaser':
-                if teaser_end < clip_end:
-                    teaser_end = clip_end
+                if intro_start is None or clip_start < intro_start:
+                    if teaser_end < clip_end:
+                        teaser_end = clip_end
         
         if teaser_end > teaser_start:
             teaser_duration = teaser_end - teaser_start
