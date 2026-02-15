@@ -1,0 +1,143 @@
+{
+  "video": "IMG_3522.MOV",
+  "method": "advanced_ai_v5_two_pass_llm",
+  "models": [
+    "CLIP_ViT-B/32",
+    "ResNet50",
+    "Qwen2.5-VL-7B",
+    "LLM_Scene_Analysis"
+  ],
+  "total_frames": 97,
+  "total_scenes": 7,
+  "scenes": [
+    {
+      "scene_num": 1,
+      "start_time": 0,
+      "end_time": 20,
+      "duration": 20,
+      "frame_count": 10,
+      "semantic_interest": 0.1522216796875,
+      "semantic_boring": 0.09984359741210938,
+      "duplicate_ratio": 0.1,
+      "repetitive_ratio": 0.0,
+      "classification": "boring",
+      "speed": 6.0,
+      "llm_rating": 2,
+      "llm_reasoning": "Rating: 2/10 - reason: The scene lacks context and specific details that would make it interesting or engaging for viewers interested in scale model building. The description seems to be a random collection of unrelated objects and colors without a clear narrative or purpose, which makes it difficult to assess the scene's relevance or appeal to the target audience. The low interest level is further emphasized by the high duplication metric, suggesting that the scene might be a duplicate or heavily repetitive, which would not be ideal for"
+    },
+    {
+      "scene_num": 2,
+      "start_time": 20,
+      "end_time": 40,
+      "duration": 20,
+      "frame_count": 10,
+      "semantic_interest": 0.21473388671875,
+      "semantic_boring": 0.05851554870605469,
+      "duplicate_ratio": 0.1,
+      "repetitive_ratio": 0.0,
+      "classification": "boring",
+      "speed": 6.0,
+      "llm_rating": 3,
+      "llm_reasoning": "Rating: 3/10 - reason: The scene is quite repetitive and lacks clear focus, making it uninteresting. The frames are almost identical, with only slight variations in the angle or position of the hand, which doesn't add much to the scene's interest. The lack of distinct elements or actions to engage the viewer further contributes to the low rating. The scene seems to be a simple demonstration of a hand holding something, possibly a glove, but the repetition and lack of detail make it"
+    },
+    {
+      "scene_num": 3,
+      "start_time": 40,
+      "end_time": 60,
+      "duration": 20,
+      "frame_count": 10,
+      "semantic_interest": 0.181378173828125,
+      "semantic_boring": 0.07690963745117188,
+      "duplicate_ratio": 0.1,
+      "repetitive_ratio": 0.0,
+      "classification": "boring",
+      "speed": 6.0,
+      "llm_rating": 3,
+      "llm_reasoning": "Rating: 3/10 - reason: The video scene lacks clear context and specific details that would make it interesting for viewers interested in scale model building. The descriptions provided are too vague and do not offer enough information to engage someone interested in the topic. The scene seems to be a collection of unrelated objects and actions, making it difficult to understand the purpose or context of the video. To improve the interest level, the video should provide more specific and relevant information about the scale model building process or"
+    },
+    {
+      "scene_num": 4,
+      "start_time": 60,
+      "end_time": 80,
+      "duration": 20,
+      "frame_count": 10,
+      "semantic_interest": 0.180560302734375,
+      "semantic_boring": 0.09428176879882813,
+      "duplicate_ratio": 0.0,
+      "repetitive_ratio": 0.0,
+      "classification": "low",
+      "speed": 4.0,
+      "llm_rating": 5,
+      "llm_reasoning": "Rating: 5/10 - reason: The video scene is somewhat interesting as it shows a scale model building process, which can be engaging for those interested in model making. However, the description lacks specific details about the scale model itself, the tools being used, or the progress being made. It's more of a general shot of a workspace with various items, which might not be as captivating for viewers who are specifically interested in the scale model building process. The scene also doesn't provide a"
+    },
+    {
+      "scene_num": 5,
+      "start_time": 80,
+      "end_time": 120,
+      "duration": 40,
+      "frame_count": 20,
+      "semantic_interest": 0.1938507080078125,
+      "semantic_boring": 0.0586883544921875,
+      "duplicate_ratio": 0.2,
+      "repetitive_ratio": 0.1,
+      "classification": "boring",
+      "speed": 6.0,
+      "llm_rating": 2,
+      "llm_reasoning": "Rating: 2/10 - reason: The scene is repetitive and lacks a clear focus, making it uninteresting. The frames are nearly identical, which is evident from the \"duplication=20%\" metric. The lack of variety in the objects and actions makes it hard to engage with the content. The scene does not provide enough visual information to maintain interest. The scene is also missing any narrative or purpose, which further reduces its appeal. The scene is a duplicate of the previous frame"
+    },
+    {
+      "scene_num": 6,
+      "start_time": 120.0,
+      "end_time": 156.0,
+      "duration": 36.0,
+      "frame_count": 18,
+      "semantic_interest": 0.1524929470486111,
+      "semantic_boring": 0.11023733350965711,
+      "duplicate_ratio": 0.0,
+      "repetitive_ratio": 0.0,
+      "classification": "boring",
+      "speed": 6.0,
+      "llm_rating": 2,
+      "llm_reasoning": "Rating: 2/10 - reason: The video scene lacks context and detail, focusing on a few objects without providing a clear narrative or purpose. The elements present are not enough to engage the viewer's interest. The scene is repetitive and lacks dynamic movement or visual appeal. The scene is static and does not offer any insight into the scale model building process. The scene is not engaging and does not provide any information or context that would make it interesting to watch. The scene is not dynamic and"
+    },
+    {
+      "scene_num": 7,
+      "start_time": 156.0,
+      "end_time": 192.0,
+      "duration": 36.0,
+      "frame_count": 18,
+      "semantic_interest": 0.1182827419704861,
+      "semantic_boring": 0.1177402072482639,
+      "duplicate_ratio": 0.3333333333333333,
+      "repetitive_ratio": 0.4444444444444444,
+      "classification": "boring",
+      "speed": 6.0,
+      "llm_rating": 2,
+      "llm_reasoning": "Rating: 2/10 - reason: The video scene is repetitive and lacks clear interest or focus, with only minor variations in the same elements. The scene is static and does not provide much visual or narrative interest. The lack of movement or progression in the scene further diminishes its appeal. The high duplication percentage also indicates that the scene is not unique or engaging enough to warrant a higher rating. The scene does not offer any new information or insights, making it difficult to maintain interest over time"
+    }
+  ],
+  "summary": {
+    "interesting": 0,
+    "moderate": 0,
+    "low": 1,
+    "boring": 6,
+    "skip": 0,
+    "original_duration": 192.0,
+    "output_duration": 33.66666666666667,
+    "compression_ratio": 82.46527777777779
+  },
+  "showcases": [
+    {
+      "timestamp": 20,
+      "llm_reasoning": "20s: The glove and red liquid spill on a white surface, showing a specific action of the project.\n40s: A hand in a blue glove holding a spray can, demonstrating a different aspect of the project's work.\n120s: Hands in blue gloves painting with a paintbrush, showcasing another unique aspect of the project. The 20s moment is visually different from the other two as it shows a spill, while the 40s and 120s moments show actions of painting. The 20s moment also demonstrates a different aspect of the project compared to the 40s and 120s moments, as it shows a spill rather than painting. The 4"
+    },
+    {
+      "timestamp": 40,
+      "llm_reasoning": "20s: The glove and red liquid spill on a white surface, showing a specific action of the project.\n40s: A hand in a blue glove holding a spray can, demonstrating a different aspect of the project's work.\n120s: Hands in blue gloves painting with a paintbrush, showcasing another unique aspect of the project. The 20s moment is visually different from the other two as it shows a spill, while the 40s and 120s moments show actions of painting. The 20s moment also demonstrates a different aspect of the project compared to the 40s and 120s moments, as it shows a spill rather than painting. The 4"
+    },
+    {
+      "timestamp": 120,
+      "llm_reasoning": "20s: The glove and red liquid spill on a white surface, showing a specific action of the project.\n40s: A hand in a blue glove holding a spray can, demonstrating a different aspect of the project's work.\n120s: Hands in blue gloves painting with a paintbrush, showcasing another unique aspect of the project. The 20s moment is visually different from the other two as it shows a spill, while the 40s and 120s moments show actions of painting. The 20s moment also demonstrates a different aspect of the project compared to the 40s and 120s moments, as it shows a spill rather than painting. The 4"
+    }
+  ]
+}

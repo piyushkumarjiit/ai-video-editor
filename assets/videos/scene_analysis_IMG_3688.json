@@ -1,0 +1,113 @@
+{
+  "video": "IMG_3688.MOV",
+  "method": "advanced_ai_v5_two_pass_llm",
+  "models": [
+    "CLIP_ViT-B/32",
+    "ResNet50",
+    "Qwen2.5-VL-7B",
+    "LLM_Scene_Analysis"
+  ],
+  "total_frames": 58,
+  "total_scenes": 5,
+  "scenes": [
+    {
+      "scene_num": 1,
+      "start_time": 0,
+      "end_time": 40,
+      "duration": 40,
+      "frame_count": 20,
+      "semantic_interest": 0.246881103515625,
+      "semantic_boring": 0.019556808471679687,
+      "duplicate_ratio": 0.25,
+      "repetitive_ratio": 0.15,
+      "classification": "low",
+      "speed": 4.0,
+      "llm_rating": 4,
+      "llm_reasoning": "Rating: 4/10 - reason: The video scene is repetitive and lacks variety, showing the same objects and actions in a similar manner without much progression or engagement. The lack of clear progression or new information makes it less interesting for viewers. The scene could be improved by introducing different tools, materials, or steps in the scale model building process to increase interest. The duplication of content further reduces the scene's value, as it doesn't provide new information or a different perspective. The scene is"
+    },
+    {
+      "scene_num": 2,
+      "start_time": 40,
+      "end_time": 60,
+      "duration": 20,
+      "frame_count": 10,
+      "semantic_interest": 0.200927734375,
+      "semantic_boring": 0.06754150390625,
+      "duplicate_ratio": 0.0,
+      "repetitive_ratio": 0.0,
+      "classification": "low",
+      "speed": 4.0,
+      "llm_rating": 5,
+      "llm_reasoning": "Rating: 5/10 - reason:\n\nThe video scene appears to show hands wearing blue gloves, working on a green mat with various objects present. While the scene includes some interesting elements like the blue gloves and green mat, the lack of clear context or detailed focus on the specific activity or project being built makes it somewhat generic and less engaging. The presence of multiple objects (black object, white paper, pliers, tools, basket) suggests a model building or crafting activity, but the scene"
+    },
+    {
+      "scene_num": 3,
+      "start_time": 60,
+      "end_time": 80,
+      "duration": 20,
+      "frame_count": 10,
+      "semantic_interest": 0.22838134765625,
+      "semantic_boring": 0.046437835693359374,
+      "duplicate_ratio": 0.1,
+      "repetitive_ratio": 0.0,
+      "classification": "moderate",
+      "speed": 2.0,
+      "llm_rating": 6,
+      "llm_reasoning": "Rating: 6/10 - reason: The scene is somewhat repetitive and lacks variety in objects and actions, which reduces its interest level. The focus on blue gloves and black object suggests a specific task but without additional context or different elements, it feels less engaging. The scene could benefit from more diverse elements or a clearer indication of what the task is to increase interest. The duplication of frames (10%) also detracts from the overall quality, making the scene less dynamic and engaging. However"
+    },
+    {
+      "scene_num": 4,
+      "start_time": 80,
+      "end_time": 100,
+      "duration": 20,
+      "frame_count": 10,
+      "semantic_interest": 0.2594970703125,
+      "semantic_boring": 0.02297077178955078,
+      "duplicate_ratio": 0.2,
+      "repetitive_ratio": 0.0,
+      "classification": "low",
+      "speed": 4.0,
+      "llm_rating": 4,
+      "llm_reasoning": "Rating: 4/10 - reason: The video scene is repetitive and lacks variety in objects and actions, which reduces its interest level. The scene shows similar elements in multiple frames, and the lack of clear progression or development in the scene makes it less engaging. The duplication of frames further diminishes the scene's appeal. The presence of tools and hands suggests some activity, but the lack of context or progression in the scene makes it difficult to maintain interest. The scene could benefit from more varied"
+    },
+    {
+      "scene_num": 5,
+      "start_time": 100,
+      "end_time": 114.0,
+      "duration": 14.0,
+      "frame_count": 7,
+      "semantic_interest": 0.1988525390625,
+      "semantic_boring": 0.07415335518973214,
+      "duplicate_ratio": 0.0,
+      "repetitive_ratio": 0.0,
+      "classification": "moderate",
+      "speed": 2.0,
+      "llm_rating": 6,
+      "llm_reasoning": "Rating: 6/10 - reason: The video scene is somewhat repetitive and lacks variety in terms of objects and actions. While it shows hands wearing blue gloves working with various tools on a white paper, the scene is static and doesn't provide much visual or thematic interest. The objects and actions are too similar, making it difficult to maintain engagement for a longer period. The scene could be improved by adding more dynamic elements or introducing a variety of tools and objects to make it more engaging. The"
+    }
+  ],
+  "summary": {
+    "interesting": 0,
+    "moderate": 2,
+    "low": 3,
+    "boring": 0,
+    "skip": 0,
+    "original_duration": 114.0,
+    "output_duration": 37.0,
+    "compression_ratio": 67.54385964912281
+  },
+  "showcases": [
+    {
+      "timestamp": 18,
+      "llm_reasoning": "18s: The frame shows a variety of tools and materials being used, including a screwdriver, cutting mat, and paint, which provides a glimpse into the different aspects of the project. The diverse tools and materials being used in this frame are visually different from the other frames, showcasing the complexity and multifaceted nature of the project.\n\n42s: This frame captures a person's hands working with a black object, white paper, and a green cutting mat. It shows the actual work being done on the project, which is visually different from the other frames as it focuses on the hands and the materials being used, rather than the tools and materials being used.\n\n78s: This frame shows a person's hands working with a"
+    },
+    {
+      "timestamp": 42,
+      "llm_reasoning": "18s: The frame shows a variety of tools and materials being used, including a screwdriver, cutting mat, and paint, which provides a glimpse into the different aspects of the project. The diverse tools and materials being used in this frame are visually different from the other frames, showcasing the complexity and multifaceted nature of the project.\n\n42s: This frame captures a person's hands working with a black object, white paper, and a green cutting mat. It shows the actual work being done on the project, which is visually different from the other frames as it focuses on the hands and the materials being used, rather than the tools and materials being used.\n\n78s: This frame shows a person's hands working with a"
+    },
+    {
+      "timestamp": 78,
+      "llm_reasoning": "18s: The frame shows a variety of tools and materials being used, including a screwdriver, cutting mat, and paint, which provides a glimpse into the different aspects of the project. The diverse tools and materials being used in this frame are visually different from the other frames, showcasing the complexity and multifaceted nature of the project.\n\n42s: This frame captures a person's hands working with a black object, white paper, and a green cutting mat. It shows the actual work being done on the project, which is visually different from the other frames as it focuses on the hands and the materials being used, rather than the tools and materials being used.\n\n78s: This frame shows a person's hands working with a"
+    }
+  ]
+}

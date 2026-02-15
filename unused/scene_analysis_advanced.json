@@ -1,0 +1,92 @@
+{
+  "video": "IMG_3839.MOV",
+  "method": "advanced_ai",
+  "models": [
+    "TransNetV2",
+    "YOLOv8",
+    "RAFT",
+    "GPU_OpticalFlow"
+  ],
+  "total_frames": 536,
+  "total_scenes": 4,
+  "shot_boundaries": null,
+  "scenes": [
+    {
+      "scene_num": 1,
+      "start_time": 0.0,
+      "end_time": 98.0,
+      "duration": 98.0,
+      "frame_count": 50,
+      "avg_motion": 8.516924176216126,
+      "motion_variance": 3.324377775480419,
+      "person_presence_ratio": 0.44,
+      "bottle_ratio": 0.0,
+      "brightness_change": -0.040657707633593554,
+      "contrast_change": 0.06777733371876987,
+      "avg_objects": 1.3,
+      "interest_score": 82.70185895870387,
+      "classification": "interesting",
+      "speed": 1.0
+    },
+    {
+      "scene_num": 2,
+      "start_time": 100.0,
+      "end_time": 558.0,
+      "duration": 458.0,
+      "frame_count": 230,
+      "avg_motion": 8.167112146868654,
+      "motion_variance": 3.5595885787825616,
+      "person_presence_ratio": 0.3347826086956522,
+      "bottle_ratio": 0.05217391304347826,
+      "brightness_change": 0.06159400483766042,
+      "contrast_change": -0.06002536249308299,
+      "avg_objects": 1.2391304347826086,
+      "interest_score": 83.32524055180677,
+      "classification": "interesting",
+      "speed": 1.0
+    },
+    {
+      "scene_num": 3,
+      "start_time": 560.0,
+      "end_time": 758.0,
+      "duration": 198.0,
+      "frame_count": 100,
+      "avg_motion": 7.629461570344866,
+      "motion_variance": 3.519683798868009,
+      "person_presence_ratio": 0.32,
+      "bottle_ratio": 0.02,
+      "brightness_change": -0.05078473309655651,
+      "contrast_change": 0.04289758373897462,
+      "avg_objects": 1.08,
+      "interest_score": 78.14896522419791,
+      "classification": "low",
+      "speed": 2.5
+    },
+    {
+      "scene_num": 4,
+      "start_time": 760.0,
+      "end_time": 1068.0,
+      "duration": 308.0,
+      "frame_count": 155,
+      "avg_motion": 7.591810320269677,
+      "motion_variance": 3.4029074367661405,
+      "person_presence_ratio": 0.14193548387096774,
+      "bottle_ratio": 0.012903225806451613,
+      "brightness_change": 0.08975810610702617,
+      "contrast_change": -0.09887858809133282,
+      "avg_objects": 2.032258064516129,
+      "interest_score": 78.21021723065111,
+      "classification": "low",
+      "speed": 2.5
+    }
+  ],
+  "summary": {
+    "interesting": 2,
+    "moderate": 0,
+    "low": 2,
+    "skip": 0,
+    "original_duration": 1062.0,
+    "output_duration": 758.4000000000001,
+    "compression_ratio": 28.587570621468917
+  }
+}

@@ -55,7 +55,9 @@
 !*.md
 !*.sh
 !.gitkeep
-
+!*.json
+!*.txt
+!*.fcpxml
 
 # OAuth credentials - keep private
 client_secrets.json

@@ -1,0 +1,143 @@
+{
+  "video": "IMG_3575.MOV",
+  "method": "advanced_ai_v5_two_pass_llm",
+  "models": [
+    "CLIP_ViT-B/32",
+    "ResNet50",
+    "Qwen2.5-VL-7B",
+    "LLM_Scene_Analysis"
+  ],
+  "total_frames": 112,
+  "total_scenes": 7,
+  "scenes": [
+    {
+      "scene_num": 1,
+      "start_time": 0,
+      "end_time": 40,
+      "duration": 40,
+      "frame_count": 20,
+      "semantic_interest": 0.270928955078125,
+      "semantic_boring": 0.009188592433929443,
+      "duplicate_ratio": 0.65,
+      "repetitive_ratio": 0.65,
+      "classification": "boring",
+      "speed": 6.0,
+      "llm_rating": 2,
+      "llm_reasoning": "Rating: 2/10 - reason: The scene is repetitive and lacks variety, with only minor changes in the positioning of the objects. The lack of clear progression or focus on a specific activity makes it uninteresting. The duplication score of 65% further indicates that the scene is not engaging. The scene does not provide enough information to maintain interest over the 40 seconds. The viewer's attention is not captured due to the lack of dynamic content and the repetitive nature of the scene"
+    },
+    {
+      "scene_num": 2,
+      "start_time": 40.0,
+      "end_time": 73.33333333333334,
+      "duration": 33.33333333333334,
+      "frame_count": 17,
+      "semantic_interest": 0.28840188419117646,
+      "semantic_boring": 0.004889712614171645,
+      "duplicate_ratio": 0.4117647058823529,
+      "repetitive_ratio": 0.8235294117647058,
+      "classification": "low",
+      "speed": 4.0,
+      "llm_rating": 4,
+      "llm_reasoning": "Rating: 4/10 - reason: The scene is repetitive and lacks variety, making it uninteresting. The frames are almost identical, which significantly reduces the engagement level. The lack of dynamic action or diverse elements in the scene further diminishes its appeal. The high duplication score (41%) indicates that the video content is not engaging enough to maintain viewer interest. The scene fails to capture the viewer's attention or provide a compelling narrative or visual experience. The repetitive nature of the frames and"
+    },
+    {
+      "scene_num": 3,
+      "start_time": 73.33333333333334,
+      "end_time": 106.66666666666667,
+      "duration": 33.33333333333333,
+      "frame_count": 17,
+      "semantic_interest": 0.28751148897058826,
+      "semantic_boring": 0.008840645060819738,
+      "duplicate_ratio": 0.29411764705882354,
+      "repetitive_ratio": 0.35294117647058826,
+      "classification": "moderate",
+      "speed": 2.0,
+      "llm_rating": 6,
+      "llm_reasoning": "Rating: 6/10 - The scene shows hands with blue gloves working on a model car, which is a common and interesting activity for many people. However, the scene is quite repetitive and lacks variety, which lowers the interest level slightly. The scene also includes a duplicate frame, which further contributes to the lower interest rating. The scene could be improved by adding more variety and less repetition to increase the interest level. The scene also includes a red car, which could be more interesting if the"
+    },
+    {
+      "scene_num": 4,
+      "start_time": 106.66666666666667,
+      "end_time": 140.0,
+      "duration": 33.33333333333333,
+      "frame_count": 16,
+      "semantic_interest": 0.27870941162109375,
+      "semantic_boring": 0.01785057783126831,
+      "duplicate_ratio": 0.4375,
+      "repetitive_ratio": 0.625,
+      "classification": "boring",
+      "speed": 6.0,
+      "llm_rating": 2,
+      "llm_reasoning": "Rating: 2/10 - reason: The video scene is highly repetitive, showing the same static frame with a model car and various materials used in scale model building. There's no progression or dynamic action, which significantly reduces the interest level. The lack of new information or engaging content makes it difficult to maintain viewer engagement, hence the low rating. The duplication score of 44% further supports the low interest rating as it indicates that the video content is not varied or novel. The scene"
+    },
+    {
+      "scene_num": 5,
+      "start_time": 140.0,
+      "end_time": 170.0,
+      "duration": 30.0,
+      "frame_count": 15,
+      "semantic_interest": 0.2891927083333333,
+      "semantic_boring": 0.007905940214792887,
+      "duplicate_ratio": 0.5333333333333333,
+      "repetitive_ratio": 0.4,
+      "classification": "boring",
+      "speed": 6.0,
+      "llm_rating": 3,
+      "llm_reasoning": "Rating: 3/10 - reason: The scene is repetitive and lacks variety in objects and actions, making it uninteresting. The focus on a single task and the lack of progression or change in the scene further reduce its appeal. The high duplication percentage also contributes to the lack of engagement. The scene does not provide enough visual or thematic diversity to maintain interest. The presence of duplicate frames adds to the lack of dynamic content. The scene is too static and monotonous, failing to engage"
+    },
+    {
+      "scene_num": 6,
+      "start_time": 170.0,
+      "end_time": 200.0,
+      "duration": 30.0,
+      "frame_count": 15,
+      "semantic_interest": 0.2794270833333333,
+      "semantic_boring": 0.009774446487426758,
+      "duplicate_ratio": 0.2,
+      "repetitive_ratio": 0.0,
+      "classification": "low",
+      "speed": 4.0,
+      "llm_rating": 4,
+      "llm_reasoning": "Rating: 4/10 - reason: The video scene lacks variety and includes duplicate frames, which reduces its interest level. The scene shows hands and a red car, but the lack of distinct visual elements and the repetition of frames make it less engaging. The interest metric is low, and the duplication metric is high, contributing to a low overall rating. The scene could be improved by introducing more varied elements or reducing duplication. The scene is also repetitive, which further decreases its interest level. The"
+    },
+    {
+      "scene_num": 7,
+      "start_time": 200,
+      "end_time": 220,
+      "duration": 20,
+      "frame_count": 10,
+      "semantic_interest": 0.288037109375,
+      "semantic_boring": 0.007524514198303222,
+      "duplicate_ratio": 0.0,
+      "repetitive_ratio": 0.0,
+      "classification": "moderate",
+      "speed": 2.0,
+      "llm_rating": 6,
+      "llm_reasoning": "Rating: 6/10 - reason: The scene shows hands wearing blue gloves working on a scale model building project. The objects present include a red car, a screwdriver, a workbench, paper, and paint. The scene is somewhat repetitive and lacks diversity in terms of objects and actions. The focus is on the hands and the tools, which might not be as engaging for viewers interested in the broader context of scale model building. The scene could benefit from more variety in the objects and"
+    }
+  ],
+  "summary": {
+    "interesting": 0,
+    "moderate": 2,
+    "low": 2,
+    "boring": 3,
+    "skip": 0,
+    "original_duration": 220.0,
+    "output_duration": 59.72222222222222,
+    "compression_ratio": 72.85353535353536
+  },
+  "showcases": [
+    {
+      "timestamp": 22,
+      "llm_reasoning": "22s: The moment captures hands wearing blue gloves working on a red car model, highlighting the actual work being done and the use of tools and materials.\n116s: This moment showcases a variety of tools and materials being used, including a paintbrush, paint palette, white paper, and green cutting mat, demonstrating the diverse aspects of the project.\n222s: The scene includes hands wearing blue gloves working on a red car model, a screwdriver, a workbench, white paper, and a black tray, providing a comprehensive view of the project's progress and the tools involved. The inclusion of a black tray adds a new element to the visual diversity. 22s: The moment captures hands wearing blue gloves"
+    },
+    {
+      "timestamp": 116,
+      "llm_reasoning": "22s: The moment captures hands wearing blue gloves working on a red car model, highlighting the actual work being done and the use of tools and materials.\n116s: This moment showcases a variety of tools and materials being used, including a paintbrush, paint palette, white paper, and green cutting mat, demonstrating the diverse aspects of the project.\n222s: The scene includes hands wearing blue gloves working on a red car model, a screwdriver, a workbench, white paper, and a black tray, providing a comprehensive view of the project's progress and the tools involved. The inclusion of a black tray adds a new element to the visual diversity. 22s: The moment captures hands wearing blue gloves"
+    },
+    {
+      "timestamp": 222,
+      "llm_reasoning": "22s: The moment captures hands wearing blue gloves working on a red car model, highlighting the actual work being done and the use of tools and materials.\n116s: This moment showcases a variety of tools and materials being used, including a paintbrush, paint palette, white paper, and green cutting mat, demonstrating the diverse aspects of the project.\n222s: The scene includes hands wearing blue gloves working on a red car model, a screwdriver, a workbench, white paper, and a black tray, providing a comprehensive view of the project's progress and the tools involved. The inclusion of a black tray adds a new element to the visual diversity. 22s: The moment captures hands wearing blue gloves"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<fcpxml version="1.11">
+  <resources>
+    <format height="2160" id="r1" colorSpace="9-18-9 (Rec. 2020 HLG)" name="FFVideoFormatRateUndefined" width="3840" frameDuration="1/24s" />
+    <asset audioSources="1" format="r1" duration="25690/24s" id="r2" audioChannels="2" hasAudio="1" start="0s" name="IMG_3839" hasVideo="1">
+      <media-rep src="file:///home/mazsola/video/IMG_3839.MOV" kind="original-media" />
+    </asset>
+  </resources>
+  <library>
+    <event name="Auto-Editor Media Group">
+      <project name="IMG_3839">
+        <sequence tcStart="0s" format="r1" tcFormat="NDF" audioLayout="stereo" audioRate="48k">
+          <spine>
+            <asset-clip offset="0s" duration="10865/24s" tcFormat="NDF" start="0s" name="IMG_3839" ref="r2" />
+            <asset-clip offset="10865/24s" duration="5/24s" tcFormat="NDF" start="10954/24s" name="IMG_3839" ref="r2" />
+            <asset-clip offset="10870/24s" duration="7/24s" tcFormat="NDF" start="10962/24s" name="IMG_3839" ref="r2" />
+            <asset-clip offset="10877/24s" duration="2407/24s" tcFormat="NDF" start="10973/24s" name="IMG_3839" ref="r2" />
+            <asset-clip offset="13284/24s" duration="9/24s" tcFormat="NDF" start="13384/24s" name="IMG_3839" ref="r2" />
+            <asset-clip offset="13293/24s" duration="5/24s" tcFormat="NDF" start="13460/24s" name="IMG_3839" ref="r2" />
+            <asset-clip offset="13298/24s" duration="952/24s" tcFormat="NDF" start="13485/24s" name="IMG_3839" ref="r2" />
+            <asset-clip offset="14250/24s" duration="5/24s" tcFormat="NDF" start="14454/24s" name="IMG_3839" ref="r2" />
+            <asset-clip offset="14255/24s" duration="5/24s" tcFormat="NDF" start="14507/24s" name="IMG_3839" ref="r2" />
+            <asset-clip offset="14260/24s" duration="7/24s" tcFormat="NDF" start="14515/24s" name="IMG_3839" ref="r2" />
+            <asset-clip offset="14267/24s" duration="5/24s" tcFormat="NDF" start="14534/24s" name="IMG_3839" ref="r2" />
+            <asset-clip offset="14272/24s" duration="10981/24s" tcFormat="NDF" start="14565/24s" name="IMG_3839" ref="r2" />
+            <asset-clip offset="25253/24s" duration="127/24s" tcFormat="NDF" start="25564/24s" name="IMG_3839" ref="r2" />
+          </spine>
+        </sequence>
+      </project>
+    </event>
+  </library>
+</fcpxml>

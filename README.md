@@ -17,6 +17,24 @@ This pipeline isn't just a tool—it's a force multiplier for solo creators who 
 
 ---
 
+## 🚀 Quick Start - Run Everything in One Command
+
+```bash
+# Complete automated pipeline: Raw video → Edited timeline
+python run_pipeline.py
+```
+
+**What it does:**
+1. **Stage 1**: Analyzes all videos with AI (ResNet-50, CLIP, Qwen2.5-VL)
+2. **Stage 2**: Extracts scenes and creates speed-adjusted clips
+3. **Stage 3**: Generates DaVinci Resolve timeline with music and effects
+
+**Output:** `timeline_davinci_resolve.fcpxml` ready to import into DaVinci Resolve
+
+> 💡 **That's it!** One command processes hours of footage into an edit-ready timeline in ~20 minutes.
+
+---
+
 ## Overview
 
 An intelligent video editing automation system that uses computer vision and large language models to analyze, classify, and automatically edit long-form videos into engaging, compressed timelines ready for DaVinci Resolve.
@@ -244,32 +262,41 @@ All Python dependencies are pinned in [requirements.txt](requirements.txt).
 
 ## Usage
 
-### Quick Start
+### Complete Automated Pipeline (Recommended)
 
 ```bash
-# Run complete pipeline
+# Run the full pipeline - analyze, extract, and generate timeline
 python run_pipeline.py
 
-# This executes all three stages:
-# 1. Analyze videos
-# 2. Extract scenes
-# 3. Export timeline
+# Output: timeline_davinci_resolve.fcpxml + ai_clips/ folder
 ```
 
-### Render and Upload
+This orchestrates all three stages automatically:
+- **Stage 1**: AI analysis of all videos in current directory
+- **Stage 2**: Scene extraction with speed adjustments
+- **Stage 3**: Timeline generation with music, transitions, and effects
+
+### Post-Pipeline Steps
+
+After `run_pipeline.py` completes, import and render in DaVinci Resolve:
 
 ```bash
-# Apply LUTs (optional)
+# 1. Import timeline to DaVinci Resolve
+#    File → Import → Timeline → timeline_davinci_resolve.fcpxml
+
+# 2. Apply LUTs (optional)
 python apply_lut_resolve.py --config project_config.json
 
-# Render from DaVinci Resolve
+# 3. Render from DaVinci Resolve
 python render_youtube.py --output ~/Videos/output.mp4
 
-# Upload to YouTube (uses project_config.json defaults)
+# 4. Upload to YouTube (uses project_config.json defaults)
 python upload_youtube.py --video ~/Videos/output.mp4
 ```
 
-### Individual Stages
+### Manual Stage-by-Stage Execution
+
+If you prefer to run stages individually:
 
 ```bash
 # Stage 1: Analyze video (generates scene_analysis_*.json)

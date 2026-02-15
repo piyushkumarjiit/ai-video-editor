@@ -1,0 +1,68 @@
+{
+  "video": "IMG_3698.MOV",
+  "method": "advanced_ai_v5_two_pass_llm",
+  "models": [
+    "CLIP_ViT-B/32",
+    "ResNet50",
+    "Qwen2.5-VL-7B",
+    "LLM_Scene_Analysis"
+  ],
+  "total_frames": 16,
+  "total_scenes": 2,
+  "scenes": [
+    {
+      "scene_num": 1,
+      "start_time": 0,
+      "end_time": 20,
+      "duration": 20,
+      "frame_count": 10,
+      "semantic_interest": 0.25816650390625,
+      "semantic_boring": 0.02790355682373047,
+      "duplicate_ratio": 0.0,
+      "repetitive_ratio": 0.2,
+      "classification": "moderate",
+      "speed": 2.0,
+      "llm_rating": 6,
+      "llm_reasoning": "Rating: 6/10 - reason: The video scene is focused on a scale model building activity, showing hands manipulating various objects on a green mat. The presence of blue gloves, plastic bags, and bottles suggests a detailed and hands-on process, which could be engaging for those interested in model building or crafting. However, the scene lacks a clear narrative or specific elements that would make it particularly captivating or unique, which is why it rates a 6/10. The scene is neither"
+    },
+    {
+      "scene_num": 2,
+      "start_time": 20,
+      "end_time": 30.0,
+      "duration": 10.0,
+      "frame_count": 5,
+      "semantic_interest": 0.2658203125,
+      "semantic_boring": 0.01179656982421875,
+      "duplicate_ratio": 0.0,
+      "repetitive_ratio": 0.0,
+      "classification": "moderate",
+      "speed": 2.0,
+      "llm_rating": 7,
+      "llm_reasoning": "Rating: 7/10 - reason: The scene provides a clear view of hands manipulating various small objects on a green mat, which suggests a detailed and focused activity. The presence of blue gloves and tools indicates a level of precision and care, which can be engaging for viewers interested in model building or crafting. However, the scene lacks a specific context or a clear end goal, which might reduce interest for some viewers. The scene is not repetitive, as each frame seems to show a different stage"
+    }
+  ],
+  "summary": {
+    "interesting": 0,
+    "moderate": 2,
+    "low": 0,
+    "boring": 0,
+    "skip": 0,
+    "original_duration": 30.0,
+    "output_duration": 15.0,
+    "compression_ratio": 50.0
+  },
+  "showcases": [
+    {
+      "timestamp": 6,
+      "llm_reasoning": "6s: The scene shows hands actively cutting paper with scissors on a green mat, demonstrating the practical work being done on the model building project. The visual is clear and shows the process of preparing materials.\n\n14s: This moment captures hands working with clear plastic, a yellow box, and blue wire on a grid surface. It showcases a different aspect of the project, focusing on the assembly of components, which is visually distinct from the cutting activity.\n\n24s: The scene highlights hands working on a circuit board in a focused work area, surrounded by small parts and tools. This moment demonstrates the intricate nature of the project and the detailed work involved, providing a diverse view compared to the previous moments. The visual is sharp and highlights the"
+    },
+    {
+      "timestamp": 14,
+      "llm_reasoning": "6s: The scene shows hands actively cutting paper with scissors on a green mat, demonstrating the practical work being done on the model building project. The visual is clear and shows the process of preparing materials.\n\n14s: This moment captures hands working with clear plastic, a yellow box, and blue wire on a grid surface. It showcases a different aspect of the project, focusing on the assembly of components, which is visually distinct from the cutting activity.\n\n24s: The scene highlights hands working on a circuit board in a focused work area, surrounded by small parts and tools. This moment demonstrates the intricate nature of the project and the detailed work involved, providing a diverse view compared to the previous moments. The visual is sharp and highlights the"
+    },
+    {
+      "timestamp": 24,
+      "llm_reasoning": "6s: The scene shows hands actively cutting paper with scissors on a green mat, demonstrating the practical work being done on the model building project. The visual is clear and shows the process of preparing materials.\n\n14s: This moment captures hands working with clear plastic, a yellow box, and blue wire on a grid surface. It showcases a different aspect of the project, focusing on the assembly of components, which is visually distinct from the cutting activity.\n\n24s: The scene highlights hands working on a circuit board in a focused work area, surrounded by small parts and tools. This moment demonstrates the intricate nature of the project and the detailed work involved, providing a diverse view compared to the previous moments. The visual is sharp and highlights the"
+    }
+  ]
+}

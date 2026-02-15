@@ -1,0 +1,68 @@
+{
+  "video": "IMG_3751.MOV",
+  "method": "advanced_ai_v5_two_pass_llm",
+  "models": [
+    "CLIP_ViT-B/32",
+    "ResNet50",
+    "Qwen2.5-VL-7B",
+    "LLM_Scene_Analysis"
+  ],
+  "total_frames": 10,
+  "total_scenes": 2,
+  "scenes": [
+    {
+      "scene_num": 1,
+      "start_time": 0,
+      "end_time": 10,
+      "duration": 10,
+      "frame_count": 5,
+      "semantic_interest": 0.1798583984375,
+      "semantic_boring": 0.012030875682830811,
+      "duplicate_ratio": 0.0,
+      "repetitive_ratio": 0.0,
+      "classification": "interesting",
+      "speed": 1.0,
+      "llm_rating": 8,
+      "llm_reasoning": "Rating: 8/10 - The video showcases a close-up of a model car's interior, highlighting intricate details such as the steering wheel and dashboard. The craftsmanship is evident in the precision of the assembly and the attention to detail in the components. The scene provides a good level of interest for viewers interested in model building, especially those who appreciate the finer aspects of scale model construction. The lack of environmental context is not a significant issue as the focus is on the model itself, making it a"
+    },
+    {
+      "scene_num": 2,
+      "start_time": 10,
+      "end_time": 25,
+      "duration": 15,
+      "frame_count": 5,
+      "semantic_interest": 0.180584716796875,
+      "semantic_boring": 0.011832904815673829,
+      "duplicate_ratio": 0.0,
+      "repetitive_ratio": 0.0,
+      "classification": "moderate",
+      "speed": 2.0,
+      "llm_rating": 7,
+      "llm_reasoning": "Rating: 7/10 - reason: The video showcases a close-up of a model car with intricate details, focusing on the dashboard and steering wheel. The craftsmanship is evident in the fine workmanship and attention to detail. However, the scene lacks environmental context, which could have made it more engaging. The lack of environmental context is acceptable for a detail showcase, but a broader perspective would have been beneficial for a more comprehensive interest level. The video is well-executed and informative, but the"
+    }
+  ],
+  "summary": {
+    "interesting": 1,
+    "moderate": 1,
+    "low": 0,
+    "boring": 0,
+    "skip": 0,
+    "original_duration": 25,
+    "output_duration": 17.5,
+    "compression_ratio": 30.000000000000004
+  },
+  "showcases": [
+    {
+      "timestamp": 14,
+      "llm_reasoning": "14s: The moment showcases hands actively working on the model car, demonstrating the actual process of assembling or modifying the car. It provides a close-up view of the hands and tools, offering a more personal and engaging perspective on the project.\n\n18s: This moment captures a broader view of the workspace, including the model car on the green mat, a box, and a shelf with various items. It provides an overview of the environment where the project is being carried out, highlighting the tools and materials involved in the building process.\n\n10s: This timestamp shows a detailed view of the workspace with a cutting mat, scissors, glue, and paper. It demonstrates the tools and materials used in the project, offering insight into the technical"
+    },
+    {
+      "timestamp": 18,
+      "llm_reasoning": "14s: The moment showcases hands actively working on the model car, demonstrating the actual process of assembling or modifying the car. It provides a close-up view of the hands and tools, offering a more personal and engaging perspective on the project.\n\n18s: This moment captures a broader view of the workspace, including the model car on the green mat, a box, and a shelf with various items. It provides an overview of the environment where the project is being carried out, highlighting the tools and materials involved in the building process.\n\n10s: This timestamp shows a detailed view of the workspace with a cutting mat, scissors, glue, and paper. It demonstrates the tools and materials used in the project, offering insight into the technical"
+    },
+    {
+      "timestamp": 10,
+      "llm_reasoning": "14s: The moment showcases hands actively working on the model car, demonstrating the actual process of assembling or modifying the car. It provides a close-up view of the hands and tools, offering a more personal and engaging perspective on the project.\n\n18s: This moment captures a broader view of the workspace, including the model car on the green mat, a box, and a shelf with various items. It provides an overview of the environment where the project is being carried out, highlighting the tools and materials involved in the building process.\n\n10s: This timestamp shows a detailed view of the workspace with a cutting mat, scissors, glue, and paper. It demonstrates the tools and materials used in the project, offering insight into the technical"
+    }
+  ]
+}
