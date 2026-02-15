@@ -36,131 +36,88 @@ This pipeline transforms lengthy raw footage (30-60+ minutes) into polished, wat
 - Configurable watermarks with opacity and positioning
 - GPU-accelerated video processing (NVENC)
 
-📊 **For a complete visual overview of the pipeline architecture, see [PIPELINE_DIAGRAM.md](PIPELINE_DIAGRAM.md)**
-
 ## Pipeline Architecture
 
+```mermaid
+graph TB
+    %% Input Stage
+    RAW[📹 Raw Video Files<br/>MOV/MP4 30-60 min]
+    
+    %% Stage 1: Analysis
+    subgraph S1[" 🧠 STAGE 1: AI ANALYSIS "]
+        ANALYZE[analyze_advanced5.py]
+        MODELS[ResNet-50 + CLIP + Qwen2.5-VL<br/>Frame sampling every 2s]
+        CLASSIFY[Scene Classification<br/>Quality rating 1-10<br/>Speed assignment 1x-6x]
+        JSON[scene_analysis_*.json]
+    end
+    
+    %% Stage 2: Extraction
+    subgraph S2[" ✂️ STAGE 2: CLIP EXTRACTION "]
+        EXTRACT[extract_scenes.py]
+        FFMPEG[FFmpeg + NVENC H.265<br/>Speed-adjusted clips<br/>Showcase highlights]
+        CLIPS[ai_clips/ folder]
+    end
+    
+    %% Stage 3: Timeline
+    subgraph S3[" 🎬 STAGE 3: TIMELINE GENERATION "]
+        TIMELINE[export_resolve.py]
+        BUILD[Teaser + Intro + Main + Outro<br/>Audio mix + Watermark<br/>Cross-dissolves]
+        FCPXML[timeline_davinci_resolve.fcpxml]
+    end
+    
+    %% Stage 4: Resolve
+    subgraph S4[" 🎨 STAGE 4: DAVINCI RESOLVE "]
+        IMPORT[Import Timeline<br/>File → Import → Timeline]
+        LUT[apply_lut_resolve.py<br/>Optional LUT application]
+        RENDER[render_youtube.py<br/>H.265 4K @ 30 Mbps]
+        MP4[Final MP4]
+    end
+    
+    %% Stage 5: Upload
+    subgraph S5[" ☁️ STAGE 5: YOUTUBE UPLOAD "]
+        UPLOAD[upload_youtube.py]
+        AUTH[OAuth 2.0 + Thumbnail<br/>Playlist + Metadata]
+        YT[▶️ YouTube Video]
+    end
+    
+    %% Flow
+    RAW --> ANALYZE
+    ANALYZE --> MODELS
+    MODELS --> CLASSIFY
+    CLASSIFY --> JSON
+    
+    JSON --> EXTRACT
+    EXTRACT --> FFMPEG
+    FFMPEG --> CLIPS
+    
+    CLIPS --> TIMELINE
+    TIMELINE --> BUILD
+    BUILD --> FCPXML
+    
+    FCPXML --> IMPORT
+    IMPORT --> LUT
+    LUT --> RENDER
+    RENDER --> MP4
+    
+    MP4 --> UPLOAD
+    UPLOAD --> AUTH
+    AUTH --> YT
+    
+    %% Styling
+    classDef stage1 fill:#fff3e0,stroke:#f57c00,stroke-width:2px
+    classDef stage2 fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px
+    classDef stage3 fill:#e8f5e9,stroke:#388e3c,stroke-width:2px
+    classDef stage4 fill:#fce4ec,stroke:#c2185b,stroke-width:2px
+    classDef stage5 fill:#ffebee,stroke:#d32f2f,stroke-width:2px
+    
+    class ANALYZE,MODELS,CLASSIFY,JSON stage1
+    class EXTRACT,FFMPEG,CLIPS stage2
+    class TIMELINE,BUILD,FCPXML stage3
+    class IMPORT,LUT,RENDER,MP4 stage4
+    class UPLOAD,AUTH,YT stage5
 ```
-INPUT: Raw Videos (MOV/MP4)
-         |
-         v
-+-------------------------+
-| STAGE 1: ANALYSIS       |
-| (analyze_advanced5.py)  |
-+-------------------------+
-| Pass 1: Frame Analysis  |
-|  - Sample every 2s      |
-|  - ResNet-50 features   |
-|  - Qwen2.5-VL captions  |
-|  - CLIP embeddings      |
-|  - Perceptual hashes    |
-+-------------------------+
-         |
-         v
-+-------------------------+
-| Scene Detection         |
-|  - Visual transitions   |
-|  - Logical segmentation |
-+-------------------------+
-         |
-         v
-+-------------------------+
-| Pass 2: Classification  |
-|  - LLM quality rating   |
-|  - Classify scenes      |
-|  - Showcase moments     |
-|  - Assign speeds        |
-+-------------------------+
-         |
-         v
-OUTPUT: scene_analysis_*.json
-         |
-         v
-+-------------------------+
-| STAGE 2: EXTRACTION     |
-| (extract_scenes.py)     |
-+-------------------------+
-| Scene Clip Extraction   |
-|  - FFmpeg extraction    |
-|  - Speed adjustments    |
-|  - GPU HEVC encode      |
-|  - Skip boring scenes   |
-+-------------------------+
-         |
-         v
-+-------------------------+
-| Showcase Extraction     |
-|  - 5-sec clips at 1x    |
-|  - Center on highlights |
-+-------------------------+
-         |
-         v
-OUTPUT: ai_clips/
-         |
-         v
-+-------------------------+
-| STAGE 3: EXPORT         |
-| (export_resolve.py)     |
-+-------------------------+
-| Teaser Assembly         |
-|  - Top showcase clips   |
-|  - Interesting scenes   |
-|  - Max 45 seconds       |
-+-------------------------+
-         |
-         v
-+-------------------------+
-| Timeline Build          |
-|  1. Teaser clips        |
-|  2. Intro video         |
-|  3. Main content        |
-|  4. Outro video         |
-|                         |
-|  - Filter boring        |
-|  - Deduplicate scenes   |
-|  - Cross-dissolves      |
-|  - Rotation transforms  |
-+-------------------------+
-         |
-         v
-+-------------------------+
-| Audio + Watermark       |
-|  Lane 1: Teaser music   |
-|  Lane 2: Background     |
-|  Video: Muted (-96dB)   |
-|  Watermark: 70% opacity |
-+-------------------------+
-         |
-         v
-OUTPUT: timeline.fcpxml
-     |
-     v
-+-------------------------+
-| DaVinci Resolve Import  |
-+-------------------------+
-     |
-     v
-+-------------------------+
-| Optional LUT Apply      |
-| (apply_lut_resolve.py)  |
-+-------------------------+
-     |
-     v
-+-------------------------+
-| Render (render_youtube) |
-+-------------------------+
-     |
-     v
-OUTPUT: MP4 (4K, H.265)
-     |
-     v
-+-------------------------+
-| Upload (upload_youtube) |
-+-------------------------+
-     |
-     v
-   YouTube Video
-```
+
+📊 **For detailed component breakdown and performance metrics, see [PIPELINE_DIAGRAM.md](PIPELINE_DIAGRAM.md)**
 
 ## Scene Classification System
 
