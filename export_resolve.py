@@ -265,25 +265,36 @@ def dedupe_clip_infos(clip_infos, threshold):
     return selected
 
 
-def to_file_uri(path_str):
+def to_file_uri(path_str, clips_dir=None):
+    """
+    Convert path to file URI for FCPXML.
+    Uses absolute file:// URIs for all media files so DaVinci can locate them.
+    """
     path = Path(path_str).expanduser().resolve()
     return f"file://{path.as_posix()}"
 
 
-def find_rendered_clip(rendered_dir, video_stem, scene_num, classification, speed):
+def find_rendered_clip(rendered_dir, video_stem, scene_num, classification, speed, extensions=None):
+    extensions = extensions or ['.mkv']
+    extensions = [ext if ext.startswith('.') else f".{ext}" for ext in extensions]
     prefix = f"{video_stem}_" if video_stem else ""
-    candidates = [
-        f"{prefix}scene_{scene_num:02d}_{classification}_{speed:.2f}x.mkv",
-        f"{prefix}scene_{scene_num:02d}_{classification}_{speed:.1f}x.mkv",
-        f"{prefix}scene_{scene_num:02d}_{classification}_{speed:g}x.mkv",
-    ]
+    candidates = []
+    for ext in extensions:
+        candidates.extend([
+            f"{prefix}scene_{scene_num:02d}_{classification}_{speed:.2f}x{ext}",
+            f"{prefix}scene_{scene_num:02d}_{classification}_{speed:.1f}x{ext}",
+            f"{prefix}scene_{scene_num:02d}_{classification}_{speed:g}x{ext}",
+        ])
     for name in candidates:
         path = rendered_dir / name
         if path.exists():
             return path
 
-    pattern = f"{prefix}scene_{scene_num:02d}_{classification}_*x.mkv"
-    matches = sorted(rendered_dir.glob(pattern))
+    matches = []
+    for ext in extensions:
+        pattern = f"{prefix}scene_{scene_num:02d}_{classification}_*x{ext}"
+        matches.extend(rendered_dir.glob(pattern))
+    matches = sorted(matches)
     if len(matches) == 1:
         return matches[0]
 
@@ -306,6 +317,11 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
     """Create FCP XML timeline for DaVinci Resolve"""
     config = config or {}
     timeline_config = config.get('timeline', config)
+    export_cfg = config.get('export', {})
+    clip_ext = export_cfg.get('clip_format', 'mkv')
+    clip_ext = f".{str(clip_ext).lower().lstrip('.')}"
+    clip_exts = [clip_ext, '.mkv', '.mov', '.mp4']
+    clip_exts = [ext for i, ext in enumerate(clip_exts) if ext not in clip_exts[:i]]
     
     # Read exclude_boring from config if not explicitly set via command-line
     # Command-line argument (exclude_boring parameter) takes precedence over config
@@ -339,7 +355,7 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
             output_duration_frac = Fraction(output_duration_frames, fps)
             
             classification = scene.get('classification', 'unknown')
-            rendered_path = find_rendered_clip(rendered_dir, video_stem, i, classification, speed)
+            rendered_path = find_rendered_clip(rendered_dir, video_stem, i, classification, speed, extensions=clip_exts)
             use_rendered_clip = use_rendered and rendered_path is not None
             rendered_duration_frac = None
             if use_rendered_clip:
@@ -489,11 +505,16 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
             
             for idx, showcase in enumerate(showcases):
                 timestamp = showcase['timestamp']
-                # Showcase clips are named: {stem}_showcase_{num}_{timestamp}s_1.00x.mkv
-                showcase_pattern = f"{video_stem}_showcase_*_{timestamp}s_1.00x.mkv"
-                matches = list(render_dir.glob(showcase_pattern)) if render_dir.exists() else []
-                if matches:
-                    clip_path = matches[0]
+                # Showcase clips are named: {stem}_showcase_{num}_{timestamp}s_1.00x.{ext}
+                clip_path = None
+                if render_dir.exists():
+                    for ext in clip_exts:
+                        showcase_pattern = f"{video_stem}_showcase_*_{timestamp}s_1.00x{ext}"
+                        matches = list(render_dir.glob(showcase_pattern))
+                        if matches:
+                            clip_path = matches[0]
+                            break
+                if clip_path:
                     # Rate showcases: earlier showcases get higher rating (first is best)
                     # Base rating 10, minus position penalty, plus video quality bonus
                     showcase_rating = 10.0 - (idx * 1.0) + video_quality_bonus
@@ -515,7 +536,7 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
                 if scene.get('classification') == 'interesting':
                     scene_num = scene['scene_num']
                     speed = scene['speed']
-                    rendered_path = find_rendered_clip(render_dir, video_stem, scene_num, 'interesting', speed)
+                    rendered_path = find_rendered_clip(render_dir, video_stem, scene_num, 'interesting', speed, extensions=clip_exts)
                     if rendered_path and rendered_path.exists():
                         llm_rating = scene.get('llm_rating', 8)
                         video_showcases.append((video_index, {
@@ -936,7 +957,7 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
                 'start': '0/1s',
                 'hasAudio': '0',
                 'id': video_asset_id,
-                'uid': to_file_uri(video_path),
+                'uid': to_file_uri(video_path, clip_base_dir),
                 'duration': f"{duration_frac.numerator}/{duration_frac.denominator}s",
                 'hasVideo': '1',
                 'audioSources': '0',
@@ -944,7 +965,7 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
                 'audioChannels': '0'
             })
             SubElement(asset_video, 'media-rep', {
-                'src': to_file_uri(video_path),
+                'src': to_file_uri(video_path, clip_base_dir),
                 'kind': 'original-media'
             })
 
@@ -953,14 +974,14 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
                 'start': '0/1s',
                 'hasAudio': '1',
                 'id': audio_asset_id,
-                'uid': to_file_uri(video_path),
+                'uid': to_file_uri(video_path, clip_base_dir),
                 'duration': f"{duration_frac.numerator}/{duration_frac.denominator}s",
                 'hasVideo': '0',
                 'audioSources': '1',
                 'audioChannels': '1'
             })
             SubElement(asset_audio, 'media-rep', {
-                'src': to_file_uri(video_path),
+                'src': to_file_uri(video_path, clip_base_dir),
                 'kind': 'original-media'
             })
 
@@ -1014,20 +1035,23 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
             continue
         asset_id = f'r{asset_counter}'
         asset_counter += 1
+        # Use r0 (proper 23.98fps) for video clips, r2 for static images
+        is_image = clip_info['src_name'].lower().endswith(('.jpg', '.jpeg', '.png', '.tiff', '.gif'))
+        asset_format = 'r2' if is_image else 'r0'
         asset = SubElement(resources, 'asset', {
             'name': clip_info['src_name'],
             'start': '0/1s',
             'hasAudio': '1',
             'id': asset_id,
-            'uid': to_file_uri(clip_info['src_path']),
+            'uid': to_file_uri(clip_info['src_path'], clip_base_dir),
             'duration': f"{clip_info['src_duration_frac'].numerator}/{clip_info['src_duration_frac'].denominator}s",
             'hasVideo': '1',
             'audioSources': '1',
-            'format': 'r2',
+            'format': asset_format,
             'audioChannels': '2'
         })
         SubElement(asset, 'media-rep', {
-            'src': to_file_uri(clip_info['src_path']),
+            'src': to_file_uri(clip_info['src_path'], clip_base_dir),
             'kind': 'original-media'
         })
         legacy_asset_map[id(clip_info)] = asset_id
@@ -1270,13 +1294,16 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
             SubElement(clip, 'adjust-conform', {'type': 'fit'})
         else:
             asset_ref = legacy_asset_map[id(clip_info)]
+            # Use r0 (proper 23.98fps) for video clips, r2 for static images
+            is_image = clip_info['src_name'].lower().endswith(('.jpg', '.jpeg', '.png', '.tiff', '.gif'))
+            clip_format = 'r2' if is_image else 'r0'
             clip_attrs = {
                 'name': clip_name,
                 'ref': asset_ref,
                 'start': f'{clip_start_frac.numerator}/{clip_start_frac.denominator}s',
                 'offset': f'{clip_offset.numerator}/{clip_offset.denominator}s',
                 'duration': f'{output_duration_frac.numerator}/{output_duration_frac.denominator}s',
-                'format': 'r2',
+                'format': clip_format,
                 'enabled': '1',
                 'tcFormat': 'NDF',
                 'lane': str(main_video_lane),
@@ -1284,20 +1311,30 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
                 'audioDuration': f'{audio_duration_frac.numerator}/{audio_duration_frac.denominator}s'
             }
             clip = SubElement(spine, 'asset-clip', clip_attrs)
-            SubElement(clip, 'conform-rate', {'srcFrameRate': '24'})
-            if not clip_info['use_rendered'] and abs(speed - 1.0) > 0.01:
-                timemap = SubElement(clip, 'timeMap', {'frameSampling': 'floor'})
-                SubElement(timemap, 'timept', {
-                    'time': '0/1s',
-                    'interp': 'linear',
-                    'value': '0/1s'
-                })
-                SubElement(timemap, 'timept', {
-                    'time': f'{output_duration_frac.numerator}/{output_duration_frac.denominator}s',
-                    'interp': 'linear',
-                    'value': f'{duration_frac.numerator}/{duration_frac.denominator}s'
-                })
+            
+            # IMPORTANT: For rendered/pre-processed clips, DO NOT add conform-rate or adjust-transform
+            # These elements force DaVinci to wrap clips as compounds instead of native media,
+            # preventing LUT application and proper codec recognition.
+            # Rendered clips already have rotation/transforms baked in during extraction.
+            if not clip_info['use_rendered']:
+                # Only add conform-rate for source clips that need frame rate adjustment
+                SubElement(clip, 'conform-rate', {'srcFrameRate': '24'})
+                
+                # Only add timeMap for speed adjustments on source clips
+                if abs(speed - 1.0) > 0.01:
+                    timemap = SubElement(clip, 'timeMap', {'frameSampling': 'floor'})
+                    SubElement(timemap, 'timept', {
+                        'time': '0/1s',
+                        'interp': 'linear',
+                        'value': '0/1s'
+                    })
+                    SubElement(timemap, 'timept', {
+                        'time': f'{output_duration_frac.numerator}/{output_duration_frac.denominator}s',
+                        'interp': 'linear',
+                        'value': f'{duration_frac.numerator}/{duration_frac.denominator}s'
+                    })
         
+        # Add adjust-volume to clips that need audio adjustment
         if snippet_volume_db is not None:
             clip_class = scene.get('classification')
             if clip_class not in ('intro', 'outro'):
@@ -1305,22 +1342,23 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
                     'amount': f"{snippet_volume_db}dB"
                 })
 
-        # Add adjust-transform
-        clip_transform = {
-            'position': '0 0',
-            'scale': '1 1',
-            'anchor': '0 0'
-        }
-        if clip_info.get('rotation'):
-            clip_transform['rotation'] = str(clip_info['rotation'])
-            zoom = timeline_config.get('rotation_zoom', 1.78)
-            clip_transform['scale'] = f"{zoom} {zoom}"
-        # Add zoom for photos
-        if classification == 'closing_photo':
-            closing_photo_config = timeline_config.get('closing_photos', {})
-            photo_zoom = closing_photo_config.get('zoom', 1.350)
-            clip_transform['scale'] = f"{photo_zoom} {photo_zoom}"
-        SubElement(clip, 'adjust-transform', clip_transform)
+        # Add adjust-transform for clips that need rotation/zoom adjustment
+        if True:
+            clip_transform = {
+                'position': '0 0',
+                'scale': '1 1',
+                'anchor': '0 0'
+            }
+            if clip_info.get('rotation'):
+                clip_transform['rotation'] = str(clip_info['rotation'])
+                zoom = timeline_config.get('rotation_zoom', 1.78)
+                clip_transform['scale'] = f"{zoom} {zoom}"
+            # Add zoom for photos
+            if classification == 'closing_photo':
+                closing_photo_config = timeline_config.get('closing_photos', {})
+                photo_zoom = closing_photo_config.get('zoom', 1.350)
+                clip_transform['scale'] = f"{photo_zoom} {photo_zoom}"
+            SubElement(clip, 'adjust-transform', clip_transform)
 
         
         print(f'   Clip {i:02d}: {clip_info["video_name"]} {start_sec:7.1f}s-{end_sec:7.1f}s ({duration_sec:6.1f}s) @ {speed:.1f}x ({speed*100:.0f}%) → {output_duration_sec:6.1f}s [{classification}]')

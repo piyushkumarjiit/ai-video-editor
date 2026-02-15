@@ -54,18 +54,15 @@ def extract_scene(video_path, scene, output_path, clip_format="mkv", export_cfg=
     result = subprocess.run(probe_cmd, capture_output=True, text=True)
     has_audio = 'audio' in result.stdout.lower()
     
-    # Build ffmpeg command
+    # Build ffmpeg command (audio mapping is optional)
     cmd = [
         'ffmpeg', '-y',
         '-ss', str(start_time),
         '-t', str(duration),
         '-i', str(video_path),
         '-map', '0:v',
+        '-map', '0:a?'
     ]
-    
-    # Add audio mapping only if audio stream exists
-    if has_audio:
-        cmd.extend(['-map', '0:a'])
     
     # Apply speed filter if needed
     if speed > 1.0:
@@ -96,12 +93,32 @@ def extract_scene(video_path, scene, output_path, clip_format="mkv", export_cfg=
     if clip_format == 'mov':
         video_codec = export_cfg.get('video_codec', 'prores_ks')
         pix_fmt = export_cfg.get('pixel_format', 'yuv422p10le')
-        prores_profile = export_cfg.get('prores_profile', 3)
-        cmd.extend([
-            '-c:v', video_codec,
-        ])
+        
+        cmd.extend(['-c:v', video_codec])
+        
         if video_codec == 'prores_ks':
+            prores_profile = export_cfg.get('prores_profile', 3)
             cmd.extend(['-profile:v', str(prores_profile)])
+        elif video_codec == 'libx265':
+            crf = export_cfg.get('crf', 18)
+            preset = export_cfg.get('preset', 'medium')
+            cmd.extend([
+                '-crf', str(crf),
+                '-preset', preset,
+                '-tag:v', 'hvc1'
+            ])
+        elif video_codec == 'hevc_nvenc':
+            preset = export_cfg.get('preset', 'p4')
+            cq = export_cfg.get('cq', 23)
+            rc = export_cfg.get('rc', 'vbr')
+            cmd.extend([
+                '-preset', str(preset),
+                '-rc', rc,
+                '-cq', str(cq),
+                '-tag:v', 'hvc1'
+            ])
+            use_nvenc = True
+        
         if pix_fmt:
             cmd.extend(['-pix_fmt', pix_fmt])
     else:
@@ -130,8 +147,29 @@ def extract_scene(video_path, scene, output_path, clip_format="mkv", export_cfg=
     try:
         subprocess.run(cmd, capture_output=True, check=True)
         print("✓")
-    except subprocess.CalledProcessError:
+    except subprocess.CalledProcessError as exc:
+        stderr = (exc.stderr or b"").decode(errors="ignore") if isinstance(exc.stderr, (bytes, bytearray)) else (exc.stderr or "")
+        if stderr:
+            print(f"\n   ⚠️  ffmpeg error: {stderr.strip()}")
         if not use_nvenc:
+            if has_audio:
+                print("   Retrying without audio...")
+                cmd_no_audio = []
+                skip_next = False
+                for idx, token in enumerate(cmd):
+                    if skip_next:
+                        skip_next = False
+                        continue
+                    if token == '-map' and idx + 1 < len(cmd) and cmd[idx + 1] == '0:a?':
+                        skip_next = True
+                        continue
+                    if token in ('-c:a', '-ar', '-ac'):
+                        skip_next = True
+                        continue
+                    cmd_no_audio.append(token)
+                subprocess.run(cmd_no_audio, capture_output=True, check=True)
+                print("✓")
+                return
             raise
         # Try CPU encoding if GPU fails
         print("GPU failed, trying CPU...", end=' ')
