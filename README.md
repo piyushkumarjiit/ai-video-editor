@@ -1,8 +1,25 @@
 # AI Video Editing Pipeline
 
-An intelligent video editing automation system that uses computer vision and large language models to analyze, classify, and automatically edit long-form videos into engaging, compressed timelines ready for DaVinci Resolve.
+## Why This Project Exists
+
+**The Problem:** Creating engaging video content from long-form footage is painfully time-consuming. A typical 60-minute recording requires 4-6 hours of manual editing—watching every frame, identifying interesting moments, cutting boring sections, adjusting speeds, adding music, and polishing transitions. For hobbyists creating scale model builds, DIY projects, or tutorial content, this workload is unsustainable. Videos pile up unedited, creative momentum dies, and content never reaches an audience.
+
+**The Solution:** This AI-powered pipeline compresses weeks of manual editing into minutes of automated processing. By leveraging vision-language models, computer vision, and intelligent scene classification, the system watches your footage for you, identifies what's worth keeping, eliminates dead time, and generates broadcast-ready timelines—complete with music, transitions, and dynamic speed ramping.
+
+**The Value:**
+- **Time Savings:** 60 min → 15 min final video in ~20 minutes of processing (vs. 6 hours manual editing)
+- **Consistency:** AI applies uniform quality standards across all footage, eliminating subjective editing fatigue
+- **Discoverability:** Automatic teaser generation highlights the best moments upfront, boosting viewer retention
+- **Scalability:** Process entire video backlogs overnight; edit 10 videos as easily as 1
+- **Creative Freedom:** Spend time creating content, not editing it
+
+This pipeline isn't just a tool—it's a force multiplier for solo creators who want to share their work without drowning in post-production.
+
+---
 
 ## Overview
+
+An intelligent video editing automation system that uses computer vision and large language models to analyze, classify, and automatically edit long-form videos into engaging, compressed timelines ready for DaVinci Resolve.
 
 This pipeline transforms lengthy raw footage (30-60+ minutes) into polished, watchable videos by automatically detecting scene quality, adjusting playback speeds, extracting highlight moments, generating professional timelines with music/transitions/watermarks, rendering in DaVinci Resolve, and uploading to YouTube.
 
@@ -18,6 +35,8 @@ This pipeline transforms lengthy raw footage (30-60+ minutes) into polished, wat
 - Multi-track audio with background music and teaser soundtracks
 - Configurable watermarks with opacity and positioning
 - GPU-accelerated video processing (NVENC)
+
+📊 **For a complete visual overview of the pipeline architecture, see [PIPELINE_DIAGRAM.md](PIPELINE_DIAGRAM.md)**
 
 ## Pipeline Architecture
 

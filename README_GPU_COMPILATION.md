@@ -38,8 +38,8 @@ CUDA 12.4 requires GCC ≤ 12.x. We compile GCC 12.3.0 to `/opt/gcc-12`.
 ### Using the Provided Script (Recommended)
 
 ```bash
-chmod +x install_gcc12.sh
-sudo ./install_gcc12.sh
+chmod +x tools/install_gcc12.sh
+sudo ./tools/install_gcc12.sh
 ```
 
 **Build time:** ~40 minutes on modern CPU
@@ -72,8 +72,8 @@ glibc 2.40 declares math functions with `noexcept`, but CUDA 12.4 headers don't.
 ### Using the Provided Script (Recommended)
 
 ```bash
-chmod +x patch_cuda_math.sh
-sudo ./patch_cuda_math.sh
+chmod +x tools/patch_cuda_math.sh
+sudo ./tools/patch_cuda_math.sh
 ```
 
 ### Verify Patches Applied
@@ -121,8 +121,8 @@ Now build llama-cpp-python from source using GCC 12 and patched CUDA headers.
 source .venv/bin/activate
 
 # Run the build script
-chmod +x build_llama_cpp_with_gcc12.sh
-./build_llama_cpp_with_gcc12.sh
+chmod +x tools/build_llama_cpp_with_gcc12.sh
+./tools/build_llama_cpp_with_gcc12.sh
 ```
 
 **Build time:** ~5-10 minutes (183 compilation steps)
@@ -168,7 +168,7 @@ libcublasLt.so.12 => /usr/local/cuda/lib64/libcublasLt.so.12
 
 ```bash
 source .venv/bin/activate
-python test_video_gpu.py
+python tools/test_video_gpu.py
 ```
 
 ### What the Test Does

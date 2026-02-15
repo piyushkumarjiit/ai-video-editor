@@ -98,11 +98,11 @@ Central configuration file for all pipeline stages:
 │   └── luts/                    # Color grading LUTs
 │
 ├── unused/                       # Old scripts (archived)
-├── unused2/                      # Debug tools & temp files (archived)
-│   ├── query_codecs.py          # Debug: query DaVinci codecs
-│   ├── query_render_settings.py # Debug: query render settings
-│   ├── media_pool.fcpxml        # Old/backup timeline
-│   └── tmp_advanced4_frames/    # Old temp directory
+├── tools/                        # GPU build/test utilities
+│   ├── install_gcc12.sh         # Build GCC 12 for CUDA 12.4
+│   ├── patch_cuda_math.sh       # Patch CUDA math headers
+│   ├── build_llama_cpp_with_gcc12.sh # Build llama-cpp-python with CUDA
+│   └── test_video_gpu.py        # GPU smoke test
 │
 ├── README.md                     # Main documentation
 ├── README_GPU_COMPILATION.md     # GPU setup guide
@@ -168,8 +168,10 @@ pip install google-api-python-client google-auth-oauthlib google-auth-httplib2
 ## Notes
 
 ### Archive Directories
-- **`unused/`** - Old experimental scripts, not used in current pipeline
-- **`unused2/`** - Debug tools and temporary files, kept for reference
+  - **`unused/`** - Old experimental scripts, not used in current pipeline
+
+### Tools
+  - **`tools/`** - GPU compilation and verification scripts used by [README_GPU_COMPILATION.md](README_GPU_COMPILATION.md)
 
 ### Git Ignore
 The following files are excluded from version control:
