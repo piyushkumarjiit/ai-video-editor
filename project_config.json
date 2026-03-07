@@ -75,6 +75,15 @@
     "outro_clip": "./assets/Finish-Intro-V3.mkv",
     "exclude_boring": true,
     "include_classifications": ["interesting", "moderate"],
+    "max_duration_minutes": 45,
+    "smart_select": true,
+    "smart_select_weights": {
+      "llm_rating": 1.0,
+      "semantic_interest": 3.0,
+      "duplicate_penalty": 0.3,
+      "repetitive_penalty": 0.3,
+      "min_per_video_seconds": 10
+    },
     "teaser_enabled": true,
     "teaser_max_duration": 65.0,
     "timeline_width": 3840,
@@ -120,7 +129,7 @@
     },
     "teaser_music": {
       "folder": "./assets/music-teaser",
-      "audio_lane": 1,
+      "audio_lane": 3,
       "random_seed": null,
       "fade_duration": 1.0,
       "fade_silence_db": -60.0

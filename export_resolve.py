@@ -463,6 +463,115 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
         if after < before:
             print(f"🚫 Excluded boring scenes: {before} → {after}")
 
+    # ---- Smart selection: fit content into max_duration_minutes budget ----
+    max_duration_minutes = timeline_config.get('max_duration_minutes')
+    smart_select_enabled = timeline_config.get('smart_select', False)
+
+    if max_duration_minutes and smart_select_enabled and clip_infos:
+        max_duration_sec = float(max_duration_minutes) * 60.0
+        weights = timeline_config.get('smart_select_weights', {})
+        w_rating = float(weights.get('llm_rating', 1.0))
+        w_semantic = float(weights.get('semantic_interest', 3.0))
+        w_dup = float(weights.get('duplicate_penalty', 0.3))
+        w_rep = float(weights.get('repetitive_penalty', 0.3))
+        min_per_video_sec = float(weights.get('min_per_video_seconds', 10))
+
+        # Estimate overhead from intro/outro/teaser/closing (not yet added)
+        overhead_sec = 0.0
+        if timeline_config.get('intro_clip'):
+            overhead_sec += 8.0  # rough intro duration
+        if timeline_config.get('outro_clip'):
+            overhead_sec += 8.0  # rough outro duration
+        teaser_dur = float(timeline_config.get('teaser_max_duration', 65.0))
+        if timeline_config.get('teaser_enabled', True):
+            overhead_sec += teaser_dur
+        # Closing photos/teasers estimate
+        paths_cfg_ss = config.get('paths', {})
+        if paths_cfg_ss.get('photos'):
+            photos_path_ss = Path(paths_cfg_ss['photos']).expanduser().resolve()
+            if photos_path_ss.exists():
+                photo_count = sum(1 for f in photos_path_ss.iterdir()
+                                 if f.is_file() and f.suffix.lower() in {'.jpg','.jpeg','.png','.bmp','.tiff'})
+                closing_photo_dur = float(timeline_config.get('closing_photos', {}).get('duration_seconds', 3))
+                overhead_sec += photo_count * closing_photo_dur
+        if paths_cfg_ss.get('teaser_videos'):
+            tv_path_ss = Path(paths_cfg_ss['teaser_videos']).expanduser().resolve()
+            if tv_path_ss.exists():
+                for f in tv_path_ss.iterdir():
+                    if f.is_file() and f.suffix.lower() in {'.mov','.mp4','.mkv','.avi','.m4v'}:
+                        overhead_sec += 18.0  # rough per teaser-video
+
+        content_budget = max(60.0, max_duration_sec - overhead_sec)
+        current_total = sum(float(info['output_duration_frac']) for info in clip_infos)
+
+        if current_total > content_budget:
+            # Score each clip
+            def _compute_quality_score(info):
+                scene = info['scene']
+                rating = float(scene.get('llm_rating', 5))
+                sem = float(scene.get('semantic_interest', 0.1))
+                dup = float(scene.get('duplicate_ratio', 0))
+                rep = float(scene.get('repetitive_ratio', 0))
+                cls = scene.get('classification', 'moderate')
+                score = (rating * w_rating) * (1.0 - dup * w_dup - rep * w_rep) + sem * w_semantic
+                if cls == 'interesting':
+                    score += 2.0  # bonus for interesting
+                return score
+
+            for info in clip_infos:
+                info['_quality_score'] = _compute_quality_score(info)
+
+            # Group clips by video
+            from collections import defaultdict
+            videos_clips = defaultdict(list)
+            for info in clip_infos:
+                videos_clips[info['video_name']].append(info)
+
+            # Phase 1: guarantee minimum per video (highest-scored first)
+            guaranteed = []
+            remaining_pool = []
+            for vname, vclips in videos_clips.items():
+                vclips_sorted = sorted(vclips, key=lambda x: x['_quality_score'], reverse=True)
+                video_dur = 0.0
+                for clip in vclips_sorted:
+                    clip_dur = float(clip['output_duration_frac'])
+                    if video_dur < min_per_video_sec:
+                        guaranteed.append(clip)
+                        video_dur += clip_dur
+                    else:
+                        remaining_pool.append(clip)
+
+            guaranteed_dur = sum(float(c['output_duration_frac']) for c in guaranteed)
+
+            # Phase 2: fill remaining budget with highest-scored clips
+            remaining_pool.sort(key=lambda x: x['_quality_score'], reverse=True)
+            budget_left = content_budget - guaranteed_dur
+            extra = []
+            for clip in remaining_pool:
+                clip_dur = float(clip['output_duration_frac'])
+                if budget_left >= clip_dur:
+                    extra.append(clip)
+                    budget_left -= clip_dur
+
+            # Merge and restore original ordering
+            selected_set = set(id(c) for c in guaranteed) | set(id(c) for c in extra)
+            clip_infos = [info for info in clip_infos if id(info) in selected_set]
+            new_total = sum(float(info['output_duration_frac']) for info in clip_infos)
+
+            # Find cutoff score
+            scores = sorted([c['_quality_score'] for c in clip_infos])
+            cutoff = scores[0] if scores else 0
+
+            print(f"\n🧠 Smart selection: {current_total/60:.1f} min → {new_total/60:.1f} min "
+                  f"(budget {content_budget/60:.1f} min, overhead ~{overhead_sec/60:.1f} min)")
+            print(f"   {len(clip_infos)} clips kept from {len(guaranteed) + len(remaining_pool)}, "
+                  f"cutoff score {cutoff:.2f}, "
+                  f"{len(videos_clips)} videos represented (min {min_per_video_sec}s each)")
+
+            # Clean up temp scores
+            for info in clip_infos:
+                info.pop('_quality_score', None)
+
     intro_path = timeline_config.get('intro_clip')
     outro_path = timeline_config.get('outro_clip')
     copy_intro_outro = timeline_config.get('copy_intro_outro_to_clips_dir', True)
@@ -1200,6 +1309,7 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
     print()
     
     timeline_pos_sec = Fraction(0, 1)
+    _FRAC_LIMIT = 1_000_000  # keep fraction denominators manageable
     
     transition_seconds = timeline_config.get('transition_duration', None)
     transition_duration = None
@@ -1220,9 +1330,9 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
         clip_end = timeline_cursor + info['output_duration_frac']
         clip_timeline_ranges.append((clip_start, clip_end))
         if transition_half and idx < len(clip_infos) - 1:
-            timeline_cursor = clip_end - transition_half
+            timeline_cursor = (clip_end - transition_half).limit_denominator(_FRAC_LIMIT)
         else:
-            timeline_cursor = clip_end
+            timeline_cursor = clip_end.limit_denominator(_FRAC_LIMIT)
     snippet_volume_db = timeline_config.get(
         'snippet_audio_volume_db',
         audio_config.get('snippet_audio_volume_db', None)
@@ -1365,7 +1475,7 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
         print(f'   Clip {i:02d}: {clip_info["video_name"]} {start_sec:7.1f}s-{end_sec:7.1f}s ({duration_sec:6.1f}s) @ {speed:.1f}x ({speed*100:.0f}%) → {output_duration_sec:6.1f}s [{classification}]')
         
         # Move timeline position forward
-        timeline_pos_sec += output_duration_frac
+        timeline_pos_sec = (timeline_pos_sec + output_duration_frac).limit_denominator(_FRAC_LIMIT)
         
         # Add transition to next clip (except for last clip) with overlap
         if transition_duration and i < len(clip_infos):
@@ -1377,7 +1487,7 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
             })
             SubElement(transition, 'filter-video', {'name': 'Transition', 'ref': 'r1'})
             SubElement(transition, 'filter-audio', {'name': 'Transition', 'ref': 'r1'})
-            timeline_pos_sec -= transition_half
+            timeline_pos_sec = (timeline_pos_sec - transition_half).limit_denominator(_FRAC_LIMIT)
 
     if watermark_asset_id:
         watermark_size = get_media_dimensions(watermark_path)
@@ -1512,6 +1622,8 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
                 # Simplify fractions to avoid precision issues with large numbers
                 clip_start = music_pos.limit_denominator(10000)
                 clip_duration = clip_duration.limit_denominator(10000)
+                if clip_duration <= 0:
+                    break  # limit_denominator can round tiny remainders to 0
                 attributes = {
                     'name': Path(track['path']).name,
                     'ref': track['asset_id'],
@@ -1635,6 +1747,8 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
                 
                 clip_start = music_pos.limit_denominator(10000)
                 clip_duration = clip_duration.limit_denominator(10000)
+                if clip_duration <= 0:
+                    break  # limit_denominator can round tiny remainders to 0
                 
                 attributes = {
                     'name': Path(track['path']).name,
@@ -1798,12 +1912,17 @@ def create_fcpxml_timeline(analysis_path, video_dir, output_file, clip_base_dir=
                 })
     
     # Add final gap
+    gap_dur = Fraction(1001, 2000)
     gap = SubElement(spine, 'gap', {
         'name': 'Gap',
         'start': '3600/1s',
         'offset': f'{timeline_pos_sec.numerator}/{timeline_pos_sec.denominator}s',
-        'duration': '1001/2000s'
+        'duration': f'{gap_dur.numerator}/{gap_dur.denominator}s'
     })
+
+    # Fix sequence duration to match actual timeline content
+    final_duration = (timeline_pos_sec + gap_dur).limit_denominator(_FRAC_LIMIT)
+    sequence.set('duration', f'{final_duration.numerator}/{final_duration.denominator}s')
     
     # Write XML file with proper formatting
     tree = ElementTree(fcpxml)

@@ -28,6 +28,7 @@
 # Logs and data exports
 *.log
 *.csv
+*metadata*.json
 
 # Virtual environment
 /.venv/
