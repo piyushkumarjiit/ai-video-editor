@@ -134,8 +134,11 @@ def render_timeline_youtube(output_path, timeline_index=1, config=None):
 		time.sleep(0.5)
 		
 		# Then set render settings
+		# Resolve API requires TargetDir + CustomName (not TargetFile)
+		output_filename = Path(output_path_str).stem  # filename without extension
 		render_settings = {
-			"TargetFile": output_path_str,
+			"TargetDir": output_dir,
+			"CustomName": output_filename,
 			"VideoQuality": video_quality,
 			"EncodingProfile": encoding_profile,
 			"PresetName": preset_name,

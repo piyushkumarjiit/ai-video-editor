@@ -5,20 +5,20 @@
         <format name="FFVideoFormat3840x2160p2398" height="2160" id="r0" frameDuration="1001/24000s" width="3840" />
         <format name="FFVideoFormatRateUndefined" height="2160" id="r2" frameDuration="1/24s" width="3840" />
         <effect name="Cross Dissolve" id="r1" uid="FxPlug:4731E73A-8DAC-4113-9A30-AE85B1761265" />
-        <asset name="IMG_4358_showcase_01_16s_1.00x.mov" start="0/1s" hasAudio="1" id="r3" uid="file:///home/mazsola/video/ai_clips/IMG_4358/IMG_4358_showcase_01_16s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
-            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_4358/IMG_4358_showcase_01_16s_1.00x.mov" kind="original-media" />
-        </asset>
-        <asset name="IMG_4076_showcase_01_10s_1.00x.mov" start="0/1s" hasAudio="1" id="r4" uid="file:///home/mazsola/video/ai_clips/IMG_4076/IMG_4076_showcase_01_10s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+        <asset name="IMG_4076_showcase_01_10s_1.00x.mov" start="0/1s" hasAudio="1" id="r3" uid="file:///home/mazsola/video/ai_clips/IMG_4076/IMG_4076_showcase_01_10s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
             <media-rep src="file:///home/mazsola/video/ai_clips/IMG_4076/IMG_4076_showcase_01_10s_1.00x.mov" kind="original-media" />
         </asset>
-        <asset name="IMG_4316_showcase_01_22s_1.00x.mov" start="0/1s" hasAudio="1" id="r5" uid="file:///home/mazsola/video/ai_clips/IMG_4316/IMG_4316_showcase_01_22s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
-            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_4316/IMG_4316_showcase_01_22s_1.00x.mov" kind="original-media" />
+        <asset name="IMG_4358_showcase_01_16s_1.00x.mov" start="0/1s" hasAudio="1" id="r4" uid="file:///home/mazsola/video/ai_clips/IMG_4358/IMG_4358_showcase_01_16s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_4358/IMG_4358_showcase_01_16s_1.00x.mov" kind="original-media" />
         </asset>
-        <asset name="IMG_4347_showcase_01_12s_1.00x.mov" start="0/1s" hasAudio="1" id="r6" uid="file:///home/mazsola/video/ai_clips/IMG_4347/IMG_4347_showcase_01_12s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+        <asset name="IMG_4347_showcase_01_12s_1.00x.mov" start="0/1s" hasAudio="1" id="r5" uid="file:///home/mazsola/video/ai_clips/IMG_4347/IMG_4347_showcase_01_12s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
             <media-rep src="file:///home/mazsola/video/ai_clips/IMG_4347/IMG_4347_showcase_01_12s_1.00x.mov" kind="original-media" />
         </asset>
-        <asset name="IMG_4082_showcase_01_140s_1.00x.mov" start="0/1s" hasAudio="1" id="r7" uid="file:///home/mazsola/video/ai_clips/IMG_4082/IMG_4082_showcase_01_140s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
-            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_4082/IMG_4082_showcase_01_140s_1.00x.mov" kind="original-media" />
+        <asset name="IMG_4298_showcase_01_100s_1.00x.mov" start="0/1s" hasAudio="1" id="r6" uid="file:///home/mazsola/video/ai_clips/IMG_4298/IMG_4298_showcase_01_100s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_4298/IMG_4298_showcase_01_100s_1.00x.mov" kind="original-media" />
+        </asset>
+        <asset name="IMG_4316_showcase_01_22s_1.00x.mov" start="0/1s" hasAudio="1" id="r7" uid="file:///home/mazsola/video/ai_clips/IMG_4316/IMG_4316_showcase_01_22s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_4316/IMG_4316_showcase_01_22s_1.00x.mov" kind="original-media" />
         </asset>
         <asset name="IMG_4520_showcase_01_0s_1.00x.mov" start="0/1s" hasAudio="1" id="r8" uid="file:///home/mazsola/video/ai_clips/IMG_4520/IMG_4520_showcase_01_0s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
             <media-rep src="file:///home/mazsola/video/ai_clips/IMG_4520/IMG_4520_showcase_01_0s_1.00x.mov" kind="original-media" />
@@ -26,23 +26,23 @@
         <asset name="IMG_4512_showcase_01_16s_1.00x.mov" start="0/1s" hasAudio="1" id="r9" uid="file:///home/mazsola/video/ai_clips/IMG_4512/IMG_4512_showcase_01_16s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
             <media-rep src="file:///home/mazsola/video/ai_clips/IMG_4512/IMG_4512_showcase_01_16s_1.00x.mov" kind="original-media" />
         </asset>
-        <asset name="IMG_4511_showcase_01_0s_1.00x.mov" start="0/1s" hasAudio="1" id="r10" uid="file:///home/mazsola/video/ai_clips/IMG_4511/IMG_4511_showcase_01_0s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
-            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_4511/IMG_4511_showcase_01_0s_1.00x.mov" kind="original-media" />
+        <asset name="IMG_4517_showcase_01_2s_1.00x.mov" start="0/1s" hasAudio="1" id="r10" uid="file:///home/mazsola/video/ai_clips/IMG_4517/IMG_4517_showcase_01_2s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_4517/IMG_4517_showcase_01_2s_1.00x.mov" kind="original-media" />
         </asset>
-        <asset name="IMG_4514_showcase_01_18s_1.00x.mov" start="0/1s" hasAudio="1" id="r11" uid="file:///home/mazsola/video/ai_clips/IMG_4514/IMG_4514_showcase_01_18s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
-            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_4514/IMG_4514_showcase_01_18s_1.00x.mov" kind="original-media" />
+        <asset name="IMG_4529_showcase_01_10s_1.00x.mov" start="0/1s" hasAudio="1" id="r11" uid="file:///home/mazsola/video/ai_clips/IMG_4529/IMG_4529_showcase_01_10s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_4529/IMG_4529_showcase_01_10s_1.00x.mov" kind="original-media" />
         </asset>
-        <asset name="IMG_4571_showcase_01_46s_1.00x.mov" start="0/1s" hasAudio="1" id="r12" uid="file:///home/mazsola/video/ai_clips/IMG_4571/IMG_4571_showcase_01_46s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
-            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_4571/IMG_4571_showcase_01_46s_1.00x.mov" kind="original-media" />
+        <asset name="IMG_4552_showcase_01_2s_1.00x.mov" start="0/1s" hasAudio="1" id="r12" uid="file:///home/mazsola/video/ai_clips/IMG_4552/IMG_4552_showcase_01_2s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_4552/IMG_4552_showcase_01_2s_1.00x.mov" kind="original-media" />
         </asset>
         <asset name="IMG_4586_showcase_01_10s_1.00x.mov" start="0/1s" hasAudio="1" id="r13" uid="file:///home/mazsola/video/ai_clips/IMG_4586/IMG_4586_showcase_01_10s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
             <media-rep src="file:///home/mazsola/video/ai_clips/IMG_4586/IMG_4586_showcase_01_10s_1.00x.mov" kind="original-media" />
         </asset>
-        <asset name="IMG_4552_showcase_01_2s_1.00x.mov" start="0/1s" hasAudio="1" id="r14" uid="file:///home/mazsola/video/ai_clips/IMG_4552/IMG_4552_showcase_01_2s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
-            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_4552/IMG_4552_showcase_01_2s_1.00x.mov" kind="original-media" />
+        <asset name="IMG_4533_showcase_01_36s_1.00x.mov" start="0/1s" hasAudio="1" id="r14" uid="file:///home/mazsola/video/ai_clips/IMG_4533/IMG_4533_showcase_01_36s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_4533/IMG_4533_showcase_01_36s_1.00x.mov" kind="original-media" />
         </asset>
-        <asset name="IMG_4530_showcase_01_2s_1.00x.mov" start="0/1s" hasAudio="1" id="r15" uid="file:///home/mazsola/video/ai_clips/IMG_4530/IMG_4530_showcase_01_2s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
-            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_4530/IMG_4530_showcase_01_2s_1.00x.mov" kind="original-media" />
+        <asset name="IMG_4577_showcase_01_36s_1.00x.mov" start="0/1s" hasAudio="1" id="r15" uid="file:///home/mazsola/video/ai_clips/IMG_4577/IMG_4577_showcase_01_36s_1.00x.mov" duration="5/1s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
+            <media-rep src="file:///home/mazsola/video/ai_clips/IMG_4577/IMG_4577_showcase_01_36s_1.00x.mov" kind="original-media" />
         </asset>
         <asset name="Start-Intro-V3.mkv" start="0/1s" hasAudio="1" id="r16" uid="file:///home/mazsola/video/assets/Start-Intro-V3.mkv" duration="187/8s" hasVideo="1" audioSources="1" format="r0" audioChannels="2">
             <media-rep src="file:///home/mazsola/video/assets/Start-Intro-V3.mkv" kind="original-media" />
@@ -629,7 +629,7 @@
             <project name="Timeline 1 (Resolve)">
                 <sequence tcStart="0/1s" duration="2251107091/853507s" format="r0" tcFormat="NDF">
                     <spine>
-                        <asset-clip name="IMG_4358_showcase_01_16s_1.00x.mov" ref="r3" start="0/1s" offset="0/1s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
+                        <asset-clip name="IMG_4076_showcase_01_10s_1.00x.mov" ref="r3" start="0/1s" offset="0/1s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
                             <adjust-volume amount="-96.0dB" />
                             <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
                         </asset-clip>
@@ -637,7 +637,7 @@
                             <filter-video name="Transition" ref="r1" />
                             <filter-audio name="Transition" ref="r1" />
                         </transition>
-                        <asset-clip name="IMG_4076_showcase_01_10s_1.00x.mov" ref="r4" start="0/1s" offset="9/2s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
+                        <asset-clip name="IMG_4358_showcase_01_16s_1.00x.mov" ref="r4" start="0/1s" offset="9/2s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
                             <adjust-volume amount="-96.0dB" />
                             <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
                         </asset-clip>
@@ -645,7 +645,7 @@
                             <filter-video name="Transition" ref="r1" />
                             <filter-audio name="Transition" ref="r1" />
                         </transition>
-                        <asset-clip name="IMG_4316_showcase_01_22s_1.00x.mov" ref="r5" start="0/1s" offset="9/1s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
+                        <asset-clip name="IMG_4347_showcase_01_12s_1.00x.mov" ref="r5" start="0/1s" offset="9/1s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
                             <adjust-volume amount="-96.0dB" />
                             <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
                         </asset-clip>
@@ -653,7 +653,7 @@
                             <filter-video name="Transition" ref="r1" />
                             <filter-audio name="Transition" ref="r1" />
                         </transition>
-                        <asset-clip name="IMG_4347_showcase_01_12s_1.00x.mov" ref="r6" start="0/1s" offset="27/2s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
+                        <asset-clip name="IMG_4298_showcase_01_100s_1.00x.mov" ref="r6" start="0/1s" offset="27/2s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
                             <adjust-volume amount="-96.0dB" />
                             <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
                         </asset-clip>
@@ -661,7 +661,7 @@
                             <filter-video name="Transition" ref="r1" />
                             <filter-audio name="Transition" ref="r1" />
                         </transition>
-                        <asset-clip name="IMG_4082_showcase_01_140s_1.00x.mov" ref="r7" start="0/1s" offset="18/1s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
+                        <asset-clip name="IMG_4316_showcase_01_22s_1.00x.mov" ref="r7" start="0/1s" offset="18/1s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
                             <adjust-volume amount="-96.0dB" />
                             <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
                         </asset-clip>
@@ -685,7 +685,7 @@
                             <filter-video name="Transition" ref="r1" />
                             <filter-audio name="Transition" ref="r1" />
                         </transition>
-                        <asset-clip name="IMG_4511_showcase_01_0s_1.00x.mov" ref="r10" start="0/1s" offset="63/2s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
+                        <asset-clip name="IMG_4517_showcase_01_2s_1.00x.mov" ref="r10" start="0/1s" offset="63/2s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
                             <adjust-volume amount="-96.0dB" />
                             <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
                         </asset-clip>
@@ -693,7 +693,7 @@
                             <filter-video name="Transition" ref="r1" />
                             <filter-audio name="Transition" ref="r1" />
                         </transition>
-                        <asset-clip name="IMG_4514_showcase_01_18s_1.00x.mov" ref="r11" start="0/1s" offset="36/1s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
+                        <asset-clip name="IMG_4529_showcase_01_10s_1.00x.mov" ref="r11" start="0/1s" offset="36/1s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
                             <adjust-volume amount="-96.0dB" />
                             <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
                         </asset-clip>
@@ -701,7 +701,7 @@
                             <filter-video name="Transition" ref="r1" />
                             <filter-audio name="Transition" ref="r1" />
                         </transition>
-                        <asset-clip name="IMG_4571_showcase_01_46s_1.00x.mov" ref="r12" start="0/1s" offset="81/2s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
+                        <asset-clip name="IMG_4552_showcase_01_2s_1.00x.mov" ref="r12" start="0/1s" offset="81/2s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
                             <adjust-volume amount="-96.0dB" />
                             <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
                         </asset-clip>
@@ -717,7 +717,7 @@
                             <filter-video name="Transition" ref="r1" />
                             <filter-audio name="Transition" ref="r1" />
                         </transition>
-                        <asset-clip name="IMG_4552_showcase_01_2s_1.00x.mov" ref="r14" start="0/1s" offset="99/2s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
+                        <asset-clip name="IMG_4533_showcase_01_36s_1.00x.mov" ref="r14" start="0/1s" offset="99/2s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
                             <adjust-volume amount="-96.0dB" />
                             <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
                         </asset-clip>
@@ -725,7 +725,7 @@
                             <filter-video name="Transition" ref="r1" />
                             <filter-audio name="Transition" ref="r1" />
                         </transition>
-                        <asset-clip name="IMG_4530_showcase_01_2s_1.00x.mov" ref="r15" start="0/1s" offset="54/1s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
+                        <asset-clip name="IMG_4577_showcase_01_36s_1.00x.mov" ref="r15" start="0/1s" offset="54/1s" duration="5/1s" format="r0" enabled="1" tcFormat="NDF" lane="0" audioStart="0/1s" audioDuration="5/1s">
                             <adjust-volume amount="-96.0dB" />
                             <adjust-transform position="0 0" scale="1.78 1.78" anchor="0 0" rotation="270" />
                         </asset-clip>
@@ -2067,61 +2067,7 @@
                             <adjust-transform position="141.58275600000002 -41.19276" scale="0.19 0.19" anchor="0 0" />
                             <adjust-blend amount="0.700" opacity="0.700" />
                         </asset-clip>
-                        <asset-clip name="Tiko Tiko - Better Believe - Creative Cut - Chill.wav" ref="r195" start="0/1s" offset="655/8s" duration="1207518/6559s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1207518/6559s" audioFadeIn="3/1s" audioFadeOut="3/1s">
-                            <adjust-volume amount="0dB" />
-                            <audio-automation lane="volume">
-                                <keyframe time="0/1s" value="-60.0dB" />
-                                <keyframe time="3/1s" value="0dB" />
-                                <keyframe time="1187841/6559s" value="0dB" />
-                                <keyframe time="1207518/6559s" value="-60.0dB" />
-                            </audio-automation>
-                        </asset-clip>
-                        <asset-clip name="BalloonPlanet - Steady Hearts Stronger Roads.wav" ref="r186" start="0/1s" offset="121551/457s" duration="1758482/5559s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1758482/5559s" audioFadeIn="3/1s" audioFadeOut="3/1s">
-                            <adjust-volume amount="0dB" />
-                            <audio-automation lane="volume">
-                                <keyframe time="0/1s" value="-60.0dB" />
-                                <keyframe time="3/1s" value="0dB" />
-                                <keyframe time="1741805/5559s" value="0dB" />
-                                <keyframe time="1758482/5559s" value="-60.0dB" />
-                            </audio-automation>
-                        </asset-clip>
-                        <asset-clip name="Tiko Tiko - Better Believe - No Backing Vocals.wav" ref="r196" start="0/1s" offset="3893884/6687s" duration="871274/4001s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="871274/4001s" audioFadeIn="3/1s" audioFadeOut="3/1s">
-                            <adjust-volume amount="0dB" />
-                            <audio-automation lane="volume">
-                                <keyframe time="0/1s" value="-60.0dB" />
-                                <keyframe time="3/1s" value="0dB" />
-                                <keyframe time="859271/4001s" value="0dB" />
-                                <keyframe time="871274/4001s" value="-60.0dB" />
-                            </audio-automation>
-                        </asset-clip>
-                        <asset-clip name="Guy Manor - Longing.wav" ref="r190" start="0/1s" offset="6321358/7901s" duration="592/5s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="592/5s" audioFadeIn="3/1s" audioFadeOut="3/1s">
-                            <adjust-volume amount="0dB" />
-                            <audio-automation lane="volume">
-                                <keyframe time="0/1s" value="-60.0dB" />
-                                <keyframe time="3/1s" value="0dB" />
-                                <keyframe time="577/5s" value="0dB" />
-                                <keyframe time="592/5s" value="-60.0dB" />
-                            </audio-automation>
-                        </asset-clip>
-                        <asset-clip name="SHYLIFE - The Colors of Magic.wav" ref="r194" start="0/1s" offset="6049966/6587s" duration="623/5s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="623/5s" audioFadeIn="3/1s" audioFadeOut="3/1s">
-                            <adjust-volume amount="0dB" />
-                            <audio-automation lane="volume">
-                                <keyframe time="0/1s" value="-60.0dB" />
-                                <keyframe time="3/1s" value="0dB" />
-                                <keyframe time="608/5s" value="0dB" />
-                                <keyframe time="623/5s" value="-60.0dB" />
-                            </audio-automation>
-                        </asset-clip>
-                        <asset-clip name="Guy Manor - Tides.wav" ref="r191" start="0/1s" offset="8241301/7901s" duration="1841/12s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1841/12s" audioFadeIn="3/1s" audioFadeOut="3/1s">
-                            <adjust-volume amount="0dB" />
-                            <audio-automation lane="volume">
-                                <keyframe time="0/1s" value="-60.0dB" />
-                                <keyframe time="3/1s" value="0dB" />
-                                <keyframe time="1805/12s" value="0dB" />
-                                <keyframe time="1841/12s" value="-60.0dB" />
-                            </audio-automation>
-                        </asset-clip>
-                        <asset-clip name="BalloonPlanet - Write Your Own Story.wav" ref="r187" start="0/1s" offset="6072173/5075s" duration="1788133/6346s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1788133/6346s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                        <asset-clip name="BalloonPlanet - Write Your Own Story.wav" ref="r187" start="0/1s" offset="655/8s" duration="1788133/6346s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1788133/6346s" audioFadeIn="3/1s" audioFadeOut="3/1s">
                             <adjust-volume amount="0dB" />
                             <audio-automation lane="volume">
                                 <keyframe time="0/1s" value="-60.0dB" />
@@ -2130,16 +2076,16 @@
                                 <keyframe time="1788133/6346s" value="-60.0dB" />
                             </audio-automation>
                         </asset-clip>
-                        <asset-clip name="Rotem Cinamon - Heros Anthem.wav" ref="r193" start="0/1s" offset="12244432/8283s" duration="2172817/9701s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="2172817/9701s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                        <asset-clip name="Tiko Tiko - Better Believe - No Backing Vocals.wav" ref="r196" start="0/1s" offset="2059340/5663s" duration="871274/4001s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="871274/4001s" audioFadeIn="3/1s" audioFadeOut="3/1s">
                             <adjust-volume amount="0dB" />
                             <audio-automation lane="volume">
                                 <keyframe time="0/1s" value="-60.0dB" />
                                 <keyframe time="3/1s" value="0dB" />
-                                <keyframe time="2143714/9701s" value="0dB" />
-                                <keyframe time="2172817/9701s" value="-60.0dB" />
+                                <keyframe time="859271/4001s" value="0dB" />
+                                <keyframe time="871274/4001s" value="-60.0dB" />
                             </audio-automation>
                         </asset-clip>
-                        <asset-clip name="Alon Ohana - The Rainbow Train - Instrumental version.wav" ref="r184" start="0/1s" offset="9649994/5669s" duration="1902439/10000s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1902439/10000s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                        <asset-clip name="Alon Ohana - The Rainbow Train - Instrumental version.wav" ref="r184" start="0/1s" offset="3119277/5365s" duration="1902439/10000s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1902439/10000s" audioFadeIn="3/1s" audioFadeOut="3/1s">
                             <adjust-volume amount="0dB" />
                             <audio-automation lane="volume">
                                 <keyframe time="0/1s" value="-60.0dB" />
@@ -2148,16 +2094,7 @@
                                 <keyframe time="1902439/10000s" value="-60.0dB" />
                             </audio-automation>
                         </asset-clip>
-                        <asset-clip name="Doug Kaufman - Impossible Things.wav" ref="r189" start="0/1s" offset="7164941/3786s" duration="489836/3305s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="489836/3305s" audioFadeIn="3/1s" audioFadeOut="3/1s">
-                            <adjust-volume amount="0dB" />
-                            <audio-automation lane="volume">
-                                <keyframe time="0/1s" value="-60.0dB" />
-                                <keyframe time="3/1s" value="0dB" />
-                                <keyframe time="479921/3305s" value="0dB" />
-                                <keyframe time="489836/3305s" value="-60.0dB" />
-                            </audio-automation>
-                        </asset-clip>
-                        <asset-clip name="Alon Peretz - All the Way Through.wav" ref="r185" start="0/1s" offset="4556869/2233s" duration="1332821/8766s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1332821/8766s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                        <asset-clip name="Alon Peretz - All the Way Through.wav" ref="r185" start="0/1s" offset="6022005/7804s" duration="1332821/8766s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1332821/8766s" audioFadeIn="3/1s" audioFadeOut="3/1s">
                             <adjust-volume amount="0dB" />
                             <audio-automation lane="volume">
                                 <keyframe time="0/1s" value="-60.0dB" />
@@ -2166,16 +2103,34 @@
                                 <keyframe time="1332821/8766s" value="-60.0dB" />
                             </audio-automation>
                         </asset-clip>
-                        <asset-clip name="Roie Shpigler - Tranquility - No Backing Vocals.wav" ref="r192" start="0/1s" offset="18642659/8502s" duration="1068551/9985s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1068551/9985s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                        <asset-clip name="Rotem Cinamon - Heros Anthem.wav" ref="r193" start="0/1s" offset="8471258/9171s" duration="2172817/9701s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="2172817/9701s" audioFadeIn="3/1s" audioFadeOut="3/1s">
                             <adjust-volume amount="0dB" />
                             <audio-automation lane="volume">
                                 <keyframe time="0/1s" value="-60.0dB" />
                                 <keyframe time="3/1s" value="0dB" />
-                                <keyframe time="1038596/9985s" value="0dB" />
-                                <keyframe time="1068551/9985s" value="-60.0dB" />
+                                <keyframe time="2143714/9701s" value="0dB" />
+                                <keyframe time="2172817/9701s" value="-60.0dB" />
                             </audio-automation>
                         </asset-clip>
-                        <asset-clip name="Beò - For the Rest of My Life - Instrumental version.wav" ref="r188" start="0/1s" offset="22622677/9837s" duration="1574666/7831s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1574666/7831s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                        <asset-clip name="Guy Manor - Tides.wav" ref="r191" start="0/1s" offset="8032607/6999s" duration="1841/12s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1841/12s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                            <adjust-volume amount="0dB" />
+                            <audio-automation lane="volume">
+                                <keyframe time="0/1s" value="-60.0dB" />
+                                <keyframe time="3/1s" value="0dB" />
+                                <keyframe time="1805/12s" value="0dB" />
+                                <keyframe time="1841/12s" value="-60.0dB" />
+                            </audio-automation>
+                        </asset-clip>
+                        <asset-clip name="Tiko Tiko - Better Believe - Creative Cut - Chill.wav" ref="r195" start="0/1s" offset="12141827/9332s" duration="1207518/6559s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1207518/6559s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                            <adjust-volume amount="0dB" />
+                            <audio-automation lane="volume">
+                                <keyframe time="0/1s" value="-60.0dB" />
+                                <keyframe time="3/1s" value="0dB" />
+                                <keyframe time="1187841/6559s" value="0dB" />
+                                <keyframe time="1207518/6559s" value="-60.0dB" />
+                            </audio-automation>
+                        </asset-clip>
+                        <asset-clip name="Beò - For the Rest of My Life - Instrumental version.wav" ref="r188" start="0/1s" offset="845077/569s" duration="1574666/7831s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1574666/7831s" audioFadeIn="3/1s" audioFadeOut="3/1s">
                             <adjust-volume amount="0dB" />
                             <audio-automation lane="volume">
                                 <keyframe time="0/1s" value="-60.0dB" />
@@ -2184,16 +2139,61 @@
                                 <keyframe time="1574666/7831s" value="-60.0dB" />
                             </audio-automation>
                         </asset-clip>
-                        <asset-clip name="Tiko Tiko - Better Believe - Creative Cut - Chill.wav" ref="r195" start="0/1s" offset="15922815/6367s" duration="681505/8429s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="681505/8429s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                        <asset-clip name="BalloonPlanet - Steady Hearts Stronger Roads.wav" ref="r186" start="0/1s" offset="15957248/9463s" duration="1758482/5559s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1758482/5559s" audioFadeIn="3/1s" audioFadeOut="3/1s">
                             <adjust-volume amount="0dB" />
                             <audio-automation lane="volume">
                                 <keyframe time="0/1s" value="-60.0dB" />
                                 <keyframe time="3/1s" value="0dB" />
-                                <keyframe time="656218/8429s" value="0dB" />
-                                <keyframe time="681505/8429s" value="-60.0dB" />
+                                <keyframe time="1741805/5559s" value="0dB" />
+                                <keyframe time="1758482/5559s" value="-60.0dB" />
                             </audio-automation>
                         </asset-clip>
-                        <asset-clip name="REPINA - Better Days.wav" ref="r202" start="0/1s" offset="25287626/9795s" duration="389/12s" enabled="1" tcFormat="NDF" lane="3" audioStart="0/1s" audioDuration="389/12s" audioFadeIn="1/1s" audioFadeOut="1/1s">
+                        <asset-clip name="SHYLIFE - The Colors of Magic.wav" ref="r194" start="0/1s" offset="19839843/9907s" duration="623/5s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="623/5s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                            <adjust-volume amount="0dB" />
+                            <audio-automation lane="volume">
+                                <keyframe time="0/1s" value="-60.0dB" />
+                                <keyframe time="3/1s" value="0dB" />
+                                <keyframe time="608/5s" value="0dB" />
+                                <keyframe time="623/5s" value="-60.0dB" />
+                            </audio-automation>
+                        </asset-clip>
+                        <asset-clip name="Guy Manor - Longing.wav" ref="r190" start="0/1s" offset="16451831/7734s" duration="592/5s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="592/5s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                            <adjust-volume amount="0dB" />
+                            <audio-automation lane="volume">
+                                <keyframe time="0/1s" value="-60.0dB" />
+                                <keyframe time="3/1s" value="0dB" />
+                                <keyframe time="577/5s" value="0dB" />
+                                <keyframe time="592/5s" value="-60.0dB" />
+                            </audio-automation>
+                        </asset-clip>
+                        <asset-clip name="Doug Kaufman - Impossible Things.wav" ref="r189" start="0/1s" offset="22247244/9907s" duration="489836/3305s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="489836/3305s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                            <adjust-volume amount="0dB" />
+                            <audio-automation lane="volume">
+                                <keyframe time="0/1s" value="-60.0dB" />
+                                <keyframe time="3/1s" value="0dB" />
+                                <keyframe time="479921/3305s" value="0dB" />
+                                <keyframe time="489836/3305s" value="-60.0dB" />
+                            </audio-automation>
+                        </asset-clip>
+                        <asset-clip name="Roie Shpigler - Tranquility - No Backing Vocals.wav" ref="r192" start="0/1s" offset="23825682/9953s" duration="1068551/9985s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="1068551/9985s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                            <adjust-volume amount="0dB" />
+                            <audio-automation lane="volume">
+                                <keyframe time="0/1s" value="-60.0dB" />
+                                <keyframe time="3/1s" value="0dB" />
+                                <keyframe time="1038596/9985s" value="0dB" />
+                                <keyframe time="1068551/9985s" value="-60.0dB" />
+                            </audio-automation>
+                        </asset-clip>
+                        <asset-clip name="BalloonPlanet - Write Your Own Story.wav" ref="r187" start="0/1s" offset="11866461/4745s" duration="793809/9818s" enabled="1" tcFormat="NDF" lane="2" audioStart="0/1s" audioDuration="793809/9818s" audioFadeIn="3/1s" audioFadeOut="3/1s">
+                            <adjust-volume amount="0dB" />
+                            <audio-automation lane="volume">
+                                <keyframe time="0/1s" value="-60.0dB" />
+                                <keyframe time="3/1s" value="0dB" />
+                                <keyframe time="764355/9818s" value="0dB" />
+                                <keyframe time="793809/9818s" value="-60.0dB" />
+                            </audio-automation>
+                        </asset-clip>
+                        <asset-clip name="Katrina Stone - I Dont Care.wav" ref="r200" start="0/1s" offset="25287626/9795s" duration="389/12s" enabled="1" tcFormat="NDF" lane="3" audioStart="0/1s" audioDuration="389/12s" audioFadeIn="1/1s" audioFadeOut="1/1s">
                             <adjust-volume amount="0dB" />
                             <audio-automation lane="volume">
                                 <keyframe time="0/1s" value="-60.0dB" />
@@ -2202,7 +2202,7 @@
                                 <keyframe time="389/12s" value="-60.0dB" />
                             </audio-automation>
                         </asset-clip>
-                        <asset-clip name="Captain Joz - Personal.wav" ref="r198" start="0/1s" offset="0/1s" duration="60160/1079s" enabled="1" tcFormat="NDF" lane="3" audioStart="0/1s" audioDuration="60160/1079s" audioFadeIn="1/1s" audioFadeOut="1/1s">
+                        <asset-clip name="SLPSTRM - Roadside Rodeo.wav" ref="r205" start="0/1s" offset="0/1s" duration="59/1s" enabled="1" tcFormat="NDF" lane="3" audioStart="0/1s" audioDuration="59/1s" audioFadeIn="1/1s" audioFadeOut="1/1s">
                             <adjust-volume amount="0dB" />
                         </asset-clip>
                         <gap name="Gap" start="3600/1s" offset="198902041/75428s" duration="1001/2000s" />
