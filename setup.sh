@@ -50,4 +50,12 @@ except Exception as e:
     print(f"\n⚠️ Error during verification: {e}")
 EOF
 
+# 7. Download Sample Data (Optional)
+if [ -f "sample_videos.txt" ]; then
+    echo "📥 Downloading samples from sample_videos.txt..."
+    yt-dlp -f "bestvideo[height<=720]+bestaudio/best[height<=720]" \
+        -a sample_videos.txt -P "./samples" -o "%(title)s.%(ext)s" \
+        --no-mtime --restrict-filenames
+fi
+
 echo "✅ Setup Complete! Run 'source $ENV_PATH/bin/activate' to start."

@@ -39,6 +39,10 @@
 /music/
 /unused/
 /unused2/
+/models/*
+/samples/*
+
+sample_videos.txt
 
 # Keep folder structure placeholders
 !/ai_clips/.gitkeep
