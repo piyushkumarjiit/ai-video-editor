@@ -1,37 +1,53 @@
 #!/bin/bash
-
-# 1. Configuration - Change this if you want a different env name
 ENV_PATH="$HOME/.virtualenvs/ai-video-env"
-PROJECT_ROOT=$(pwd)
 
-echo "🚀 Starting environment setup for $PROJECT_ROOT"
+echo "🚀 Starting R720 AI Environment Setup..."
 
-# 2. Install System Dependencies (Build tools for llama-cpp, etc.)
-echo "📦 Checking system dependencies (may ask for sudo password)..."
+# 1. System Dependencies
 sudo apt update
-sudo apt install -y build-essential cmake python3-venv python3-dev
+sudo apt install -y build-essential cmake python3-venv python3-dev nvidia-cuda-toolkit
 
-# 3. Create Virtual Environment if it doesn't exist
+# 2. Path Setup (Critical for 1080 Ti detection)
+# This dynamically finds where nvcc was installed
+export PATH=$(command -v nvcc | xargs dirname):$PATH
+export LD_LIBRARY_PATH=$(dirname $(command -v nvcc) | xargs dirname)/lib64:$LD_LIBRARY_PATH
+
+# 3. Venv Creation
+mkdir -p "$HOME/.virtualenvs"
 if [ ! -d "$ENV_PATH" ]; then
-    echo "🐍 Creating virtual environment at $ENV_PATH..."
     python3 -m venv "$ENV_PATH"
-else
-    echo "✅ Virtual environment already exists."
 fi
 
-# 4. Activation & Installation
-echo "🔌 Activating environment and installing requirements..."
 source "$ENV_PATH/bin/activate"
-
-# Upgrade pip first to avoid "broken pip" errors
 pip install --upgrade pip
 
-# Install requirements
+# 4. GPU-Optimized Compilation
+echo "🏎️ Building llama-cpp with 1080 Ti (CUDA) Support..."
+# Added FORCE_CMAKE=1 and GGML_CUDA=on for the 1080 Ti
+CMAKE_ARGS="-DGGML_CUDA=on" FORCE_CMAKE=1 \
+pip install llama-cpp-python --no-cache-dir --force-reinstall
+
+# 5. Install the rest
 if [ -f "requirements.txt" ]; then
-    pip install -r requirements.txt
-    echo "✨ All Python libraries installed successfully!"
-else
-    echo "⚠️ Warning: requirements.txt not found. Skipping library install."
+    pip install -r requirements.txt --upgrade
 fi
 
-echo "🎉 Setup complete! Run 'source $ENV_PATH/bin/activate' to start working."
+# 6. Verify GPU Acceleration
+echo "🔍 Verifying GPU Handshake..."
+python3 <<EOF
+try:
+    import llama_cpp
+    # Check if the compiled backend supports CUDA
+    from llama_cpp import llama_cpp as low_level
+    lib = low_level.load_shared_library('llama')
+    gpu_supported = bool(lib.llama_supports_gpu_offload())
+    
+    if gpu_supported:
+        print("\n✅ SUCCESS: llama-cpp-python is compiled with GPU support!")
+    else:
+        print("\n❌ FAILURE: llama-cpp-python is using CPU only.")
+except Exception as e:
+    print(f"\n⚠️ Error during verification: {e}")
+EOF
+
+echo "✅ Setup Complete! Run 'source $ENV_PATH/bin/activate' to start."
