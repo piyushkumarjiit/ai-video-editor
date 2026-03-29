@@ -1,81 +1,61 @@
-import os
-import subprocess
-import json
+import cv2
+import numpy as np
 
-# --- CONFIGURATION ---
-INPUT_DIR = 'samples/sanitized'
-OUTPUT_BASE_DIR = 'keyframes'
-FRAME_RATE = 1  # Extract 1 frame per second of video
-# ---------------------
+def detect_scenes_gpu(video_path, threshold=30.0):
+    cap = cv2.VideoCapture(video_path)
+    if not cap.isOpened():
+        print("Error: Could not open video.")
+        return []
 
-def get_video_resolution(video_path):
-    """Uses ffprobe to get the width and height of the video."""
-    cmd = [
-        "ffprobe", "-v", "error", "-select_streams", "v:0",
-        "-show_entries", "stream=width,height", "-of", "json", video_path
-    ]
-    try:
-        result = subprocess.run(cmd, capture_output=True, text=True, check=True)
-        data = json.loads(result.stdout)
-        width = data['streams'][0]['width']
-        height = data['streams'][0]['height']
-        return width, height
-    except Exception as e:
-        print(f"⚠️ Warning: Could not get resolution for {video_path}. Error: {e}")
-        return 1280, 720  # Fallback to 720p if probe fails
+    scene_changes = []
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    total_pixels = width * height * 3 # 3 channels (BGR)
 
-def extract_scenes():
-    if not os.path.exists(INPUT_DIR):
-        print(f"❌ Error: Input directory '{INPUT_DIR}' not found.")
-        return
+    # Initialize GPU Mats
+    gpu_prev_frame = cv2.cuda_GpuMat()
+    gpu_curr_frame = cv2.cuda_GpuMat()
+    
+    frame_count = 0
+    
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
 
-    os.makedirs(OUTPUT_BASE_DIR, exist_ok=True)
-    video_files = [f for f in os.listdir(INPUT_DIR) if f.endswith(('.mp4', '.mkv', '.avi'))]
-
-    if not video_files:
-        print(f"📁 No sanitized videos found in {INPUT_DIR}.")
-        return
-
-    for video_file in video_files:
-        video_path = os.path.join(INPUT_DIR, video_file)
-        video_name = os.path.splitext(video_file)[0]
+        # 1. Upload current frame to GPU
+        gpu_curr_frame.upload(frame)
         
-        # --- PART 1: RESOLUTION-AWARE LOGIC ---
-        width, height = get_video_resolution(video_path)
+        # 2. Convert to Grayscale or stay BGR (Grayscale is faster for diffs)
+        # For simplicity and accuracy in color-based cuts, we stay in BGR here
         
-        # Create folder name with resolution suffix
-        output_folder = os.path.join(OUTPUT_BASE_DIR, f"{video_name}_{width}x{height}")
-        os.makedirs(output_folder, exist_ok=True)
+        if frame_count > 0:
+            # 3. Calculate Absolute Difference on GPU
+            # This is the "Motion/Change" map
+            gpu_diff = cv2.cuda.absdiff(gpu_curr_frame, gpu_prev_frame)
+            
+            # 4. Sum all pixel differences on GPU
+            # Returns a Scalar (sum of B, G, R channels)
+            diff_sum = cv2.cuda.sum(gpu_diff)
+            
+            # 5. Calculate average change per pixel
+            avg_diff = sum(diff_sum) / total_pixels
+            
+            # If the change exceeds threshold, mark a scene cut
+            if avg_diff > threshold:
+                timestamp = frame_count / fps
+                scene_changes.append((frame_count, timestamp))
+                print(f"Scene change detected at frame {frame_count} ({timestamp:.2f}s) - Score: {avg_diff:.2f}")
 
-        # Save metadata for downstream scripts (Verification & Redaction)
-        metadata = {
-            "video_name": video_name,
-            "width": width,
-            "height": height,
-            "fps_extracted": FRAME_RATE
-        }
-        with open(os.path.join(output_folder, "details.json"), "w") as f:
-            json.dump(metadata, f, indent=4)
+        # Move current to previous for next iteration
+        gpu_curr_frame.copyTo(gpu_prev_frame)
+        frame_count += 1
 
-        print(f"🎬 Processing: {video_name} ({width}x{height})")
-        
-        # FFmpeg command to extract frames
-        # %03d.jpg creates 001.jpg, 002.jpg, etc.
-        output_pattern = os.path.join(output_folder, "%03d.jpg")
-        
-        ffmpeg_cmd = [
-            "ffmpeg", "-i", video_path,
-            "-vf", f"fps={FRAME_RATE}",
-            "-q:v", "2", # High quality JPEGs
-            output_pattern,
-            "-y" # Overwrite existing
-        ]
-
-        try:
-            subprocess.run(ffmpeg_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.STDOUT, check=True)
-            print(f"✅ Extracted keyframes to: {output_folder}")
-        except subprocess.CalledProcessError as e:
-            print(f"❌ FFmpeg failed on {video_name}: {e}")
+    cap.release()
+    return scene_changes
 
 if __name__ == "__main__":
-    extract_scenes()
+    # Lower threshold is more sensitive; 30-40 is standard for hard cuts
+    scenes = detect_scenes_gpu("input_video.mp4", threshold=35.0)
+    print(f"Total scenes found: {len(scenes)}")
