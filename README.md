@@ -19,6 +19,10 @@ This pipeline isn't just a tool—it's a force multiplier for solo creators who 
 
 ## 🚀 Quick Start - Run Everything in One Command
 
+After cloning the repo, one can use setup.sh to create the environment before tinkering with python files.
+chmod +x setup.sh
+./setup.sh
+
 ```bash
 # Complete automated pipeline: Raw video → Edited timeline
 python run_pipeline.py
