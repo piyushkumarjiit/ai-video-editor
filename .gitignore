@@ -41,8 +41,14 @@
 /unused2/
 /models/*
 /samples/*
+/keyframes/*
 
 sample_videos.txt
+yt-dlp.conf
+video_analysis.json
+ui_manifest.json
+tracked_manifest.json
+redaction_manifest.json
 
 # Keep folder structure placeholders
 !/ai_clips/.gitkeep
@@ -67,3 +73,4 @@ sample_videos.txt
 # OAuth credentials - keep private
 client_secrets.json
 youtube_credentials.json
+sample_videos.txt

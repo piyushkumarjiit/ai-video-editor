@@ -54,13 +54,13 @@ EOF
 if [ -f "sample_videos.txt" ]; then
     echo "📥 Downloading samples from sample_videos.txt..."
     # Download as MP4
-    yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" \
-        -a sample_videos.txt \
-        -P "./samples" \
-        -o "%(title)s.%(ext)s" \
-        --no-mtime \
-        --restrict-filenames \
-        --merge-output-format mp4
+    yt-dlp -f "bestvideo[vcodec^=avc1][height<=720]+bestaudio[ext=m4a]/best[vcodec^=avc1][height<=720]/best" \
+    -a sample_videos.txt \
+    -P "./samples" \
+    -o "%(title)s.%(ext)s" \
+    --no-mtime \
+    --restrict-filenames \
+    --merge-output-format mp4
 fi
 
 echo "✅ Setup Complete! Run 'source $ENV_PATH/bin/activate' to start."

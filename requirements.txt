@@ -20,3 +20,8 @@ httplib2
 
 # Youtube download for sample files
 yt-dlp
+
+# New ones added
+scenedetect[opencv]
+ollama 
+tqdm

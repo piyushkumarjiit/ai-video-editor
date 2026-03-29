@@ -1,0 +1,199 @@
+{
+    "Karen_Fights_Real_Estate_Agent_Over_House": [
+        {
+            "frame": "001.jpg",
+            "detections": "[{'id': 'face_person_1', 'label': 'face_person_1', 'bbox_2d': [200, 220, 980, 440]}]"
+        },
+        {
+            "frame": "002.jpg",
+            "detections": [
+                {
+                    "id": "face_person_1",
+                    "label": "face_person_1",
+                    "bbox_2d": [
+                        450,
+                        10,
+                        900,
+                        990
+                    ]
+                }
+            ]
+        },
+        {
+            "frame": "003.jpg",
+            "detections": {
+                "result": [
+                    {
+                        "id": "face_witness_1",
+                        "label": "face_witness_1",
+                        "bbox": [
+                            100,
+                            114,
+                            950,
+                            392
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "frame": "004.jpg",
+            "detections": []
+        },
+        {
+            "frame": "005.jpg",
+            "detections": []
+        }
+    ],
+    "Lululemon_Shoplifter_Gets_Caught_in_The_Act": [
+        {
+            "frame": "001.jpg",
+            "detections": []
+        },
+        {
+            "frame": "002.jpg",
+            "detections": [
+                {
+                    "id": "face_person_1",
+                    "label": "face_person_1",
+                    "bbox_2d": [
+                        235,
+                        325,
+                        700,
+                        999
+                    ]
+                }
+            ]
+        },
+        {
+            "frame": "003.jpg",
+            "detections": [
+                {
+                    "id": "face_cop_1",
+                    "label": "face_cop_1",
+                    "bbox_2d": [
+                        821,
+                        0,
+                        999,
+                        998
+                    ]
+                },
+                {
+                    "id": "face_witness_1",
+                    "label": "face_witness_1",
+                    "bbox_2d": [
+                        350,
+                        477,
+                        496,
+                        679
+                    ]
+                }
+            ]
+        },
+        {
+            "frame": "004.jpg",
+            "detections": [
+                {
+                    "id": "face_cop_1",
+                    "label": "face_person_1",
+                    "bbox_2d": [
+                        414,
+                        213,
+                        692,
+                        997
+                    ]
+                },
+                {
+                    "id": "face_person_1",
+                    "label": "face_person_1",
+                    "bbox_2d": [
+                        757,
+                        198,
+                        973,
+                        997
+                    ]
+                }
+            ]
+        },
+        {
+            "frame": "005.jpg",
+            "detections": [
+                {
+                    "id": "face_witness_1",
+                    "label": "face_witness_1",
+                    "bbox_2d": [
+                        40,
+                        640,
+                        980,
+                        1000
+                    ]
+                }
+            ]
+        }
+    ],
+    "Man_Attacks_Blind_Woman_as_His_44th_Crime": [
+        {
+            "frame": "001.jpg",
+            "detections": [
+                {
+                    "id": "face_witness_1",
+                    "label": "PEOPLE",
+                    "bbox_2d": [
+                        100,
+                        150,
+                        900,
+                        820
+                    ]
+                }
+            ]
+        },
+        {
+            "frame": "002.jpg",
+            "detections": [
+                {
+                    "category": "face_witness_1",
+                    "bbox": [
+                        240,
+                        70,
+                        746,
+                        998
+                    ]
+                }
+            ]
+        },
+        {
+            "frame": "003.jpg",
+            "detections": [
+                {
+                    "id": "face_person_1",
+                    "label": "face_person_1",
+                    "bbox_2d": [
+                        85,
+                        300,
+                        450,
+                        600
+                    ]
+                }
+            ]
+        },
+        {
+            "frame": "004.jpg",
+            "detections": [
+                {
+                    "id": "face_person_1",
+                    "label": "face_person_1",
+                    "bbox_2d": [
+                        253,
+                        62,
+                        764,
+                        997
+                    ]
+                }
+            ]
+        },
+        {
+            "frame": "005.jpg",
+            "detections": ""
+        }
+    ]
+}

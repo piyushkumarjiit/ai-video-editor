@@ -1,0 +1,85 @@
+{
+    "Karen_Fights_Real_Estate_Agent_Over_House": {
+        "face_1": {
+            "category": "face_person_1",
+            "first_seen": "001.jpg",
+            "total_frames": 2,
+            "sample_bbox": [
+                200,
+                220,
+                980,
+                440
+            ]
+        },
+        "face_2": {
+            "category": "face_person_1",
+            "first_seen": "002.jpg",
+            "total_frames": 1,
+            "sample_bbox": [
+                450,
+                10,
+                900,
+                990
+            ]
+        }
+    },
+    "Lululemon_Shoplifter_Gets_Caught_in_The_Act": {
+        "face_1": {
+            "category": "face_person_1",
+            "first_seen": "002.jpg",
+            "total_frames": 3,
+            "sample_bbox": [
+                235,
+                325,
+                700,
+                999
+            ]
+        },
+        "face_2": {
+            "category": "face_cop_1",
+            "first_seen": "003.jpg",
+            "total_frames": 2,
+            "sample_bbox": [
+                821,
+                0,
+                999,
+                998
+            ]
+        },
+        "face_3": {
+            "category": "face_witness_1",
+            "first_seen": "005.jpg",
+            "total_frames": 1,
+            "sample_bbox": [
+                40,
+                640,
+                980,
+                1000
+            ]
+        }
+    },
+    "Man_Attacks_Blind_Woman_as_His_44th_Crime": {
+        "PEOPLE_1": {
+            "category": "PEOPLE",
+            "first_seen": "001.jpg",
+            "total_frames": 3,
+            "sample_bbox": [
+                100,
+                150,
+                900,
+                820
+            ]
+        },
+        "face_2": {
+            "category": "face_person_1",
+            "first_seen": "003.jpg",
+            "total_frames": 1,
+            "sample_bbox": [
+                85,
+                300,
+                450,
+                600
+            ]
+        }
+    }
+}
