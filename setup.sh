@@ -3,9 +3,13 @@ ENV_PATH="$HOME/.virtualenvs/ai-video-env"
 
 echo "🚀 Starting R720 AI Environment Setup..."
 
+# Add NVIDIA repo and download the keyring for NVIDIA
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
+sudo dpkg -i cuda-keyring_1.1-1_all.deb
+
 # 1. System Dependencies
 sudo apt update
-sudo apt install -y build-essential cmake python3-venv python3-dev nvidia-cuda-toolkit ffmpeg
+sudo apt install -y build-essential cmake python3-venv python3-dev nvidia-cuda-toolkit ffmpeg libcudnn8 libcudnn8-dev
 
 # 2. Path Setup (Critical for 1080 Ti detection)
 # This dynamically finds where nvcc was installed
@@ -26,6 +30,10 @@ echo "🏎️ Building llama-cpp with 1080 Ti (CUDA) Support..."
 # Added FORCE_CMAKE=1 and GGML_CUDA=on for the 1080 Ti
 CMAKE_ARGS="-DGGML_CUDA=on" FORCE_CMAKE=1 \
 pip install llama-cpp-python --no-cache-dir --force-reinstall
+
+# build
+
+
 
 # 5. Install the rest
 if [ -f "requirements.txt" ]; then
