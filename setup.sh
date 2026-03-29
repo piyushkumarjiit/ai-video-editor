@@ -1,5 +1,7 @@
 #!/bin/bash
 ENV_PATH="$HOME/.virtualenvs/ai-video-env"
+# Set it to True if you want to build opencv that uses CUDA and GPU but it will tkae a long time 30+ mins
+BUILD_OPENCV=false
 
 echo "🚀 Starting R720 AI Environment Setup..."
 
@@ -31,7 +33,31 @@ echo "🏎️ Building llama-cpp with 1080 Ti (CUDA) Support..."
 CMAKE_ARGS="-DGGML_CUDA=on" FORCE_CMAKE=1 \
 pip install llama-cpp-python --no-cache-dir --force-reinstall
 
-# build
+# --- 3. Conditional OpenCV Build ---
+if [ "$BUILD_OPENCV" = true ]; then
+    echo "Flag --build-opencv detected. Calling independent build script..."
+    
+    # Check if the script exists before calling
+    if [ -f "./install_cv_cuda.sh" ]; then
+        chmod +x install_cv_cuda.sh        
+        source ./install_cv_cuda.sh
+
+        # if eveyrhing succeeded link OpenCV_CUDA to venv
+        echo "Linking build to active virtual environment..."
+        VENV_SITE_PACKAGES=$(python3 -c "import site; print(site.getsitepackages()[0])")
+        OPENCV_SO=$(find /usr/local/lib/python3* -name "cv2*.so" | head -n 1)
+
+        if [ -f "$OPENCV_SO" ]; then
+            ln -sf "$OPENCV_SO" "$VENV_SITE_PACKAGES/cv2.so"
+            echo "Success: OpenCV linked to $VENV_SITE_PACKAGES"
+        else
+            echo "Error: Compiled .so file not found."
+        fi
+    else
+        echo "Error: install_cv_cuda.sh not found in current directory."
+    fi
+fi
+
 
 
 

@@ -1,6 +1,9 @@
 #!/bin/bash
 
 # --- PRE-FLIGHT CHECKS ---
+
+# there is also dependecy on Numpy 1.X so ensure that your venv uses 1.X
+
 # Add NVIDIA repo and download the keyring for NVIDIA
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
 sudo dpkg -i cuda-keyring_1.1-1_all.deb

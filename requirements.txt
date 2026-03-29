@@ -1,5 +1,6 @@
 # Core ML/vision
-numpy
+# numpy --> removed as opencv cuda relies on numpy 1.X
+numpy>=1.21.2,<2.0.0
 opencv-python
 pillow
 scikit-learn
