@@ -5,7 +5,7 @@ echo "🚀 Starting R720 AI Environment Setup..."
 
 # 1. System Dependencies
 sudo apt update
-sudo apt install -y build-essential cmake python3-venv python3-dev nvidia-cuda-toolkit
+sudo apt install -y build-essential cmake python3-venv python3-dev nvidia-cuda-toolkit ffmpeg
 
 # 2. Path Setup (Critical for 1080 Ti detection)
 # This dynamically finds where nvcc was installed
@@ -53,9 +53,14 @@ EOF
 # 7. Download Sample Data (Optional)
 if [ -f "sample_videos.txt" ]; then
     echo "📥 Downloading samples from sample_videos.txt..."
-    yt-dlp -f "bestvideo[height<=720]+bestaudio/best[height<=720]" \
-        -a sample_videos.txt -P "./samples" -o "%(title)s.%(ext)s" \
-        --no-mtime --restrict-filenames
+    # Download as MP4
+    yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]/best" \
+        -a sample_videos.txt \
+        -P "./samples" \
+        -o "%(title)s.%(ext)s" \
+        --no-mtime \
+        --restrict-filenames \
+        --merge-output-format mp4
 fi
 
 echo "✅ Setup Complete! Run 'source $ENV_PATH/bin/activate' to start."
