@@ -4,6 +4,10 @@ import numpy as np
 
 def interpolate_coordinates(start_coords, end_coords, current_frame, start_frame, end_frame):
     """Calculates the estimated bounding box between two AI-identified keyframes."""
+    # Safety check to avoid division by zero
+    if end_frame == start_frame:
+        return start_coords
+        
     fraction = (current_frame - start_frame) / (end_frame - start_frame)
     
     x = int(start_coords['x'] + (end_coords['x'] - start_coords['x']) * fraction)
@@ -15,31 +19,44 @@ def interpolate_coordinates(start_coords, end_coords, current_frame, start_frame
 
 def generate_full_tracking(video_path, redaction_manifest):
     cap = cv2.VideoCapture(video_path)
-    fps = cap.get(cv2.CAP_PROP_FPS)
+    # Get actual dimensions to scale from the AI's 0-1000 range
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    cap.release()
+
     full_tracked_data = {}
 
     for entity_id, instances in redaction_manifest.items():
-        # instances is a list of {frame_number, x, y, w, h}
-        instances = sorted(instances, key=lambda x: x['frame_number'])
+        # Sort by frame to ensure linear progression
+        instances = sorted(instances, key=lambda x: x.get('frame_number', 0))
         
         for i in range(len(instances) - 1):
             start_node = instances[i]
             end_node = instances[i+1]
             
-            for f in range(start_node['frame_number'], end_node['frame_number']):
+            # Fill the gap between two keyframes
+            for f in range(start_node['frame_number'], end_node['frame_number'] + 1):
                 coords = interpolate_coordinates(
                     start_node, end_node, f, 
                     start_node['frame_number'], end_node['frame_number']
                 )
                 
+                # SCALE MAPPING: Convert 0-1000 to actual Pixels
+                scaled_coords = {
+                    'x': int(coords['x'] * width / 1000),
+                    'y': int(coords['y'] * height / 1000),
+                    'w': int(coords['w'] * width / 1000),
+                    'h': int(coords['h'] * height / 1000)
+                }
+                
                 if f not in full_tracked_data:
                     full_tracked_data[f] = []
                 
-                full_tracked_data[f].append({
-                    'entity_id': entity_id,
-                    'bbox': coords
-                })
+                # Check for duplicates to prevent double-blurring same entity
+                if not any(d['entity_id'] == entity_id for d in full_tracked_data[f]):
+                    full_tracked_data[f].append({
+                        'entity_id': entity_id,
+                        'bbox': scaled_coords
+                    })
     
     return full_tracked_data
-
-# Save this to tracked_manifest.json for the renderer to consume
