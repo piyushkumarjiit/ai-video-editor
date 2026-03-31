@@ -1,0 +1,24 @@
+# Add this function to the bottom of your ~/.bashrc (for global use) 
+# or at the end of $HOME/.virtualenvs/ai-video-env/bin/activate (to keep it specific to your venv environment)
+
+# Override the 'pip' command with a smart wrapper
+pip() {
+    # 1. Define the global/default fallback constraint
+    DEFAULT_CONSTRAINT="/home/piyush/ai-video-editor/constraints.txt"
+    
+    # 2. Check if a local constraints.txt exists in the CURRENT directory
+    if [ -f "constraints.txt" ]; then
+        LOCAL_CONSTRAINT="$(pwd)/constraints.txt"
+        echo "🛡️  Using LOCAL constraints: $LOCAL_CONSTRAINT"
+        command pip "$@" -c "$LOCAL_CONSTRAINT"
+        
+    # 3. Else, check if the DEFAULT one exists
+    elif [ -f "$DEFAULT_CONSTRAINT" ]; then
+        echo "🌍 Using GLOBAL constraints: $DEFAULT_CONSTRAINT"
+        command pip "$@" -c "$DEFAULT_CONSTRAINT"
+        
+    # 4. Otherwise, just run pip normally
+    else
+        command pip "$@"
+    fi
+}

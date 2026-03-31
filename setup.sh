@@ -3,7 +3,7 @@ ENV_PATH="$HOME/.virtualenvs/ai-video-env"
 # Set it to True if you want to build opencv that uses CUDA and GPU but it will tkae a long time 30+ mins
 BUILD_OPENCV=false
 
-echo "🚀 Starting R720 AI Environment Setup..."
+echo "🚀 Starting AI Environment Setup..."
 
 # Add NVIDIA repo and download the keyring for NVIDIA
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
@@ -40,9 +40,9 @@ if [ "$BUILD_OPENCV" = true ]; then
     # Check if the script exists before calling
     if [ -f "./install_cv_cuda.sh" ]; then
         chmod +x install_cv_cuda.sh        
-        source ./install_cv_cuda.sh
+        source ./install_cv_cuda.sh "$ENV_PATH"
 
-        # if eveyrhing succeeded link OpenCV_CUDA to venv
+        # if eveyrhing succeeded ink OpenCV_CUDA to venv
         echo "Linking build to active virtual environment..."
         VENV_SITE_PACKAGES=$(python3 -c "import site; print(site.getsitepackages()[0])")
         OPENCV_SO=$(find /usr/local/lib/python3* -name "cv2*.so" | head -n 1)
@@ -57,9 +57,6 @@ if [ "$BUILD_OPENCV" = true ]; then
         echo "Error: install_cv_cuda.sh not found in current directory."
     fi
 fi
-
-
-
 
 # 5. Install the rest
 if [ -f "requirements.txt" ]; then
@@ -96,5 +93,10 @@ if [ -f "sample_videos.txt" ]; then
     --restrict-filenames \
     --merge-output-format mp4
 fi
+
+# Create models direcotry
+mkdir -p models
+# Download into models folder
+wget -O models/yolov8n-face.pt https://github.com/derronqi/yolov8-face/releases/download/v1.0/yolov8n-face.pt
 
 echo "✅ Setup Complete! Run 'source $ENV_PATH/bin/activate' to start."

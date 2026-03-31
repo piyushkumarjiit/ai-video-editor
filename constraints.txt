@@ -1,0 +1,2 @@
+#numpy<2.0
+#opencv-python; python_version < "0"  # This is a trick to tell pip: "Never install this"
