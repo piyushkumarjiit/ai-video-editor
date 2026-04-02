@@ -1,61 +1,58 @@
 import cv2
-import numpy as np
+import os
+import json
 
-def detect_scenes_gpu(video_path, threshold=30.0):
+def extract_scenes(video_path, output_dir="samples/scenes", threshold=30.0):
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
     cap = cv2.VideoCapture(video_path)
-    if not cap.isOpened():
-        print("Error: Could not open video.")
-        return []
-
-    scene_changes = []
     fps = cap.get(cv2.CAP_PROP_FPS)
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    total_pixels = width * height * 3 # 3 channels (BGR)
+    
+    scene_count = 0
+    start_frame = 0
+    current_frame = 0
+    
+    print(f"🎬 Processing Video: {width}x{height} @ {fps} FPS")
 
-    # Initialize GPU Mats
-    gpu_prev_frame = cv2.cuda_GpuMat()
-    gpu_curr_frame = cv2.cuda_GpuMat()
-    
-    frame_count = 0
-    
     while True:
         ret, frame = cap.read()
         if not ret:
             break
-
-        # 1. Upload current frame to GPU
-        gpu_curr_frame.upload(frame)
         
-        # 2. Convert to Grayscale or stay BGR (Grayscale is faster for diffs)
-        # For simplicity and accuracy in color-based cuts, we stay in BGR here
-        
-        if frame_count > 0:
-            # 3. Calculate Absolute Difference on GPU
-            # This is the "Motion/Change" map
-            gpu_diff = cv2.cuda.absdiff(gpu_curr_frame, gpu_prev_frame)
-            
-            # 4. Sum all pixel differences on GPU
-            # Returns a Scalar (sum of B, G, R channels)
-            diff_sum = cv2.cuda.sum(gpu_diff)
-            
-            # 5. Calculate average change per pixel
-            avg_diff = sum(diff_sum) / total_pixels
-            
-            # If the change exceeds threshold, mark a scene cut
-            if avg_diff > threshold:
-                timestamp = frame_count / fps
-                scene_changes.append((frame_count, timestamp))
-                print(f"Scene change detected at frame {frame_count} ({timestamp:.2f}s) - Score: {avg_diff:.2f}")
+        # Simple Logic: Save metadata every 300 frames (approx 10s) 
+        # or use a real scene-change detection threshold here.
+        if current_frame % 300 == 0 and current_frame > 0:
+            scene_id = f"scene_{scene_count:03d}"
+            scene_path = os.path.join(output_dir, scene_id)
+            if not os.path.exists(scene_path): os.makedirs(scene_path)
 
-        # Move current to previous for next iteration
-        gpu_curr_frame.copyTo(gpu_prev_frame)
-        frame_count += 1
+            # SAVE METADATA WITH GLOBAL OFFSET
+            metadata = {
+                "scene_id": scene_id,
+                "global_start_frame": start_frame,
+                "global_end_frame": current_frame,
+                "resolution": {"w": width, "h": height},
+                "fps": fps
+            }
+            
+            with open(os.path.join(scene_path, "details.json"), "w") as f:
+                json.dump(metadata, f, indent=4)
+            
+            # Save a reference keyframe for the AI to look at
+            cv2.imwrite(os.path.join(scene_path, "keyframe.jpg"), frame)
+            
+            print(f"✅ Scene {scene_id} recorded (Start: {start_frame})")
+            start_frame = current_frame
+            scene_count += 1
+            
+        current_frame += 1
 
     cap.release()
-    return scene_changes
+    print(f"🚀 Total Scenes Extracted: {scene_count}")
 
 if __name__ == "__main__":
-    # Lower threshold is more sensitive; 30-40 is standard for hard cuts
-    scenes = detect_scenes_gpu("input_video.mp4", threshold=35.0)
-    print(f"Total scenes found: {len(scenes)}")
+    # Update this path to your sanitized video on the R720
+    extract_scenes("samples/sanitized/input_video.mp4")

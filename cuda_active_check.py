@@ -149,6 +149,57 @@ def check_ultralytics_yolo():
         print(f"❌ Ultralytics Integration: Failed - {e}")
         return False
 
+def check_torch_vision_sync():
+    print("\n--- 🛠️  Torch/Torchvision Binary Sync ---")
+    try:
+        import torchvision
+        print(f"✅ Torchvision Version: {torchvision.__version__}")
+        
+        # This is the "Gold Standard" test: Does a Vision Op work on the GPU?
+        # If Torch and Torchvision are out of sync, this will throw a C++ error immediately.
+        from torchvision.ops import nms
+        boxes = torch.rand(5, 4).cuda()
+        scores = torch.rand(5).cuda()
+        _ = nms(boxes, scores, 0.5)
+        print("✅ Torch & Torchvision are BINARY COMPATIBLE on GPU.")
+    except Exception as e:
+        print(f"❌ Torch/Torchvision Sync FAILED: {e}")
+        print("💡 Suggestion: Reinstall torchvision to match your Torch version.")
+
+# --- NEW: VRAM STATUS ---
+def check_vram_headroom():
+    print("\n--- 💾 GPU VRAM Headroom ---")
+    if torch.cuda.is_available():
+        t = torch.cuda.get_device_properties(0).total_memory / 1024**3
+        r = torch.cuda.memory_reserved(0) / 1024**3
+        a = torch.cuda.memory_allocated(0) / 1024**3
+        f = t - r  # Free roughly
+        print(f"✅ Total VRAM: {t:.2f}GB | Allocated: {a:.2f}GB | Available: {f:.2f}GB")
+        if f < 2.0:
+            print("⚠️  Warning: Low VRAM headroom. Close Ollama or other processes.")
+    else:
+        print("❌ No CUDA device detected for VRAM check.")
+
+# --- UPDATED PYTORCH CHECK (With Version Warnings) ---
+def check_pytorch_cuda():
+    print("\n--- 🔥 PyTorch / CUDA Core ---")
+    if torch.cuda.is_available():
+        print(f"✅ PyTorch CUDA Available | Device: {torch.cuda.get_device_name(0)}")
+        print(f"   Torch Version: {torch.__version__} | CUDA Version: {torch.version.cuda}")
+        
+        # Alert if versions look suspicious but work
+        if "2.8.0" in torch.__version__ and "12." in torch.version.cuda:
+            print("ℹ️  Note: Running Torch 2.8.0 on CUDA 12. This is your 'Pinned' stable build.")
+
+        try:
+            x = torch.rand(100, 100).cuda()
+            print("✅ GPU Tensor Allocation: Successful.")
+        except Exception as e:
+            print(f"❌ GPU Tensor Allocation: FAILED ({e})")
+    else:
+        print("❌ PyTorch is running on CPU.")
+
+
 if __name__ == "__main__":
     print("🚀 Starting AI-Video-Editor GPU Pipeline Diagnostics\n")
     check_nvidia_smi()
@@ -160,4 +211,7 @@ if __name__ == "__main__":
     check_numpy_simd()
     check_ollama_gpu()
     check_ultralytics_yolo()
+    check_pytorch_cuda()
+    check_torch_vision_sync()
+    check_vram_headroom()
     print("\n✨ Diagnostics Complete. Use this output for your next environment sync.")

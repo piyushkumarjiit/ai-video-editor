@@ -1,3 +1,7 @@
+# --- INDEX CONFIGURATION ---
+--index-url https://download.pytorch.org/whl/cu126
+--extra-index-url https://pypi.org/simple
+
 # Core ML/vision
 numpy # --> removed as opencv cuda relies on numpy 1.X
 #numpy>=1.21.2,<2.0.0
@@ -5,9 +9,15 @@ numpy # --> removed as opencv cuda relies on numpy 1.X
 pillow
 scikit-learn
 
-torch
-torchvision
-torchaudio
+# --- CORE BINARIES (MUST MATCH sm_61) Use latest if on a lter GPU---
+torch==2.7.1
+torchvision==0.22.1
+torchaudio==2.7.1
+
+# --- VISION & TRANSCRIBE (Manual Install Recommended) ---
+# The following package must be installed with: pip install ultralytics --no-deps
+# to prevent it from overwriting the custom OpenCV-CUDA build.
+# ultralytics
 
 transformers
 accelerate
@@ -21,14 +31,13 @@ google-auth-httplib2
 httplib2
 
 # Youtube download for sample files
-yt-dlp
+yt-dlp # put urls in the samples.txt and it would automatically download the files in samples folder
 
 # New ones added
 #scenedetect[opencv]
 ollama 
 tqdm
 huggingface_hub
-# ultralytics  <-- DO NOT install via -r if using custom OpenCV-CUDA
 matplotlib
 scipy
 pyyaml
@@ -36,3 +45,11 @@ pandas
 requests
 screeninfo
 psutil
+
+openai # to access local Ollama
+
+#Added for Whisper work
+#faster-whisper
+moviepy
+whisperx
+

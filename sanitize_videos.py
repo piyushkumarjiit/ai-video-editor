@@ -1,3 +1,26 @@
+"""
+Video Sanitization Pipeline
+---------------------------
+This script prepares raw video footage for the AI editing pipeline by re-encoding 
+input files into a standardized format. It ensures consistent video parameters 
+while optimizing for processing speed and playback.
+
+Key Functionalities:
+1. GPU Acceleration: Automatically detects NVIDIA GPUs and utilizes NVENC (h264_nvenc) 
+   for high-speed hardware-accelerated encoding.
+2. CPU Fallback: Provides a robust fallback to software encoding (libx264) if 
+   no compatible GPU is found.
+3. Stream Preservation: Copies audio streams directly without re-encoding to 
+   maintain original quality.
+4. Optimization: Applies '+faststart' flags to move metadata to the beginning of 
+   the file, enabling faster random access for AI frame extraction.
+5. Idempotency: Skips files that have already been sanitized to save time during 
+   repeated runs.
+
+Usage:
+    Place raw .mp4 files in 'samples/' and run:
+    python3 sanitize_videos.py
+"""
 import os
 import subprocess
 

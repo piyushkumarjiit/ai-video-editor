@@ -42,6 +42,7 @@
 /models/*
 /samples/*
 /keyframes/*
+/transcripts/*
 
 sample_videos.txt
 yt-dlp.conf
@@ -57,7 +58,7 @@ redaction_manifest.json
 
 # Temporary/output folders
 /tmp_advanced3_frames/
-
+.env
 # Ignore everything by default, then allow only Python files
 *
 !*/
