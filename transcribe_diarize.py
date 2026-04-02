@@ -84,29 +84,38 @@ def run_isolated_denoise(video_path):
         raw_wav
     ], check=True, capture_output=True)
 
+    env = os.environ.copy()
+    env["CUDA_VISIBLE_DEVICES"] = "" 
+    
     try:
-        print(f"🧹 Phase 0: Denoising {base_name}...")
+        print(f"🧹 Phase 0: Denoising {base_name} (Isolated CPU Mode)...")
+        # Removed capture_output so you see the progress bar
         subprocess.run([
             DENOISE_PYTHON, "-m", "df.enhance", 
             raw_wav, "--output-dir", DENOISED_DIR
-        ], check=True, capture_output=True) 
+        ], env=env, check=True) 
 
-        # 2. Find the actual enhanced file in the NEW folder
+        # 2. MATCH THE EXACT FILENAME SEEN IN YOUR LS COMMAND
+        # DeepFilterNet adds the model name as a suffix
         enhanced_file = None
-        for file in os.listdir(DENOISED_DIR):
-            # DeepFilterNet adds '_enhanced' to the filename
-            if base_name in file and "enhanced" in file:
-                enhanced_file = os.path.join(DENOISED_DIR, file)
-                break
-        
-        # 3. Cleanup the raw temp file immediately
-        if os.path.exists(raw_wav):
-            os.remove(raw_wav)
+        expected_suffix = "_raw_tmp_DeepFilterNet3.wav"
+        potential_path = os.path.join(DENOISED_DIR, f"{base_name}{expected_suffix}")
 
+        if os.path.exists(potential_path):
+            enhanced_file = potential_path
+        else:
+            # Fallback fuzzy search if the model version changes
+            for file in os.listdir(DENOISED_DIR):
+                if base_name in file and "DeepFilterNet" in file:
+                    enhanced_file = os.path.join(DENOISED_DIR, file)
+                    break
+        
         if enhanced_file:
+            # Cleanup raw temp only on success
+            if os.path.exists(raw_wav):
+                os.remove(raw_wav)
             return enhanced_file
         
-        # Fallback if enhancement failed but raw exists
         return raw_wav 
     except Exception as e:
         print(f"⚠️ Denoising failed: {e}")
