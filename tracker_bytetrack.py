@@ -1,4 +1,17 @@
-# tracker_bytetrack.py
+"""
+FILE: tracker_bytetrack.py
+ROLE: Temporal Entity Tracking (Object Persistence)
+-------------------------------------------------------------------------
+DESCRIPTION:
+Uses the ByteTrack algorithm via Ultralytics to ensure that a detected 
+object maintains the same ID across frames. Essential for ensuring 
+that a 'Suspect' identified in the first second remains 'Suspect' 
+throughout the clip.
+
+OUTPUT: tracking.json (Map of IDs to frame-by-frame bounding boxes).
+-------------------------------------------------------------------------
+"""
+
 import cv2
 import json
 import os

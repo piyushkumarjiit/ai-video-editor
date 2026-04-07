@@ -1,3 +1,20 @@
+"""
+FILE: get_ui_manifest.py
+ROLE: UI Data Aggregator & Entity Summarizer
+-------------------------------------------------------------------------
+DESCRIPTION:
+Processes the tracked manifest to create a 'Human-Readable' summary for 
+the Streamlit frontend. It collapses thousands of individual frame 
+detections into a list of unique entities, capturing:
+- Entity ID and Category (e.g., 'face_person_1').
+- The first frame appearance (for thumbnail generation).
+- Total frame count (to show the user how 'present' the entity is).
+
+INPUT: tracked_manifest.json
+OUTPUT: ui_manifest.json (Consumed by app_ui.py)
+-------------------------------------------------------------------------
+"""
+
 import json
 
 def generate_ui_data(input_file):

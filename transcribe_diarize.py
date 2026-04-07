@@ -1,3 +1,23 @@
+"""
+FILE: transcribe_video.py
+ROLE: Rapid Global Transcription (No Speaker ID)
+-------------------------------------------------------------------------
+DESCRIPTION:
+A high-speed transcription fallback that uses Faster-Whisper. It provides 
+a quick text dump of a video's audio without the overhead of 
+denoising or speaker diarization.
+
+INPUT: 
+- Video files in 'samples/sanitized/'.
+
+OUTPUT:
+- transcripts/{video_name}.txt: A single-block text transcript.
+
+HARDWARE COMPATIBILITY:
+- Uses int8 quantization; extremely low VRAM footprint on 1080 Ti.
+-------------------------------------------------------------------------
+"""
+
 import os
 import gc
 import torch

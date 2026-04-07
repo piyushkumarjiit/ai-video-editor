@@ -1,3 +1,16 @@
+"""
+FILE: generate_boxed_frames.py
+STATUS: DEPRECATED / LEGACY
+ROLE: VLM Visual Prompt Preparation (Phase 1.5)
+-------------------------------------------------------------------------
+DESCRIPTION:
+Takes raw frames and YOLO coordinates to produce 'boxed' images in the 
+'qwen_input' directory. This 'visual prompting' technique is what 
+allows the VLM to perform specific role assignment (e.g., 'Target 1 is 
+the Officer').
+-------------------------------------------------------------------------
+"""
+
 import cv2
 import json
 import os

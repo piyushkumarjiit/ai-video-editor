@@ -1,4 +1,18 @@
-# render_nvenc_blur.py
+"""
+FILE: render_nvenc_blur.py
+ROLE: GPU-Accelerated Video Rendering (NVENC)
+-------------------------------------------------------------------------
+DESCRIPTION:
+An optimized rendering engine that uses the 1080 Ti's hardware H.264 
+encoder (NVENC). It reads a UI manifest and applies blurs while 
+streaming the output directly through FFmpeg for maximum throughput.
+
+HARDWARE COMPATIBILITY:
+- Optimized for NVIDIA 'Pascal' architecture (1080 Ti). 
+- Uses 'p6' preset for high-quality archival output.
+-------------------------------------------------------------------------
+"""
+
 import subprocess
 import json
 import cv2

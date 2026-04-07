@@ -1,3 +1,19 @@
+"""
+FILE: quick_test.py
+ROLE: Spatial "Grounding" & Coordinate Verification
+-------------------------------------------------------------------------
+DESCRIPTION:
+A visualization utility that validates AI-generated bounding boxes. 
+It maps normalized [0-1000] coordinates to actual image pixels and 
+renders a debug image to confirm the AI is targeting the correct 
+objects before the final redaction pass.
+
+HARDWARE COMPATIBILITY:
+- Optimized for Linux/R720 path compatibility via byte-level loading.
+- Requires OpenCV for image processing and visualization.
+-------------------------------------------------------------------------
+"""
+
 import cv2
 import json
 import os

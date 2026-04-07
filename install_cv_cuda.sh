@@ -1,3 +1,17 @@
+# -------------------------------------------------------------------------
+# FILE: install_cv_cuda.sh
+# ROLE: Hardware-Specific OpenCV & PyTorch Builder
+#
+# DESCRIPTION:
+# Compiles OpenCV from source with CUDA/cuDNN support specifically 
+# tailored for the 1080 Ti (Pascal). It also synchronizes PyTorch 
+# installations using the cu126 index for legacy hardware support.
+#
+# HARDWARE COMPATIBILITY:
+# - Targets Compute Capability 6.1 (NVIDIA Pascal / 1080 Ti).
+# - Requires gcc-12/g++-12 for OpenCV-CUDA source compilation.
+# -------------------------------------------------------------------------
+
 #!/bin/bash
 
 # --- PRE-FLIGHT CHECKS ---

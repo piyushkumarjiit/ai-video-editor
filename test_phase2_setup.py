@@ -1,3 +1,18 @@
+"""
+FILE: test_phase2_setup.py
+ROLE: Synthetic Resource Generation & Logic Prototyping
+-------------------------------------------------------------------------
+DESCRIPTION:
+A utility for creating isolated test environments. It generates a 
+synthetic video of moving shapes and a corresponding sparse manifest. 
+This allows for the testing of interpolation and tracking logic in a 
+mathematically predictable environment.
+
+HARDWARE COMPATIBILITY:
+- CPU-based synthetic video generation via OpenCV VideoWriter.
+-------------------------------------------------------------------------
+"""
+
 import cv2
 import numpy as np
 import json

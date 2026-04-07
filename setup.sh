@@ -1,3 +1,17 @@
+# -------------------------------------------------------------------------
+# FILE: setup.sh
+# ROLE: Primary Environment & Dependency Orchestrator
+#
+# DESCRIPTION:
+# The main project initialization script. It automates system dependency 
+# installation, venv creation, and the GPU-optimized compilation of 
+# llama-cpp-python. Includes a validation suite to verify CUDA support.
+#
+# HARDWARE COMPATIBILITY:
+# - Configures GGML_CUDA=on for NVIDIA GPU offloading.
+# - Dynamically locates nvcc and sets critical LD_LIBRARY_PATHs.
+# -------------------------------------------------------------------------
+
 #!/bin/bash
 ENV_PATH="$HOME/.virtualenvs/ai-video-env"
 # Set it to True if you want to build opencv that uses CUDA and GPU but it will tkae a long time 30+ mins

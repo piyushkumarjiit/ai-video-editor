@@ -1,3 +1,26 @@
+"""
+FILE: verify_coordinates.py
+ROLE: Coordinate Translation & Grounding Validator
+-------------------------------------------------------------------------
+DESCRIPTION:
+A diagnostic tool used to verify that normalized AI coordinates (0-1000) 
+match the physical pixels of the extracted keyframes. It renders 
+bounding boxes directly onto images to confirm detection accuracy.
+
+INPUT: 
+- tracked_manifest.json (The "Source of Truth" for AI detections).
+- keyframes/{video_name}/details.json (For W/H resolution data).
+
+OUTPUT:
+- verify_{video_name}.jpg: A visual confirmation image with green 
+  bounding boxes and entity IDs.
+
+PIPELINE STAGE: 
+- Post-Inference / Pre-Processing. Use this to ensure the AI isn't 
+  hallucinating coordinates before moving to redaction.
+-------------------------------------------------------------------------
+"""
+
 import cv2
 import json
 import os

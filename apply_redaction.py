@@ -1,3 +1,18 @@
+"""
+FILE: apply_redaction.py
+ROLE: CUDA-Accelerated Video Redaction (Final Phase)
+-------------------------------------------------------------------------
+DESCRIPTION:
+The final production script. It reads the tracking manifest and applies 
+feathered Gaussian blurs to specified entities using NVIDIA CUDA 
+acceleration. 
+
+HARDWARE COMPATIBILITY:
+- REQUIRES: OpenCV compiled with CUDA support.
+- Performance: Highly optimized for Pascal/Turing/Ampere GPUs.
+-------------------------------------------------------------------------
+"""
+
 import cv2
 import numpy as np
 

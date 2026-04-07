@@ -1,3 +1,19 @@
+"""
+FILE: run_redaction_pipeline.py
+ROLE: User-Driven Redaction Orchestration & GPU Rendering
+-------------------------------------------------------------------------
+DESCRIPTION:
+The main execution engine that filters raw AI tracking data based on 
+specific user selections from a manifest. It generates smooth tracking 
+paths through interpolation and executes final GPU-accelerated video 
+redaction to produce the blurred output file.
+
+HARDWARE COMPATIBILITY:
+- Requires an NVIDIA 1080 Ti for the final CUDA-based redaction process.
+- Integrates directly with local JSON-based manifests for ID filtering.
+-------------------------------------------------------------------------
+"""
+
 import json
 import os
 import sys

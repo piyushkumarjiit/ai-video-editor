@@ -1,4 +1,17 @@
-# denoise_worker.py
+"""
+FILE: denoise_worker.py
+ROLE: DeepFilterNet Execution Engine
+-------------------------------------------------------------------------
+DESCRIPTION:
+The actual processing core for audio cleanup. It runs the DeepFilterNet3 
+model to strip environmental noise while preserving speech. Designed to 
+run in a dedicated venv to prevent dependency hell.
+
+INPUT: temp_raw.wav (High-fidelity raw audio).
+OUTPUT: temp_clean.wav (Enhanced audio).
+-------------------------------------------------------------------------
+"""
+
 import sys
 from df.enhance import enhance, init_df, load_audio, save_audio
 

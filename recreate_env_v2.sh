@@ -1,3 +1,17 @@
+# -------------------------------------------------------------------------
+# FILE: recreate_env_v2.sh
+# ROLE: Rapid Environment Recovery & Deployment
+#
+# DESCRIPTION:
+# A streamlined script for rebuilding the Python environment. It 
+# enforces a hardware-optimized installation order to ensure Torch 
+# components are correctly linked to CUDA 12.6.
+#
+# HARDWARE COMPATIBILITY:
+# - Forces Torch installation via the cu126 index for 1080 Ti support.
+# - Configures Ultralytics with --no-deps to prevent driver issues.
+# -------------------------------------------------------------------------
+
 #!/bin/bash
 # 1. Create the environment
 python3 -m venv ~/.virtualenvs/ai-video-v2

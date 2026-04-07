@@ -1,4 +1,24 @@
-# vision_tagger_qwen3.py
+"""
+FILE: vision_tagger_qwen3.py
+ROLE: Entity Classification & Redaction Manifest Generator
+-------------------------------------------------------------------------
+DESCRIPTION:
+A specialized utility that processes tracked entities. It crops specific 
+targets from the video and uses VLM to classify them into strict 
+categories to determine if privacy redaction (blurring) is required.
+
+INPUT: 
+- Source video file (.mp4).
+- tracking.json (output from a tracking/YOLO script).
+
+OUTPUT:
+- UI Manifest JSON: Maps entity IDs to categories and provides a 
+  'blur_recommended' flag for the video editor UI.
+
+HARDWARE COMPATIBILITY:
+- Optimized for fast, targeted inference on individual crops.
+-------------------------------------------------------------------------
+"""
 import base64
 import requests
 import json

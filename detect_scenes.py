@@ -1,3 +1,18 @@
+"""
+FILE: detect_scenes.py
+STATUS: DEPRECATED / LEGACY
+-------------------------------------------------------------------------
+DESCRIPTION:
+An early-stage utility for segmenting video into 10-second 'scenes' based 
+on a fixed frame count. 
+
+REASON FOR DEPRECATION:
+Superseded by more efficient frame extraction methods that support 
+variable FPS and targeted incident detection. Fixed-interval sampling 
+(300 frames) often misses the exact start of critical incidents.
+-------------------------------------------------------------------------
+"""
+
 import cv2
 import os
 import json

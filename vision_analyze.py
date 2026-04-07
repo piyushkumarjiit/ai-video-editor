@@ -1,3 +1,25 @@
+"""
+FILE: vision_analyze.py
+ROLE: Contextual Scene Intelligence & Structured JSON Generation
+-------------------------------------------------------------------------
+DESCRIPTION:
+Performs high-level reasoning by analyzing pre-boxed images from YOLO. 
+It merges visual evidence with audio transcriptions to assign specific 
+roles (e.g., Suspect, Victim, Cop) to detected targets.
+
+INPUT: 
+- Images in 'qwen_input/' (expected to have YOLO 'green boxes').
+- Audio context/transcription passed via prompt.
+
+OUTPUT:
+- video_analysis.json: Detailed list of roles and bounding boxes 
+  normalized for downstream redaction or reporting.
+
+HARDWARE COMPATIBILITY:
+- Uses Ollama (qwen3-vl). Optimized for Pascal (1080 Ti) via quantization.
+-------------------------------------------------------------------------
+"""
+
 import os
 import ollama
 import json

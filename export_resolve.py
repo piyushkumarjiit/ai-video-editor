@@ -1,3 +1,5 @@
+# Not sude so far. Coming from original repo
+
 #!/usr/bin/env python3
 """
 Export DaVinci Resolve Timeline (FCP XML)

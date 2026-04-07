@@ -1,3 +1,24 @@
+"""
+FILE: enroll_speaker.py
+ROLE: Voice Biometric Enrollment (Speaker Library)
+-------------------------------------------------------------------------
+DESCRIPTION:
+Generates unique 'voice fingerprints' (embeddings) for known individuals. 
+These fingerprints allow the main transcription pipeline to identify 
+specific people by name rather than generic IDs.
+
+INPUT: 
+- Audio clips of individual voices in 'samples/to_enroll/'.
+
+OUTPUT:
+- .npy files in 'speaker_library/': Mathematical representations of 
+  unique voices used for matching during diarization.
+
+HARDWARE COMPATIBILITY:
+- Runs on CUDA (1080 Ti) or CPU. Lightweight and batch-processed.
+-------------------------------------------------------------------------
+"""
+
 import os
 import torch
 import numpy as np

@@ -1,3 +1,17 @@
+# -------------------------------------------------------------------------
+# FILE: run_full_pipeline.sh
+# ROLE: End-to-End Automation & Execution Wrapper
+#
+# DESCRIPTION:
+# Orchestrates the entire video processing lifecycle. Manages the 
+# sequence of Sanitization (NVENC), AI Grounding (Qwen-VL), and 
+# Final Redaction (CUDA), with a pause for manual user selection.
+#
+# HARDWARE COMPATIBILITY:
+# - Uses 1080 Ti for stage 1 (NVENC) and stage 5 (CUDA Redaction).
+# - Manages OLLAMA_HOST environment variables for Dockerized AI.
+# -------------------------------------------------------------------------
+
 #!/bin/bash
 
 # --- DOCKER & NETWORK CONFIG ---

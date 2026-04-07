@@ -1,3 +1,25 @@
+"""
+FILE: detector_yolo.py
+ROLE: High-Speed Object Detection & Coordinate Normalization (Phase 1)
+-------------------------------------------------------------------------
+DESCRIPTION:
+Performs initial visual reconnaissance using Ultralytics YOLO. It scans 
+extracted keyframes to identify 'Person' and 'Face' classes, generating 
+high-precision bounding boxes in a normalized [0-1000] format.
+
+INPUT: 
+- keyframes/ directory (individual .jpg frames).
+
+OUTPUT:
+- yolo_detections.json: Initial detection manifest. These boxes are 
+  often used as 'crops' or 'overlays' for the VLM (Qwen) stage.
+
+HARDWARE COMPATIBILITY:
+- Optimized for 1080 Ti using the 'yolov8n' (nano) variant for 
+  near-instant inference with minimal VRAM usage.
+-------------------------------------------------------------------------
+"""
+
 import os
 import json
 import cv2

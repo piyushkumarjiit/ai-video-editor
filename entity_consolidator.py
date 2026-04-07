@@ -1,3 +1,14 @@
+"""
+FILE: entity_consolidator.py
+ROLE: Cross-Frame Identity Grouping
+-------------------------------------------------------------------------
+DESCRIPTION:
+Uses mathematical distance thresholds to group fragmented detections 
+into single 'Global IDs'. Prevents the UI from showing the same person 
+multiple times if the tracker flickers.
+-------------------------------------------------------------------------
+"""
+
 import json
 import math
 

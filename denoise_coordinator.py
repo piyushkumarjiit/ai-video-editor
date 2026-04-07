@@ -1,3 +1,17 @@
+"""
+FILE: denoise_coordinator.py
+ROLE: Audio Extraction & Isolation Manager (Phase 0)
+-------------------------------------------------------------------------
+DESCRIPTION:
+Acts as the entry point for audio preprocessing. It extracts 48kHz mono 
+audio from source videos and hands it off to an isolated 'worker' 
+environment for denoising.
+
+INPUT: Source video path (.mp4, .mkv).
+OUTPUT: temp_clean.wav (Denoised audio ready for transcription).
+-------------------------------------------------------------------------
+"""
+
 import subprocess
 import os
 

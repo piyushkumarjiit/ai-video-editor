@@ -1,3 +1,15 @@
+"""
+FILE: cuda_active_check.py
+ROLE: Full-Stack GPU & AI Diagnostic Suite
+-------------------------------------------------------------------------
+DESCRIPTION:
+A comprehensive health check for the 1080 Ti / R720 environment. 
+Verifies NVIDIA drivers, OpenCV CUDA compilation, FFmpeg NVENC 
+availability, and VRAM headroom. Use this to troubleshoot 'Slow 
+Processing' errors.
+-------------------------------------------------------------------------
+"""
+
 import os
 import subprocess
 import json

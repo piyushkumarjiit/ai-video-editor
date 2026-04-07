@@ -1,3 +1,17 @@
+"""
+FILE: frame_analysis_normalizer.py
+ROLE: VLM Output Sanitization & Standardization
+-------------------------------------------------------------------------
+DESCRIPTION:
+A 'Data Janitor' script that converts unpredictable VLM JSON outputs into 
+a strict schema. It handles common AI errors like stringified JSON 
+nesting and varied key naming (bbox vs bbox_2d).
+
+INPUT: video_analysis.json (Raw AI output).
+OUTPUT: redaction_manifest.json (Clean, standardized schema).
+-------------------------------------------------------------------------
+"""
+
 import json
 import re
 

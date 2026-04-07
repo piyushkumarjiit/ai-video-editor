@@ -1,3 +1,19 @@
+"""
+FILE: setup_models.py
+ROLE: Centralized AI Model Synchronization & Asset Management
+-------------------------------------------------------------------------
+DESCRIPTION:
+An initialization utility that automates the downloading and 
+verification of YOLO and Pyannote/WhisperX models from Hugging Face. 
+It ensures all weights are stored in a local directory to support 
+offline inference and validates model integrity before deployment.
+
+HARDWARE COMPATIBILITY:
+- Optimized for environments using the NVIDIA 1080 Ti for inference.
+- Requires a valid Hugging Face Token (HF_TOKEN) for repository access.
+-------------------------------------------------------------------------
+"""
+
 from dotenv import load_dotenv
 import os
 import torch

@@ -1,3 +1,18 @@
+"""
+FILE: hello_ai.py
+ROLE: Hardware Validation & GPU Offloading Test
+-------------------------------------------------------------------------
+DESCRIPTION:
+A diagnostic script that verifies the local LLM environment and its 
+connection to the NVIDIA GPU. It loads a GGUF model and offloads all 
+layers to the 1080 Ti to confirm CUDA stability and VRAM availability.
+
+HARDWARE COMPATIBILITY:
+- Mandatory: NVIDIA GPU with functioning CUDA drivers.
+- Config: Forces total GPU offloading via n_gpu_layers=-1.
+-------------------------------------------------------------------------
+"""
+
 from llama_cpp import Llama
 import sys
 

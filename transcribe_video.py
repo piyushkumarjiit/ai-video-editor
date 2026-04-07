@@ -1,3 +1,26 @@
+"""
+FILE: transcribe_diarize.py
+ROLE: Advanced Audio-to-Text & Speaker Identification
+-------------------------------------------------------------------------
+DESCRIPTION:
+The 'Gold Standard' transcription engine for the pipeline. It denoises 
+audio, transcribes speech with word-level timing, and identifies 
+specific speakers by matching their voices against the 'speaker_library'.
+
+INPUT: 
+- Video files in 'samples/sanitized/'.
+- Voice fingerprints in 'speaker_library/'.
+
+OUTPUT:
+- transcripts/{video_name}.json: Structured transcript with speaker IDs.
+- transcripts/{video_name}.txt: Human-readable dialogue log.
+
+HARDWARE COMPATIBILITY:
+- Optimized for 1080 Ti using float32 compute. 
+- Employs aggressive GPU memory flushing to prevent VRAM crashes.
+-------------------------------------------------------------------------
+"""
+
 import os
 from moviepy import VideoFileClip
 from faster_whisper import WhisperModel

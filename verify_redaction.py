@@ -1,3 +1,26 @@
+"""
+FILE: verify_redaction.py
+ROLE: Final Redaction Safety Check (Visual Preview)
+-------------------------------------------------------------------------
+DESCRIPTION:
+The final visual verification script before actual video blurring. It 
+produces high-visibility previews (thick borders/large text) to allow 
+the user to manually confirm that every sensitive target (Face, License) 
+has a correctly sized box for redaction.
+
+INPUT: 
+- tracked_manifest.json (Latest version after normalization).
+- keyframes/{video_name}/details.json.
+
+OUTPUT:
+- verify_{video_name}.jpg: High-visibility preview image for human sign-off.
+
+PIPELINE STAGE: 
+- Final QA. This is the last script run before the 'apply_blur' stage 
+  to prevent privacy leaks.
+-------------------------------------------------------------------------
+"""
+
 import cv2
 import json
 import os

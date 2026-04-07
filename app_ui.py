@@ -1,3 +1,15 @@
+"""
+FILE: app_ui.py
+ROLE: Interactive Redaction Controller (Streamlit)
+-------------------------------------------------------------------------
+DESCRIPTION:
+The frontend for the pipeline. It reads 'ui_manifest.json' and presents 
+a checkbox list of all detected entities. Users select who to redact, 
+and the script generates the final 'redaction_manifest.json' for the 
+rendering engine.
+-------------------------------------------------------------------------
+"""
+
 import streamlit as st
 import json
 import os

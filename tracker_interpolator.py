@@ -1,3 +1,14 @@
+"""
+FILE: tracker_interpolator.py
+ROLE: Path Smoothing & Frame Gap Filling
+-------------------------------------------------------------------------
+DESCRIPTION:
+Calculates the linear trajectory of bounding boxes between AI-processed 
+keyframes. This ensures the final redaction blur doesn't 'jump' but 
+moves smoothly with the target's motion.
+-------------------------------------------------------------------------
+"""
+
 import json
 import cv2
 import numpy as np

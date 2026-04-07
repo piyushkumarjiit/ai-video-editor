@@ -1,3 +1,19 @@
+"""
+FILE: apply_lut_resolve.py
+ROLE: DaVinci Resolve Scripting Integration
+-------------------------------------------------------------------------
+DESCRIPTION:
+Connects the AI pipeline to DaVinci Resolve via the Python API. 
+This script automates the application of 3D LUTs (Look-Up Tables) to 
+timeline items. It can:
+1. Identify specific clips in a Resolve Media Pool or Timeline.
+2. Apply LUTs based on external metadata or project requirements.
+3. Query and dump timeline item properties for debugging.
+
+REQUIRED: DaVinci Resolve (Studio) and 'DaVinciResolveScript' module.
+-------------------------------------------------------------------------
+"""
+
 #!/usr/bin/env python3
 import argparse
 import json

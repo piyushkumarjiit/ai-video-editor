@@ -1,3 +1,21 @@
+"""
+FILE: clean_transcript.py
+ROLE: AI-Driven Script Polishing & Speaker Profiling
+-------------------------------------------------------------------------
+DESCRIPTION:
+The final refinement stage. It cleans raw transcripts by removing verbal 
+fillers (um/uh), fixing grammar, and mapping generic 'SPEAKER_XX' tags 
+to logical roles (OFFICER, SUSPECT, etc.) based on dialogue context.
+
+INPUT: transcripts/*.json (Output from transcribe_diarize.py).
+OUTPUT: transcripts/final_edits/*_FINAL.txt (Polished human-readable script).
+
+HARDWARE COMPATIBILITY:
+- Connects to local Ollama API (qwen3.5:9b).
+- Uses chunk-based processing to handle very long videos without OOM.
+-------------------------------------------------------------------------
+"""
+
 import json
 import os
 import math
