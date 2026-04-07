@@ -2,8 +2,10 @@
 
 # --- CONFIGURATION ---
 ENV_FILE=".env"
-IMAGE_NAME="nvcr.io/nim/nvidia/canary-1b:latest"
+#IMAGE_NAME="nvcr.io/nim/nvidia/canary-1b:latest"
+IMAGE_NAME="nvcr.io/nim/nvidia/parakeet-ctc-1.1b:latest"
 CONTAINER_NAME="speech-nim"
+export CONTAINER_ID="nvcr.io/nim/nvidia/parakeet-1-1b-ctc-en-us"
 
 # --- 1. VALIDATION ---
 if [ ! -f "$ENV_FILE" ]; then
@@ -42,17 +44,17 @@ fi
 # --- 4. EXECUTION ---
 echo "🚀 Starting $CONTAINER_NAME..."
 
-docker run -d --rm \
-  --name "$CONTAINER_NAME" \
+docker run -d --rm --name speech-nim \
   --runtime=nvidia \
   --gpus all \
-  --env-file "$ENV_FILE" \
   --shm-size=8GB \
   --ulimit memlock=-1 \
   --ulimit stack=67108864 \
+  --ulimit nofile=2048:2048 \
+  -e NGC_API_KEY=$NGC_API_KEY \
   -p 9000:9000 \
   -p 50051:50051 \
-  "$IMAGE_NAME"
+  $CONTAINER_ID:latest
 
 if [ $? -eq 0 ]; then
     echo "--------------------------------------------------------"
