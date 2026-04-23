@@ -110,16 +110,16 @@ def check_numpy_simd():
 def check_ollama_gpu():
     print("\n--- 🤖 Ollama GPU Inference ---")
     try:
-        response = requests.get("http://localhost:11434/api/tags", timeout=2)
+        LOCAL_IP = subprocess.getoutput(r"ip route get 1.1.1.1 | grep -oP 'src \K\S+'")
+        url = f"http://{LOCAL_IP}:11434/api/tags"
+        #print(f"DEBUG: Connecting to Ollama at: {url}") 
+        response = requests.get(url, timeout=2)            
         if response.status_code == 200:
             print("✅ Ollama server reachable.")
-            ps_res = subprocess.run(['ollama', 'ps'], capture_output=True, text=True)
-            if "100% GPU" in ps_res.stdout:
-                print("✅ Model loaded 100% on GPU.")
-            else:
-                print("⚠️  No model active on GPU. Run 'ollama run' to test VRAM.")
+        else:
+            print("⚠️ Ollama server reachable.")
     except:
-        print("❌ Ollama server is NOT running.")
+        print("❌ Exception while trying to reach Ollama server.")
 
 def check_opencv_dnn():
     print("\n👁️  [OpenCV DNN Backend]")

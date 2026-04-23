@@ -1,5 +1,13 @@
+# Pip packages used for denoise venv. No longer used as the shell script directly installs everything.
 
-# Pip packages used for denoise venv
+# Core Build Tools
 setuptools
 wheel
+
+# Hardware Acceleration (Optimized for 1080 Ti / CUDA 11.8)
+--extra-index-url https://download.pytorch.org/whl/cu118
+torch
+torchaudio
+
+# DeepFilterNet Components
 deepfilternet

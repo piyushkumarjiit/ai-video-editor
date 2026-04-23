@@ -16,7 +16,7 @@ import subprocess
 import os
 
 # Update this path to your specific denoising venv
-DENOISE_PYTHON = "/home/piyush/.virtualenvs/YOUR_DENOISE_VENV/bin/python"
+DENOISE_PYTHON = "/home/piyush/.virtualenvs/ai-video-v2/bin/python"
 
 def process_audio_isolated(video_path):
     raw_wav = "temp_raw.wav"
