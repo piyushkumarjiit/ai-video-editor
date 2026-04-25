@@ -34,6 +34,18 @@ from pyannote.core import Segment
 from dotenv import load_dotenv
 from scipy.spatial.distance import cdist
 
+import huggingface_hub
+from huggingface_hub import hf_hub_download as real_download
+
+# This intercepts the call and renames the bad argument on the fly
+def patched_download(*args, **kwargs):
+    if 'use_auth_token' in kwargs:
+        kwargs['token'] = kwargs.pop('use_auth_token')
+    return real_download(*args, **kwargs)
+
+huggingface_hub.hf_hub_download = patched_download
+
+
 # --- CONFIGURATION ---
 load_dotenv()
 HF_TOKEN = os.getenv("HF_TOKEN")
@@ -42,7 +54,7 @@ COMPUTE_TYPE = "float32"
 VIDEO_DIR = "samples/sanitized"
 DENOISED_DIR = "samples/denoised"  # New Directory
 OUTPUT_DIR = "transcripts"
-DENOISE_PYTHON = "/home/piyush/.virtualenvs/denoise-env/bin/python"
+DENOISE_PYTHON = "/home/pk/.virtualenvs/ai-video-denoise/bin/python"
 DELETE_DENOISED_FILES = False
 
 # --- ENVIRONMENT STABILIZATION ---
@@ -50,6 +62,12 @@ os.environ["TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD"] = "true"
 os.environ["OMP_NUM_THREADS"] = "1"
 os.environ["MKL_NUM_THREADS"] = "1"
 os.environ["GIT_PYTHON_REFRESH"] = "quiet" 
+# --- PASCAL GPU (1080 Ti) COMPATIBILITY BLOCK ---
+# os.environ["TORCH_CUDNN_ENABLED"] = "0" 
+# os.environ["TORCH_CUDNN_V8_API_ENABLED"] = "0"
+# os.environ["TORCH_ALLOW_TF32"] = "0"
+# os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
+# -----------------------------------------------
 warnings.filterwarnings("ignore", category=FutureWarning)
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -62,7 +80,9 @@ def flush_gpu():
 def identify_speakers(audio_file, diarize_df, hf_token):
     print("🔍 Phase 3.5: Matching speakers against library...")
     model = Model.from_pretrained("pyannote/embedding", use_auth_token=hf_token)
-    inference = Inference(model, window="whole", device="cpu")
+    # Dynamic device selection
+    active_device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    inference = Inference(model, window="whole", device=active_device)
     
     library = {}
     if os.path.exists("speaker_library"):
@@ -105,7 +125,17 @@ def run_isolated_denoise(video_path):
     ], check=True, capture_output=True)
 
     env = os.environ.copy()
-    env["CUDA_VISIBLE_DEVICES"] = "" 
+    env["CUDA_VISIBLE_DEVICES"] = ""
+    # env["DF_DEVICE"] = "cuda"
+    # # This forces PyTorch to avoid the cuDNN GRU kernels that are failing. Prevent the GRU logic from trying to find a "shortcut"
+    # env["TORCH_ALLOW_TF32"] = "0"
+    # env["TORCH_CUDNN_V8_API_ENABLED"] = "0"
+    # # This forces PyTorch to use its internal CUDA implementation
+    # env["TORCH_CUDNN_ENABLED"] = "0"
+    # # Handle potential contiguous issues (Pascal-specific fix)
+    # env["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
+    # # Add this line to manage memory fragmentation
+    # env["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
     
     try:
         print(f"🧹 Phase 0: Denoising {base_name} (Isolated CPU Mode)...")
