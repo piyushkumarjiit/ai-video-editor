@@ -1,5 +1,5 @@
 """
-FILE: transcribe_video.py
+FILE: transcribe_diarize.py
 ROLE: Rapid Global Transcription (No Speaker ID)
 -------------------------------------------------------------------------
 DESCRIPTION:
@@ -62,14 +62,7 @@ os.environ["TORCH_FORCE_NO_WEIGHTS_ONLY_LOAD"] = "true"
 os.environ["OMP_NUM_THREADS"] = "1"
 os.environ["MKL_NUM_THREADS"] = "1"
 os.environ["GIT_PYTHON_REFRESH"] = "quiet" 
-# --- PASCAL GPU (1080 Ti) COMPATIBILITY BLOCK ---
-# os.environ["TORCH_CUDNN_ENABLED"] = "0" 
-# os.environ["TORCH_CUDNN_V8_API_ENABLED"] = "0"
-# os.environ["TORCH_ALLOW_TF32"] = "0"
-# os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
-# -----------------------------------------------
 warnings.filterwarnings("ignore", category=FutureWarning)
-
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 os.makedirs(DENOISED_DIR, exist_ok=True) # Ensure denoised folder exists
 
@@ -126,27 +119,15 @@ def run_isolated_denoise(video_path):
 
     env = os.environ.copy()
     env["CUDA_VISIBLE_DEVICES"] = ""
-    # env["DF_DEVICE"] = "cuda"
-    # # This forces PyTorch to avoid the cuDNN GRU kernels that are failing. Prevent the GRU logic from trying to find a "shortcut"
-    # env["TORCH_ALLOW_TF32"] = "0"
-    # env["TORCH_CUDNN_V8_API_ENABLED"] = "0"
-    # # This forces PyTorch to use its internal CUDA implementation
-    # env["TORCH_CUDNN_ENABLED"] = "0"
-    # # Handle potential contiguous issues (Pascal-specific fix)
-    # env["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
-    # # Add this line to manage memory fragmentation
-    # env["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
     
     try:
         print(f"🧹 Phase 0: Denoising {base_name} (Isolated CPU Mode)...")
-        # Removed capture_output so you see the progress bar
         subprocess.run([
             DENOISE_PYTHON, "-m", "df.enhance", 
             raw_wav, "--output-dir", DENOISED_DIR
         ], env=env, check=True) 
 
-        # 2. MATCH THE EXACT FILENAME SEEN IN YOUR LS COMMAND
-        # DeepFilterNet adds the model name as a suffix
+        # 2. MATCH THE EXACT FILENAME SEEN IN YOUR LS COMMAND. DeepFilterNet adds the model name as a suffix
         enhanced_file = None
         expected_suffix = "_raw_tmp_DeepFilterNet3.wav"
         potential_path = os.path.join(DENOISED_DIR, f"{base_name}{expected_suffix}")
