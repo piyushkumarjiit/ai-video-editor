@@ -1,76 +1,97 @@
+#!/bin/bash
 # -------------------------------------------------------------------------
-# FILE: recreate_env_v2.sh
-# ROLE: Rapid Environment Recovery & Deployment
-#
+# FILE: recreate_env_split.sh
+# ROLE: Multi-Role AI Environment Builder (Denoise, ASR, Diarize)
+# USAGE: ./recreate_env_split.sh [venv_name] [python_version] [role]
+# ROLES: denoise | asr | diarize
 # DESCRIPTION:
 # A streamlined script for rebuilding the Python environment. It 
 # enforces a hardware-optimized installation order to ensure Torch 
-# components are correctly linked to CUDA 12.6.
+# components are correctly linked to CUDA 11.8 for Pascal (1080 Ti) support.
 #
 # HARDWARE COMPATIBILITY:
-# - Forces Torch installation via the cu126 index for 1080 Ti support.
-# - Configures Ultralytics with --no-deps to prevent driver issues.
+# - Forces Torch installation via the cu118 index for 1080 Ti stability.
+# - Optimized for NVIDIA Driver 535+ (CUDA 12.2).
+
+# 1. Setup the Denoising Environment
+#chmod +x recreate_env_split.sh
+#./recreate_env_split.sh ai-video-denoise python3.11 denoise
+
+# 2. Setup the Transcription (ASR) Environment
+#./recreate_env_split.sh ai-video-asr python3.11 asr
+
+# 3. Setup the Speaker Identification (Diarize) Environment
+#./recreate_env_split.sh ai-video-diarize python3.11 diarize
 # -------------------------------------------------------------------------
 
-#!/bin/bash
+VENV_NAME=$1
+TARGET_PYTHON=$2
+ROLE=$3
+FORCE_REBUILD=${4:-false} # Optional 4th argument
 
-# Force correct library loading for the current session & health check
-export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libstdc++.so.6
-export PATH=/usr/local/cuda-12.8/bin:$PATH
-export LD_LIBRARY_PATH=/usr/local/cuda-12.8/lib64:$LD_LIBRARY_PATH
-export MKL_SERVICE_FORCE_INTEL=1
+if [[ -z "$VENV_NAME" || -z "$TARGET_PYTHON" || -z "$ROLE" ]]; then
+    echo "❌ Usage: $0 [venv_name] [python_version] [denoise|asr|diarize] (force_rebuild)"
+    exit 1
+fi
 
-unset PYTHONPATH
-
-# Define the target version and path
-TARGET_PYTHON="python3.11"
-VENV_PATH="$HOME/.virtualenvs/ai-video-denoise"
-
+VENV_PATH="$HOME/.virtualenvs/$VENV_NAME"
 BUILD_OPENCV=true
 
-# 0. Prerequisites
-if [ -f "$HOME/.cargo/env" ]; then
-    source "$HOME/.cargo/env"
-fi
+export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libstdc++.so.6
+export MKL_SERVICE_FORCE_INTEL=1
+unset PYTHONPATH
 
-# install rust as it is used by deepfilternet
-if ! command -v cargo &> /dev/null; then
-    echo "🦀 Installing Rust for DeepFilterNet..."
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-    source $HOME/.cargo/env
-fi
-
-echo "🗑️ Cleaning up old environment if it exists..."
+echo "🗑️ Cleaning up $VENV_PATH..."
 sudo rm -rf "$VENV_PATH"
 
-# 1. Create the environment and upgrade pip
-echo "🐍 Creating Virtual Env..."
-# 1. Check if the specific Python version is even installed
+# 1. Prerequisites (Rust for Denoise)
+if [ "$ROLE" == "denoise" ]; then
+    if ! command -v cargo &> /dev/null; then
+        echo "🦀 Installing Rust for DeepFilterNet..."
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+        source $HOME/.cargo/env
+    fi
+fi
+
+# 2. Install Target Python via Deadsnakes
 if ! command -v $TARGET_PYTHON &> /dev/null; then
-    echo "❌ $TARGET_PYTHON not found. Installing via deadsnakes..."
+    echo "❌ $TARGET_PYTHON not found. Installing via PPA..."
     sudo add-apt-repository ppa:deadsnakes/ppa -y
     sudo apt update
     sudo apt install $TARGET_PYTHON $TARGET_PYTHON-venv $TARGET_PYTHON-dev -y
 fi
 
-# 2. Create the venv using that exact version
-echo "Creating venv with $($TARGET_PYTHON --version)..."
+# 3. Create Venv
+echo "🐍 Creating venv at $VENV_PATH..."
 $TARGET_PYTHON -m venv $VENV_PATH
-
-# 3. Activate and verify
-echo "🔌 Activating environment..."
 source "$VENV_PATH/bin/activate"
+# Quote the version constraints to prevent shell redirection errors
+$TARGET_PYTHON -m pip install --upgrade pip "setuptools<70.0.0" "wheel<0.45.0"
 
-# 2. Install Torch and Audio first (The heavy lifting). Unified Installation (Prevents Resolver Collisions)
-echo "🔥 Installing Torch components for CUDA 12.4. Installing all components in a single pass..."
-#"$TARGET_PYTHON" -m pip install --upgrade pip setuptools "wheel<0.45.0"
-$TARGET_PYTHON -m pip install --upgrade pip
-#$TARGET_PYTHON -m pip install setuptools==69.5.1 wheel==0.43.0 packaging==24.0 --no-deps
+# 4. Hardware-Optimized Installation
+echo "🔥 Installing $ROLE-specific stack for 1080 Ti..."
+
+# Common base for all (NumPy 1.26.4 is the bridge)
+#BASE_LIBS="torch==2.1.2 torchaudio==2.1.2 numpy==1.26.4 pandas<2.2.0 scipy<1.13.0 --extra-index-url https://download.pytorch.org/whl/cu118"
+
+if [ "$ROLE" == "denoise" ]; then
+    # Denoise Stack: DeepFilterNet 0.5.6
+    # $TARGET_PYTHON -m pip install torch==2.1.2 torchaudio==2.1.2 numpy==1.26.4 pandas==2.1.4 scipy==1.11.4 deepfilternet==0.5.6 --extra-index-url https://download.pytorch.org/whl/cu124
+    $TARGET_PYTHON -m pip install deepfilternet==0.5.6 numpy==1.26.4
+    $TARGET_PYTHON -m pip install torch torchaudio --index-url https://download.pytorch.org/whl/cpu
     
-
-# Torch AND the requirements file in one command as this prevents pip from 'fixing' dependencies later and breaking torchaudio
-#"$TARGET_PYTHON" -m pip install torch==2.0.1 torchaudio==2.0.2 deepfilternet==0.5.6 numpy==1.26.4 pandas<2.2.0 scipy<1.13.0 --no-cache-dir --extra-index-url https://download.pytorch.org/whl/cu118
-# --- PHASE 1: CORE FOUNDATION (Hardware & Version Bridge) ---
+elif [ "$ROLE" == "asr" ]; then
+    # ASR Stack: WhisperX (Manual layering to protect pins)
+    #$TARGET_PYTHON -m pip install torch==2.1.2 torchaudio==2.1.2 numpy==1.26.4 ctranslate2==4.3.1 --extra-index-url https://download.pytorch.org/whl/cu118
+    #$TARGET_PYTHON -m pip install git+https://github.com/m-bain/whisperX.git@v3.1.1 --no-deps
+    #$TARGET_PYTHON -m pip install torch==2.1.2 torchaudio==2.1.2 numpy==1.26.4 ctranslate2==4.3.1 --force-reinstall --extra-index-url https://download.pytorch.org/whl/cu118
+    #$TARGET_PYTHON -m pip install faster-whisper==1.0.3 transformers==4.37.2 nltk setfst srt pandas==2.1.4 scipy==1.11.4
+    # Claude
+    #$TARGET_PYTHON -m pip install whisperx --no-deps
+    #$TARGET_PYTHON -m pip install pyannote.audio==3.3.2 --no-deps
+    #$TARGET_PYTHON -m pip install pyannote.core pyannote.pipeline pyannote.metrics speechbrain asteroid-filterbanks omegaconf einops
+    
+    # --- PHASE 1: CORE FOUNDATION (Hardware & Version Bridge) ---
     $TARGET_PYTHON -m pip install "setuptools==69.5.1" "wheel==0.43.0" "packaging==24.0" "fsspec[http]==2024.3.1" "protobuf==3.20.3" --no-deps
     $TARGET_PYTHON -m pip install torch==2.5.1 torchaudio==2.5.1 numpy==1.26.4 --index-url https://download.pytorch.org/whl/cu124 --no-deps
 
@@ -135,23 +156,21 @@ $TARGET_PYTHON -m pip install --upgrade pip
     # 5. The Hardware Anchor (Final lock on NumPy)
     $TARGET_PYTHON -m pip install "numpy==1.26.4" "typing-extensions==4.12.2" --force-reinstall --no-deps
 
-    # --- PHASE 4.5: FINAL REVISED DEEPFILTERNET (DNN) INTEGRATION ---
-    $TARGET_PYTHON -m pip install "loguru==0.7.3" "appdirs==1.4.4" "tomli==2.0.1" --no-deps
-    $TARGET_PYTHON -m pip install "pathspec==0.12.1" "acoustics==0.2.6" --no-deps
-    $TARGET_PYTHON -m pip install "deepfilterlib==0.5.6" "deepfilternet==0.5.6" --no-deps
-    $TARGET_PYTHON -m pip install "pydub==0.25.1" "platformdirs==4.2.0" --no-deps
 
-
-# 3. Install the rest of the requirements
-# if [ -f "requirements-denoise.txt" ]; then
-#     echo "📦 Installing requirements-denoise.txt..."
-#     pip install -r requirements-denoise.txt
-# else
-#     echo "⚠️ Warning: requirements-denoise.txt not found, skipping."
-# fi
-
-# 4. The Critical "Manual" Step for Ultralytics (if needed in this new environment)
-#pip install ultralytics --no-deps --no-cache-dir
+# 2. Install the necessary diarization/NLP helpers that WhisperX needs
+#~/.virtualenvs/ai-video-asr/bin/python -m pip install faster-whisper==1.0.3 transformers==4.37.2 nltk
+elif [ "$ROLE" == "diarize" ]; then
+    # Diarization Stack: Pyannote (Manual layering)
+    #$TARGET_PYTHON -m pip install torch==2.1.2 torchaudio==2.1.2 numpy==1.26.4 --extra-index-url https://download.pytorch.org/whl/cu118
+    #$TARGET_PYTHON -m pip install speechbrain==1.0.0
+    # $TARGET_PYTHON -m pip install pyannote.audio==3.1.1
+    #$TARGET_PYTHON -m pip install huggingface_hub omegaconf pytorch-lightning>=2.0 pyyaml pandas==2.1.4 scipy==1.11.4
+    # Cluade
+    $TARGET_PYTHON -m pip install torch==2.5.1 torchaudio==2.5.1  --index-url https://download.pytorch.org/whl/cu124  --no-deps
+    $TARGET_PYTHON -m pip install pyannote.audio==3.3.2 --no-deps
+    $TARGET_PYTHON -m pip install pyannote.core pyannote.pipeline pyannote.metrics speechbrain asteroid-filterbanks omegaconf einops
+    $TARGET_PYTHON -m pip install openai python-dotenv requests
+fi
 
 # 5. Conditional OpenCV Build
 if [ "$BUILD_OPENCV" = true ]; then
@@ -222,36 +241,20 @@ export PYTHONPATH=""
 # 6. Verification Block
 echo "------------------------------------------------"
 echo "🔍 Running Final Health Check..."
-
-python << EOF
-import sys
+"$VENV_PATH/bin/python3" << EOF
 import torch
-
-try:
-    print("Checking DeepFilterNet import...")
-    from df.enhance import init_df
-    print("✅ DeepFilterNet module: FOUND")
-    
-    cuda_available = torch.cuda.is_available()
-    if cuda_available:
-        print(f"✅ CUDA Available: YES (Device: {torch.cuda.get_device_name(0)})")
-    else:
-        print("❌ CUDA Available: NO")
-
-    print("⏳ Testing model initialization...")
-    model, df_state, _ = init_df()
-    print("✅ Model Loading: SUCCESS")
-
-except Exception as e:
-    print(f"\n❌ HEALTH CHECK FAILED")
-    print(f"Error Type: {type(e).__name__}")
-    print(f"Message: {e}")
-    # This prints the specific line that failed inside the library
-    import traceback
-    traceback.print_exc()
-    sys.exit(1)
-
-print("\n🎉 Environment '{sys.prefix}' is 100% healthy!")
+import cv2
+print(f"✅ CUDA Available: {torch.cuda.is_available()}")
+if torch.cuda.is_available():
+    print(f"✅ GPU: {torch.cuda.get_device_name(0)}")
+print(f"✅ OpenCV CUDA Enabled: {cv2.cuda.getCudaEnabledDeviceCount() > 0}")
 EOF
 
-echo "✅ Env 2 setup complete. To use it, run: source $VENV_PATH/bin/activate . Run cuda_active_check.py to verify."
+$TARGET_PYTHON -c "import numpy; import torch; import whisperx; import pyannote.audio; \
+import openai; print(f'--- FINAL VERIFICATION ---'); print(f'Numpy: {numpy.__version__} \
+(Target: 1.26.4)'); print(f'GPU: {torch.cuda.get_device_name(0)}'); \
+print(f'ASR: WhisperX {whisperx.__version__}'); \
+print(f'Diarize: Pyannote {pyannote.audio.__version__}'); \
+print('🚀 ENVIRONMENT FULLY STABILIZED')"
+
+echo "✅ Env setup complete. To use it, run: source $VENV_PATH/bin/activate . Run cuda_active_check.py to verify."
