@@ -171,7 +171,35 @@ pip install --no-deps \
     sortedcontainers==2.4.0 soupsieve==2.8.3 tabulate==0.10.0 yt-dlp==2026.3.17 \
     tensorboardX==2.6.5 toml==0.10.2 pytorch-metric-learning==2.9.0    
 
-# 12.A Layer 7: Llama CPP with Cuda
+# 12.A Layer 8: New Modules for OCR and Documents processing
+echo "📦 Installing OCR and Document dependencies..."
+pip install --no-deps \
+    scikit-image==0.26.0 albumentations==2.0.8 albucore==0.0.24 easydict==1.13 \
+    cython==3.2.4 pyclipper==1.4.0 shapely==2.1.2 ninja==1.13.0 python-bidi==0.6.7 \
+    tifffile==2026.3.3 spacy==3.8.14 phonenumbers==8.13.55 \
+    tldextract==5.3.1 thinc==8.3.13 blis==1.3.3 pdfminer.six==20221105 \
+    pypdfium2==5.7.1 pytest==7.4.0 pytest-cov==4.1.0 \
+    stringzilla==4.6.0 simsimd==6.5.16 cloudpathlib==0.24.0 smart_open==7.6.0 \
+    spacy-legacy==3.0.12 spacy-loggers==1.0.5 murmurhash==1.0.15 cymem==2.0.13 \
+    preshed==3.0.13 wasabi==1.1.3 srsly==2.5.3 catalogue==2.0.10 \
+    weasel==1.0.0 confection==1.3.3 wrapt==2.1.2 iniconfig==2.3.0 \
+    pluggy==1.6.0 coverage==7.13.5 prettytable==3.17.0 requests-file==3.0.1
+
+# Download SpaCy model for use
+python3 -m spacy download en_core_web_lg
+
+# 12.C Layer 9: New Modules for Vector store and testing
+echo "📦 Installing OCR and Document Utilities..."
+pip install --no-deps \
+    insightface==0.7.3 easyocr==1.7.0 sentence-transformers==2.2.2 \
+    presidio-analyzer==2.2.355 pdfplumber==0.10.0 python-docx==1.0.0
+
+# 12.C Layer 9: New Modules for Vector store and testing
+echo "📦 Installing Vector DB and Utilities..."
+pip install --no-deps \
+    faiss-gpu==1.7.4 
+
+# 12.D Layer 7: Llama CPP with Cuda
 CMAKE_ARGS="-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=61" pip install llama_cpp_python==0.3.20 --no-cache-dir
 
 # 13. Conditional OpenCV Build
