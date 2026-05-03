@@ -27,15 +27,19 @@ from ultralytics import YOLO
 from tqdm import tqdm
 
 # --- CONFIGURATION ---
-# 'yolov8n.pt' is extremely fast; 'yolov8m.pt' is more accurate for faces
-MODEL_VARIANT = 'yolov8n-face.pt' # Or 'yolov8n.pt' for general objects
+MODEL_DIR = "models"
+MODEL_FILENAME = "yolov8x.pt" # or yolov8n-face.pt
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(PROJECT_ROOT, MODEL_DIR, MODEL_FILENAME)
+
 KEYFRAMES_DIR = 'keyframes'
 OUTPUT_FILE = 'yolo_detections.json'
 CONFIDENCE_THRESHOLD = 0.4
 
 # 1. Load the model once (Keep it in VRAM)
 # Note: You may need to download a face-specific weights file or use standard yolov8
-model = YOLO('yolov8n.pt') 
+model = YOLO(MODEL_PATH, verbose=False)
+print(f"✅ Loaded {MODEL_FILENAME} from {MODEL_PATH}")
 
 def run_yolo_scan():
     analysis_results = {}

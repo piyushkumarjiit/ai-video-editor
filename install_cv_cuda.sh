@@ -16,21 +16,38 @@
 
 # --- PRE-FLIGHT CHECKS ---
 
+if ! sudo -n true 2>/dev/null; then
+    echo "This script requires sudo. Please enter your password:"
+    sudo -v || exit 1
+fi
 # there is also dependecy on Numpy 1.X so ensure that your venv uses 1.X
 
 # Add NVIDIA repo and download the keyring for NVIDIA
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
-sudo dpkg -i cuda-keyring_1.1-1_all.deb
+KEYRING_FILE="cuda-keyring_1.1-1_all.deb"
+KEYRING_URL="https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/$KEYRING_FILE"
+
+echo "🌐 Downloading CUDA keyring..."
+# -q for quiet, -O to ensure it saves with the name we expect
+wget -q "$KEYRING_URL" -O "$KEYRING_FILE"
+echo "📦 Installing keyring..."
+sudo dpkg -i "$KEYRING_FILE"
 sudo apt update
+# Delete the file immediately after installation
+echo "🧹 Cleaning up $KEYRING_FILE..."
+rm -f "$KEYRING_FILE"
 sudo apt install gcc-12 g++-12 ninja-build -y # needed for opencv-cuda compilation as later versions are not supported yet
 sudo apt install libcudnn8 libcudnn8-dev
+
+# Download NVIDIA Video Decoder SDK and set below variable to the unzipped folder path, preferably inside opencv_build
+VIDEO_SDK_DIR="$HOME/opencv_build/Video_Codec_SDK_13.0.37"
 
 # 1. Get Compute Capability (e.g., 6.1 or 8.9)
 CUDA_CAP=$(nvidia-smi --query-gpu=compute_cap --format=csv,noheader,nounits 2>/dev/null | head -n 1)
 echo "🚀 Detected GPU Compute Capability: $CUDA_CAP"
 if [ -z "$CUDA_CAP" ]; then
     echo "CRITICAL: No NVIDIA GPU detected via nvidia-smi."
-    echo "Since you are on Hypervisor, ensure PCIe Passthrough is enabled for the 1080 Ti."
+    echo "If you are on Hypervisor, ensure PCIe Passthrough is enabled for the 1080 Ti."
     exit 1
 fi
 echo "Found GPU with Compute Capability: $CUDA_CAP"
@@ -43,6 +60,15 @@ if [ -n "$1" ]; then
     ENV_PATH="$1"
     TARGET_PYTHON="$ENV_PATH/bin/python3"
     echo "🎯 Using provided argument path: $ENV_PATH"
+    # Check what version this path actually reports
+    DETECTED_VER=$($TARGET_PYTHON -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")' 2>/dev/null)
+    
+    if [[ "$DETECTED_VER" != "3.10" && "$DETECTED_VER" != "3.11" ]]; then
+        echo "❌ Version Mismatch! Found Python $DETECTED_VER, but this script supports 3.10 or 3.11."
+        echo "   Please use: python3.11 -m venv $ENV_PATH"
+        exit 1
+    fi
+    echo "🎯 Validated Python $DETECTED_VER at: $ENV_PATH"
 elif [ -n "$VIRTUAL_ENV" ]; then
     ENV_PATH="$VIRTUAL_ENV"
     TARGET_PYTHON="$VIRTUAL_ENV/bin/python3"
@@ -68,8 +94,6 @@ if "$TARGET_PYTHON" -c "import cv2" &> /dev/null; then
 fi
 
 # --- INSTALLATION START ---
-
-sudo apt-get update
 sudo apt-get install -y build-essential cmake git pkg-config libjpeg-dev libtiff-dev libpng-dev \
 libavcodec-dev libavformat-dev libswscale-dev libv4l-dev libxvidcore-dev libx264-dev \
 libgtk-3-dev libatlas-base-dev gfortran python3-dev python3-numpy
@@ -86,28 +110,69 @@ git clone https://github.com/opencv/opencv.git --depth 1
 git clone https://github.com/opencv/opencv_contrib.git --depth 1
 cd opencv && mkdir -p build && cd build
 
+# Navigate to your build directory (where you keep your source code)
+cd ~/opencv_build
+
+# Clone the NVIDIA Video Codec headers
+# git clone https://github.com/FFmpeg/nv-codec-headers.git
+# cd nv-codec-headers
+# make
+# sudo make install
+# sudo ln -sf /usr/local/include/ffnvcodec/*.h /usr/local/cuda/include/
+# sudo ln -sf /usr/local/lib/pkgconfig/ffnvcodec.pc /usr/lib/x86_64-linux-gnu/pkgconfig/
+# sudo ln -sf /usr/local/include/ffnvcodec/*.h /usr/local/cuda/include/
+
+# Download the Nvidia SDK
+# extract it and keep inside opencv_build
+# set LIB DIR PATH
+# run below command to create symlinks
+#sudo ln -sf "$VIDEO_SDK_DIR/Interface/nvcuvid.h" /usr/local/cuda/include/nvcuvid.h
+#sudo ln -sf "$VIDEO_SDK_DIR/Interface/cuviddec.h" /usr/local/cuda/include/cuviddec.h
+#sudo ln -sf "$VIDEO_SDK_DIR/Interface/nvEncodeAPI.h" /usr/local/cuda/include/nvEncodeAPI.h
+
+cd ~/opencv_build/opencv/build
+
+# Purge previous build cache
+echo "🧹 Purging stale CMake and loader cache to prevent version ghosting..."
+rm -rf python_loader
+rm -f CMakeCache.txt
+
+
 # Configure (Tailored for 1080 Ti / Compute 6.1)
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
       -D CMAKE_INSTALL_PREFIX="$ENV_PATH" \
       -D CMAKE_C_COMPILER=gcc-12 \
       -D CMAKE_CXX_COMPILER=g++-12 \
-      -D CUDA_HOST_COMPILER=/usr/bin/gcc-12 \
       -D WITH_CUDA=ON \
+      -D CUDA_HOST_COMPILER=/usr/bin/gcc-12 \
+      -D CUDA_ARCH_BIN=$CUDA_CAP \
+      -D CUDA_ARCH_PTX=$CUDA_CAP \
+      -D OPENCV_CUDA_FORCE_PTX_EDITION=$CUDA_CAP \
+      -D CUDA_FAST_MATH=ON \
       -D WITH_CUDNN=ON \
       -D OPENCV_DNN_CUDA=ON \
-      -D ENABLE_FAST_MATH=ON \
-      -D CUDA_FAST_MATH=ON \
-      -D WITH_CUBLAS=ON \
-      -D CUDA_ARCH_BIN=$CUDA_CAP \
-      -D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib/modules \
       -D BUILD_opencv_python3=ON \
+      -D HAVE_opencv_python3=ON \
+      -D OPENCV_EXTRA_MODULES_PATH=$HOME/opencv_build/opencv_contrib/modules \
+      -D OPENCV_GENERATE_PKGCONFIG=ON \
+      -D BUILD_opencv_cudacodec=ON \
+      -D ENABLE_FAST_MATH=ON \
+      -D WITH_CUBLAS=ON \
+      -D WITH_TBB=ON \
+      -D VIDEOIO_INCLUDE_DIRS="$VIDEO_SDK_DIR/Interface" \
+      -D VIDEOIO_LIBRARIES="$VIDEO_SDK_DIR/Lib/linux/stubs/x86_64" \
+      -D WITH_NVCUVID=ON \
+      -D NVCUVID_INCLUDE_DIR="$VIDEO_SDK_DIR/Interface" \
+      -D NVCUVID_LIBRARY="$VIDEO_SDK_DIR/Lib/linux/stubs/x86_64/libnvcuvid.so" \
+      -D WITH_NVCUVENC=ON \
+      -D NVCUVENC_INCLUDE_DIR="$VIDEO_SDK_DIR/Interface" \
+      -D NVCUVENC_LIBRARY="$VIDEO_SDK_DIR/Lib/linux/stubs/x86_64/libnvidia-encode.so" \
       -D PYTHON3_EXECUTABLE="$TARGET_PYTHON" \
       -D PYTHON3_INCLUDE_DIR=$PYTHON_INCLUDE_DIR \
       -D PYTHON3_LIBRARY=$PYTHON_LIBRARY \
       -D PYTHON3_NUMPY_INCLUDE_DIRS=$NUMPY_INCLUDE_DIR \
       -D PYTHON3_PACKAGES_PATH=$PYTHON_PACKAGES_PATH \
-      -D HAVE_opencv_python3=ON .. \
-      -G Ninja
+      -G Ninja ..
 
 
 # Build & Install
@@ -186,7 +251,7 @@ fi
 # --- 4. Final Linking ---
 VENV_SITE_PACKAGES=$("$TARGET_PYTHON" -c "import sysconfig; print(sysconfig.get_paths()['purelib'])")
 sudo rm -rf "$VENV_SITE_PACKAGES/cv2"
-ln -sf "$CLEAN_CV_PATH/cv2" "$VENV_SITE_PACKAGES/"
+ln -sf "$CLEAN_CV_PATH" "$VENV_SITE_PACKAGES/"
 sudo ldconfig
 
 echo "✨ Move Process Complete."

@@ -127,7 +127,7 @@ pip install --no-deps \
     contourpy==1.3.3 cycler==0.12.1 fonttools==4.62.1 joblib==1.5.3 \
     kiwisolver==1.5.0 matplotlib==3.10.8 mpmath==1.3.0 networkx==3.6.1 \
     pandas==2.2.3 pyparsing==3.3.2 scikit-learn==1.8.0 scipy==1.17.1 \
-    sympy==1.14.0 threadpoolctl==3.6.0 \
+    sympy==1.14.0 threadpoolctl==3.6.0 soxr==1.0.0 \
     nltk==3.9.4 optuna==4.8.0 primePy==1.3
 
 # 10. Layer 5: Vision & ONNX
