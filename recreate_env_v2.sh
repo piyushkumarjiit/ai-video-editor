@@ -10,6 +10,8 @@
 # HARDWARE COMPATIBILITY:
 # - Forces Torch installation via the cu126 index for 1080 Ti support.
 # - Configures Ultralytics with --no-deps to prevent driver issues.
+#
+# #./recreate_env_split.sh ai-video-denoise python3.11 denoise
 # -------------------------------------------------------------------------
 
 #!/bin/bash
@@ -22,9 +24,19 @@ export MKL_SERVICE_FORCE_INTEL=1
 
 unset PYTHONPATH
 
+VENV_PATH=${1:-"$HOME/.virtualenvs/ai-video-ner"}
+TARGET_PYTHON=${2:-"python3.11"}
+ROLE=${3:-"denoise"}
+FORCE_REBUILD=${4:-false} # Optional 4th argument
+
+if [[ -z "$VENV_PATH" || -z "$TARGET_PYTHON" || -z "$FORCE_REBUILD" ]]; then
+    echo "❌ Usage: $0 [venv_name] [python_version] [denoise|asr|diarize] (force_rebuild)"
+    echo "Proceeding with defaults VENV_PATH: $VENV_PATH, TARGET_PYTHON: $TARGET_PYTHON and ROLE: $ROLE"
+fi
+
 # Define the target version and path
-TARGET_PYTHON="python3.11"
-VENV_PATH="$HOME/.virtualenvs/ai-video-denoise"
+#TARGET_PYTHON="python3.11"
+#VENV_PATH="$HOME/.virtualenvs/ai-video-denoise"
 
 BUILD_OPENCV=true
 
@@ -63,13 +75,8 @@ source "$VENV_PATH/bin/activate"
 
 # 2. Install Torch and Audio first (The heavy lifting). Unified Installation (Prevents Resolver Collisions)
 echo "🔥 Installing Torch components for CUDA 12.4. Installing all components in a single pass..."
-#"$TARGET_PYTHON" -m pip install --upgrade pip setuptools "wheel<0.45.0"
 $TARGET_PYTHON -m pip install --upgrade pip
-#$TARGET_PYTHON -m pip install setuptools==69.5.1 wheel==0.43.0 packaging==24.0 --no-deps
-    
 
-# Torch AND the requirements file in one command as this prevents pip from 'fixing' dependencies later and breaking torchaudio
-#"$TARGET_PYTHON" -m pip install torch==2.0.1 torchaudio==2.0.2 deepfilternet==0.5.6 numpy==1.26.4 pandas<2.2.0 scipy<1.13.0 --no-cache-dir --extra-index-url https://download.pytorch.org/whl/cu118
 # --- PHASE 1: CORE FOUNDATION (Hardware & Version Bridge) ---
     $TARGET_PYTHON -m pip install "setuptools==69.5.1" "wheel==0.43.0" "packaging==24.0" "fsspec[http]==2024.3.1" "protobuf==3.20.3" --no-deps
     $TARGET_PYTHON -m pip install torch==2.5.1 torchaudio==2.5.1 numpy==1.26.4 --index-url https://download.pytorch.org/whl/cu124 --no-deps
@@ -77,12 +84,9 @@ $TARGET_PYTHON -m pip install --upgrade pip
     # --- PHASE 2: THE PLUMBING ---
     # 0.A Torch & NVIDIA Stack (Added mpmath here so sympy works immediately)
     $TARGET_PYTHON -m pip install "mpmath==1.3.0" "sympy==1.13.1" "jinja2==3.1.3" "networkx==3.2.1" "triton==3.1.0" --no-deps
-    $TARGET_PYTHON -m pip install \
-        "nvidia-cublas-cu12==12.4.5.8" "nvidia-cuda-cupti-cu12==12.4.127" \
-        "nvidia-cuda-nvrtc-cu12==12.4.127" "nvidia-cuda-runtime-cu12==12.4.127" \
-        "nvidia-cudnn-cu12==9.1.0.70" "nvidia-cufft-cu12==11.2.1.3" \
-        "nvidia-curand-cu12==10.3.5.147" "nvidia-cusolver-cu12==11.6.1.9" \
-        "nvidia-cusparse-cu12==12.3.1.170" "nvidia-nccl-cu12==2.21.5" \
+    $TARGET_PYTHON -m pip install "nvidia-cublas-cu12==12.4.5.8" "nvidia-cuda-cupti-cu12==12.4.127" \
+        "nvidia-cuda-nvrtc-cu12==12.4.127" "nvidia-cuda-runtime-cu12==12.4.127" "nvidia-cudnn-cu12==9.1.0.70" "nvidia-cufft-cu12==11.2.1.3" \
+        "nvidia-curand-cu12==10.3.5.147" "nvidia-cusolver-cu12==11.6.1.9" "nvidia-cusparse-cu12==12.3.1.170" "nvidia-nccl-cu12==2.21.5" \
         "nvidia-nvjitlink-cu12==12.4.127" "nvidia-nvtx-cu12==12.4.127" --no-deps
 
     # 0.B-G Audio, Math, & Data Helpers (Added six here)
@@ -94,7 +98,8 @@ $TARGET_PYTHON -m pip install --upgrade pip
     $TARGET_PYTHON -m pip install "audioread==3.0.1" "decorator==5.1.1" "lazy_loader==0.4" "msgpack==1.0.8" "pooch==1.8.1" "soxr==0.3.7" "numba==0.59.1" --no-deps
     $TARGET_PYTHON -m pip install "threadpoolctl==3.4.0" "alembic==1.13.1" "colorlog==6.8.2" "sqlalchemy==2.0.29" "ruamel.yaml==0.18.6" "primePy==1.3" --no-deps
     $TARGET_PYTHON -m pip install "anyio==4.3.0" "distro==1.9.0" "httpx==0.27.0" "pydantic==2.7.1" "sniffio==1.3.1" --no-deps
-    $TARGET_PYTHON -m pip install "greenlet==3.0.3" "Mako==1.3.2" "typer==0.12.3" "shellingham==1.5.4" "h11==0.14.0" "matplotlib==3.8.4" "tabulate==0.9.0" --no-deps
+    # changed typer from 0.12.3 to 0.9.4 for SpaCy
+    $TARGET_PYTHON -m pip install "greenlet==3.0.3" "Mako==1.3.2" "typer==0.9.4" "shellingham==1.5.4" "h11==0.14.0" "matplotlib==3.8.4" "tabulate==0.9.0" --no-deps
     $TARGET_PYTHON -m pip install "pytz==2024.1" "python-dateutil==2.9.0.post0" "six==1.16.0" --no-deps
 
     # --- PHASE 3: THE AI MODELS ---
@@ -140,18 +145,6 @@ $TARGET_PYTHON -m pip install --upgrade pip
     $TARGET_PYTHON -m pip install "pathspec==0.12.1" "acoustics==0.2.6" --no-deps
     $TARGET_PYTHON -m pip install "deepfilterlib==0.5.6" "deepfilternet==0.5.6" --no-deps
     $TARGET_PYTHON -m pip install "pydub==0.25.1" "platformdirs==4.2.0" --no-deps
-
-
-# 3. Install the rest of the requirements
-# if [ -f "requirements-denoise.txt" ]; then
-#     echo "📦 Installing requirements-denoise.txt..."
-#     pip install -r requirements-denoise.txt
-# else
-#     echo "⚠️ Warning: requirements-denoise.txt not found, skipping."
-# fi
-
-# 4. The Critical "Manual" Step for Ultralytics (if needed in this new environment)
-#pip install ultralytics --no-deps --no-cache-dir
 
 # 5. Conditional OpenCV Build
 if [ "$BUILD_OPENCV" = true ]; then
@@ -251,7 +244,7 @@ except Exception as e:
     traceback.print_exc()
     sys.exit(1)
 
-print("\n🎉 Environment '{sys.prefix}' is 100% healthy!")
+print(f"\n🎉 Environment {sys.prefix} is 100% healthy!")
 EOF
 
 echo "✅ Env 2 setup complete. To use it, run: source $VENV_PATH/bin/activate . Run cuda_active_check.py to verify."

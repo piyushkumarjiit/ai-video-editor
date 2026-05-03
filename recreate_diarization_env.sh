@@ -1,34 +1,58 @@
 #!/bin/bash
 
-# Define the environment path
+# Define the target version and path
+TARGET_PYTHON="python3.10"
 VENV_PATH="$HOME/.virtualenvs/ai-video-diarize"
+
 BUILD_OPENCV=true
-FORCE_REBUILD=false
+FORCE_REBUILD=true
 
 echo "🗑️ Cleaning up old environment if it exists..."
 rm -rf "$VENV_PATH"
 
-echo "📂 Creating new Diarization VENV..."
-python3 -m venv "$VENV_PATH"
+echo "🛠️ Installing system-level FFmpeg headers..."
+sudo apt install -y libavformat-dev libavcodec-dev libavdevice-dev libavutil-dev libavfilter-dev libswscale-dev libswresample-dev
 
+# 1. Create the environment and upgrade pip
+echo "🐍 Creating Virtual Env..."
+# 1. Check if the specific Python version is even installed
+if ! command -v $TARGET_PYTHON &> /dev/null; then
+    echo "❌ $TARGET_PYTHON not found. Installing via deadsnakes..."
+    sudo add-apt-repository ppa:deadsnakes/ppa -y
+    sudo apt update
+    sudo apt install $TARGET_PYTHON $TARGET_PYTHON-venv $TARGET_PYTHON-dev -y
+fi
+
+# 2. Create the venv using that exact version
+echo "Creating venv with $($TARGET_PYTHON --version)..."
+$TARGET_PYTHON -m venv $VENV_PATH
+
+# 3. Activate and verify
 echo "🔌 Activating environment..."
 source "$VENV_PATH/bin/activate"
 
 echo "📦 Upgrading pip and setting up build tools..."
-pip install --upgrade pip setuptools "wheel<0.45.0"
+"$TARGET_PYTHON" -m pip install --upgrade pip setuptools<70.0.0 wheel<0.45.0
 
 echo "🧪 Installing PyTorch and Diarization Stack for CUDA 12.6..."
 
-# Uninstall standard onnxruntime just in case a dependency pulled it in
-pip uninstall -y onnxruntime
+# Install the 'Bridge' dependencies to lock the versions
+"$TARGET_PYTHON" -m pip install numpy==1.26.4 transformers==4.37.2 tokenizers==0.15.2
+
+echo "🚀 Installing authentic WhisperX from GitHub..."
+
+# 2. Install from the official source (v3.1.1 is highly stable for 1080 Ti)
+"$TARGET_PYTHON" -m pip install git+https://github.com/m-bain/whisperX.git@v3.1.1
 
 # We use the explicit cu126 index to ensure your 1080 Ti is utilized
-pip install torch==2.4.0 torchvision==0.19.0 torchaudio==2.4.0 \
-    whisperx pyannote.audio onnxruntime-gpu speechbrain \
-    transformers tokenizers numpy==1.26.4 python-dotenv \
-    huggingface_hub matplotlib tqdm pandas scipy librosa \
-    --extra-index-url https://download.pytorch.org/whl/cu121 \
+"$TARGET_PYTHON" -m pip install torch==2.1.0 torchvision==0.16.0 torchaudio==2.1.0 \
+    python-dotenv==1.0.1 faster-whisper==1.0.1 ctranslate2==4.3.1 \
+    pyannote.audio==3.1.1 pyannote.core==5.0.0 speechbrain==1.0.0 \
+    huggingface_hub==0.24.7 matplotlib tqdm==4.66.4 pandas==2.2.2 \
+    scipy==1.13.0 \
+    --extra-index-url https://download.pytorch.org/whl/cu118 \
     --no-cache-dir
+
 # pip install torch==2.7.1 torchvision==0.22.1 torchaudio==2.7.1 --index-url https://download.pytorch.org/whl/cu126
 
 # echo "🧬 Installing WhisperX and Pyannote Stack..."
@@ -86,9 +110,24 @@ if [ "$BUILD_OPENCV" = true ]; then
         fi
     fi
 
-    # Final Link Reinforcement (Ensuring the symlink exists in this specific venv)
+   # Final Link Reinforcement
     if [ -d "$CLEAN_CV_PATH" ]; then
-        ln -sf "$CLEAN_CV_PATH" "$VENV_SITE_PACKAGES/"
+        # 1. Clean existing folder/link to prevent "nested" link errors
+        if [ -d "$VENV_SITE_PACKAGES/cv2" ]; then
+            sudo rm -rf "$VENV_SITE_PACKAGES/cv2"
+        fi
+        
+        # 2. Create a proper directory instead of a single symlink
+        mkdir -p "$VENV_SITE_PACKAGES/cv2"
+        
+        # 3. Link the entire contents of the Vault (Binary + Configs)
+        echo "🔗 Linking full OpenCV Suite (Binary + Configs)..."
+        ln -sf "$CLEAN_CV_PATH/"* "$VENV_SITE_PACKAGES/cv2/"
+        
+        # 4. Optional: Create an __init__.py if the vault doesn't have it
+        if [ ! -f "$VENV_SITE_PACKAGES/cv2/__init__.py" ]; then
+            echo "from .cv2 import *" > "$VENV_SITE_PACKAGES/cv2/__init__.py"
+        fi
     fi
 fi
 

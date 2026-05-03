@@ -43,6 +43,15 @@
 /samples/*
 /keyframes/*
 /transcripts/*
+/redactions/*
+/tools/*
+/debug/*
+/tracking/*
+/tracking_results/*
+/archived/*
+/qwen_input/*
+/logs/*
+/freeze/*
 
 sample_videos.txt
 yt-dlp.conf

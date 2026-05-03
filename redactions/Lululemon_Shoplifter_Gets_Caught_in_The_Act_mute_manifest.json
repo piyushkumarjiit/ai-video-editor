@@ -1,0 +1,128 @@
+[
+    {
+        "entity": "LOCATION",
+        "text": "Waukegan",
+        "start": 0.249,
+        "end": 765.401,
+        "confidence": 0.85
+    },
+    {
+        "entity": "LOCATION",
+        "text": "Illinois",
+        "start": 0.149,
+        "end": 773.644,
+        "confidence": 0.85
+    },
+    {
+        "entity": "LOCATION",
+        "text": "Lake County",
+        "start": 1.309,
+        "end": 765.401,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Mike",
+        "start": 13.453,
+        "end": 736.643,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Mike",
+        "start": 13.453,
+        "end": 736.643,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Dad",
+        "start": 1.309,
+        "end": 765.401,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Aubrey",
+        "start": 1.309,
+        "end": 765.401,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Khadija Terry",
+        "start": 1.229,
+        "end": 765.401,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Khadija",
+        "start": 1.309,
+        "end": 765.401,
+        "confidence": 0.85
+    },
+    {
+        "entity": "LOCATION",
+        "text": "Walgreens",
+        "start": 1.309,
+        "end": 765.401,
+        "confidence": 0.85
+    },
+    {
+        "entity": "LOCATION",
+        "text": "Indiana",
+        "start": 0.149,
+        "end": 765.401,
+        "confidence": 0.85
+    },
+    {
+        "entity": "LOCATION",
+        "text": "Walgreens",
+        "start": 1.309,
+        "end": 765.401,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Khadija",
+        "start": 1.309,
+        "end": 765.401,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Khadija",
+        "start": 1.309,
+        "end": 765.401,
+        "confidence": 0.85
+    },
+    {
+        "entity": "LOCATION",
+        "text": "Indiana",
+        "start": 0.149,
+        "end": 765.401,
+        "confidence": 0.85
+    },
+    {
+        "entity": "LOCATION",
+        "text": "Illinois",
+        "start": 0.149,
+        "end": 773.644,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Khadija",
+        "start": 1.309,
+        "end": 765.401,
+        "confidence": 0.85
+    },
+    {
+        "entity": "LOCATION",
+        "text": "Illinois",
+        "start": 0.149,
+        "end": 773.644,
+        "confidence": 0.85
+    }
+]

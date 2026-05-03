@@ -1,0 +1,100 @@
+[
+    {
+        "entity": "PERSON",
+        "text": "Karen",
+        "start": 0.129,
+        "end": 1249.353,
+        "confidence": 0.85
+    },
+    {
+        "entity": "LOCATION",
+        "text": "US",
+        "start": 35.86,
+        "end": 1278.359,
+        "confidence": 0.85
+    },
+    {
+        "entity": "LOCATION",
+        "text": "Florida",
+        "start": 0.129,
+        "end": 1252.936,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Milo",
+        "start": 15.614,
+        "end": 1252.936,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Realtor",
+        "start": 0.129,
+        "end": 1257.659,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Karen",
+        "start": 0.129,
+        "end": 1249.353,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Brad",
+        "start": 0.129,
+        "end": 1247.852,
+        "confidence": 0.85
+    },
+    {
+        "entity": "LOCATION",
+        "text": "Florida",
+        "start": 0.129,
+        "end": 1252.936,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Ashley",
+        "start": 0.129,
+        "end": 1247.852,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Milo",
+        "start": 15.614,
+        "end": 1252.936,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Melody",
+        "start": 63.747,
+        "end": 1167.596,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Spinoza",
+        "start": 0.129,
+        "end": 1273.811,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Ashley",
+        "start": 0.129,
+        "end": 1247.852,
+        "confidence": 0.85
+    },
+    {
+        "entity": "LOCATION",
+        "text": "Florida",
+        "start": 0.129,
+        "end": 1252.936,
+        "confidence": 0.85
+    }
+]

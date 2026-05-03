@@ -1,0 +1,54 @@
+Based on the Python files you've provided for your AI video processing and redaction pipeline, here are the relevant headers. These are organized by their functional role in your project—from initial sanitization and scene detection to AI analysis and final GPU-accelerated rendering.
+
+### **1. Video Pre-Processing & Sanitization**
+These files handle the initial preparation of raw footage, ensuring consistent formats and detecting logical scene breaks.
+
+* **`sanitize_videos.py`**: Standardizes raw input video (codecs, frame rates) using FFmpeg with NVENC support to optimize for downstream AI processing.
+* **`detect_scenes.py`**: A simple scene-change detector that segments video into logical chunks and saves metadata (`details.json`) and keyframes for analysis.
+* **`extract_scenes.py`**: NOT USED. Uses AI analysis results to physically cut and export specific clips, with support for variable speed adjustments.
+
+### **2. Computer Vision & Detection (YOLO)**
+These files use the YOLO architecture for high-speed object and face detection to identify potential redaction targets.
+
+* **`detector_yolo.py`**: Performs high-speed scanning of keyframes to identify people and faces, outputting normalized coordinates in a JSON format.
+* **`post_yolo_draw_labels.py`**: Takes YOLO detection data and draws high-visibility bounding boxes and ID tags onto frames for human or VLM verification.
+* **`generate_boxed_frames.py`**:  NOT USED. A utility specifically for preparing "boxed" images to be sent to the Qwen-VL model for secondary classification.
+
+### **3. Advanced Vision-Language Analysis (Qwen/VLM)**
+These files leverage large vision models to provide deeper context and classification for the objects detected by YOLO.
+
+* **`vision_analyze.py`**: The main interface for the Qwen-VL model; it scans frames for security-sensitive items like documents, IDs, and specific personnel roles.
+* **`vision_tagger_qwen3.py`**: A classification utility that takes cropped images of entities and uses the VLM to strictly categorize them (e.g., "Police Officer," "Witness").
+* **`analyze_advanced5.py`**: A complex, two-pass workflow combining CLIP semantic features, ResNet extraction, and Qwen2.5-VL for intelligent scene understanding.
+
+### **4. Audio Transcription & Diarization**
+These files manage the audio pipeline, focusing on noise reduction, speaker identification, and text cleanup.
+
+* **`denoise_coordinator.py` & `denoise_worker.py`**: A split-environment system that isolates the DeepFilterNet denoising process into a dedicated virtual environment.
+* **`transcribe_video.py`**: A high-speed transcription script using `faster-whisper` optimized for the GTX 1080 Ti.
+* **`transcribe_diarize.py`**: Combines WhisperX for transcription with Pyannote for speaker diarization to create "who-said-what" logs.
+* **`clean_transcript.py`**: Uses an LLM (Qwen 3.5) to post-process raw transcripts, removing "thinking" tags and formatting the text into a clean script.
+* **`enroll_speaker.py`**: Generates mathematical voice "fingerprints" (.npy) to identify specific recurring speakers across different videos.
+
+### **5. Tracking, Interpolation & Normalization**
+These utilities bridge the gap between static frame detections and smooth, continuous video tracking.
+
+* **`frame_analysis_normalizer.py`**: Standardizes various AI output formats (YOLO, Qwen, etc.) into a single, consistent "redaction manifest."
+* **`entity_consolidator.py`**: Groups detections across multiple frames into unique "Global IDs" using spatial distance calculations.
+* **`tracker_bytetrack.py`**: Implements the ByteTrack algorithm via Ultralytics to maintain entity persistence across movement.
+* **`tracker_interpolator.py`**: Smooths the path between AI-identified keyframes by calculating estimated coordinates for every single frame in a sequence.
+
+### **6. UI & Pipeline Execution**
+The "control center" files that allow for user interaction and final video production.
+
+* **`app_ui.py`**: A Streamlit-based interface that allows users to view detected entities and manually select which ones should be redacted.
+* **`get_ui_manifest.py`**: Generates a summary of all detected entities (first seen, total frames, sample image) to populate the Streamlit UI.
+* **`run_redaction_pipeline.py`**: The master script that coordinates the user's UI selections with the interpolator and the final renderer.
+* **`apply_redaction.py`**: The heavy-lifter; uses OpenCV CUDA modules to apply feathered Gaussian blurs to selected targets at high speed.
+* **`render_nvenc_blur.py`**: An alternative renderer that pipes raw video through FFmpeg and NVENC for hardware-accelerated encoding of the final blurred video.
+
+### **7. System Diagnostics & Setup**
+* **`setup_models.py`**: Centralizes model management by downloading and verifying YOLO, Whisper, and Pyannote weights into a dedicated directory.
+* **`cuda_active_check.py`**: A comprehensive diagnostic tool to verify that NVIDIA drivers, PyTorch, and OpenCV-CUDA are correctly configured.
+* **`cv_cuda_test.py`** & **`numpy_cuda_ultralitics_test.py`**: Lightweight scripts to quickly verify GPU visibility and library compatibility.
+* **`quick_test.py`**: A grounding test to ensure that the bounding boxes generated by the AI align perfectly with the actual pixel coordinates of the source images.

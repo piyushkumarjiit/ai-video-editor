@@ -1,0 +1,114 @@
+[
+    {
+        "entity": "PERSON",
+        "text": "Agnaut",
+        "start": 16.044,
+        "end": 1002.343,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Kat",
+        "start": 16.044,
+        "end": 1002.343,
+        "confidence": 0.85
+    },
+    {
+        "entity": "LOCATION",
+        "text": "Chatham County",
+        "start": 16.044,
+        "end": 1002.343,
+        "confidence": 0.85
+    },
+    {
+        "entity": "LOCATION",
+        "text": "Georgia",
+        "start": 3.015,
+        "end": 1002.343,
+        "confidence": 0.85
+    },
+    {
+        "entity": "LOCATION",
+        "text": "Chatham",
+        "start": 16.044,
+        "end": 1002.343,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Brandon Collier",
+        "start": 3.015,
+        "end": 1002.343,
+        "confidence": 0.85
+    },
+    {
+        "entity": "LOCATION",
+        "text": "Chatham County",
+        "start": 16.044,
+        "end": 1002.343,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Brandon",
+        "start": 3.636,
+        "end": 1002.343,
+        "confidence": 0.85
+    },
+    {
+        "entity": "LOCATION",
+        "text": "Savannah",
+        "start": 3.636,
+        "end": 1002.343,
+        "confidence": 0.85
+    },
+    {
+        "entity": "LOCATION",
+        "text": "Savannah",
+        "start": 3.636,
+        "end": 1002.343,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Brandon",
+        "start": 3.636,
+        "end": 1002.343,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Brandon",
+        "start": 3.636,
+        "end": 1002.343,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Brandon",
+        "start": 3.636,
+        "end": 1002.343,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Brandon",
+        "start": 3.636,
+        "end": 1002.343,
+        "confidence": 0.85
+    },
+    {
+        "entity": "PERSON",
+        "text": "Becca",
+        "start": 16.044,
+        "end": 1002.343,
+        "confidence": 0.85
+    },
+    {
+        "entity": "LOCATION",
+        "text": "U.S.",
+        "start": 29.233,
+        "end": 998.16,
+        "confidence": 0.85
+    }
+]

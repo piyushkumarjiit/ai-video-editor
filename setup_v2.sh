@@ -7,26 +7,26 @@ ENV_PATH="$HOME/.virtualenvs/ai-video-env"
 BUILD_OPENCV=true
 # --- OLAH CONFIGURATION VARIABLES ---
 # --- CONFIGURATION VARIABLES ---
-NFS_SERVER="192.168.1.50"
-NFS_SHARE="/mnt/pool0/ai_data"
-MOUNT_POINT="/mnt/ai-models"  # Consistent with your Ollama path
+# NFS_SERVER="192.168.1.50"
+# NFS_SHARE="/mnt/pool0/ai_data"
+# MOUNT_POINT="/mnt/ai-models"  # Consistent with your Ollama path
 
-# 1. Automated NFS Mounting
-sudo mkdir -p "$MOUNT_POINT"
-if ! mountpoint -q "$MOUNT_POINT"; then
-    echo "🔗 Mounting NFS share..."
-    sudo mount -t nfs "$NFS_SERVER:$NFS_SHARE" "$MOUNT_POINT"
+# # 1. Automated NFS Mounting
+# sudo mkdir -p "$MOUNT_POINT"
+# if ! mountpoint -q "$MOUNT_POINT"; then
+    # echo "🔗 Mounting NFS share..."
+    # sudo mount -t nfs "$NFS_SERVER:$NFS_SHARE" "$MOUNT_POINT"
     
-    if ! grep -q "$MOUNT_POINT" /etc/fstab; then
-        echo "$NFS_SERVER:$NFS_SHARE $MOUNT_POINT nfs defaults,_netdev 0 0" | sudo tee -a /etc/fstab
-    fi
-fi
+    # if ! grep -q "$MOUNT_POINT" /etc/fstab; then
+        # echo "$NFS_SERVER:$NFS_SHARE $MOUNT_POINT nfs defaults,_netdev 0 0" | sudo tee -a /etc/fstab
+    # fi
+# fi
 
-# 2. Safety Check
-if ! mountpoint -q "$MOUNT_POINT"; then
-    echo "❌ ERROR: External storage failed to mount at $MOUNT_POINT"
-    exit 1
-fi
+# # 2. Safety Check
+# if ! mountpoint -q "$MOUNT_POINT"; then
+    # echo "❌ ERROR: External storage failed to mount at $MOUNT_POINT"
+    # exit 1
+# fi
 
 # 3. Ollama Configuration
 # Set the Environment variable only if it doesn't exist
@@ -98,24 +98,30 @@ fi
 if [ "$BUILD_OPENCV" = true ]; then
     echo "Flag --build-opencv detected."
     # Search for our custom build first
-    OPENCV_SO=$(find "$HOME/opencv_build" -name "cv2*.so" -type f 2>/dev/null | head -n 1)    
+    OPENCV_SO=$(find "$HOME/opencv_build" -name "cv2*.so" 2>/dev/null | head -n 1)
+    
     if [ -n "$OPENCV_SO" ]; then
-        echo "✅ Existing OpenCV build found at $OPENCV_SO. Skipping build."
-        VENV_SITE_PACKAGES=$(python3 -c "import site; print(site.getsitepackages()[0])")
-        ln -sf "$OPENCV_SO" "$VENV_SITE_PACKAGES/cv2.so"
-        echo "✅ Success: OpenCV linked to $VENV_SITE_PACKAGES"
-    else
-        echo "Error: Compiled .so file not found."
-    fi
+    echo "✅ Existing OpenCV build found at $OPENCV_SO. Skipping build."
 elif [ -f "./install_cv_cuda.sh" ]; then
         echo "🔨 Building OpenCV with CUDA (This will take 30+ mins)..."
         chmod +x install_cv_cuda.sh
         # Pass the number of cores to the sub-script to speed it up
         export MAKEFLAGS="-j$(nproc)"
         source ./install_cv_cuda.sh "$ENV_PATH"
-        OPENCV_SO=$(find "$HOME/opencv_build" -name "cv2*.so" -type f | head -n 1)
-else
+        OPENCV_SO=$(find "$HOME/opencv_build" -name "cv2*.so" | head -n 1)
+    else
         echo "❌ Error: install_cv_cuda.sh missing and no previous build found."
+    fi
+
+    # Link the SO file
+    if [ -f "$OPENCV_SO" ]; then
+        VENV_SITE_PACKAGES=$(python3 -c "import site; print(site.getsitepackages()[0])")
+        ln -sf "$OPENCV_SO" "$VENV_SITE_PACKAGES/cv2.so"
+        echo "✅ Success: OpenCV linked to $VENV_SITE_PACKAGES"
+        else
+            echo "Error: Compiled .so file not found."
+        fi
+    
 fi
 
 # 6. Install Python Requirements

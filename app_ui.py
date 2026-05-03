@@ -31,8 +31,8 @@ def main():
 
     # Parse unique entities from the manifest
     entities = {}
-    for frame, details in data.get("frames", {}).items():
-        for entity in details.get("entities", []):
+    for ent_id, info in data.get("entities", {}).items():
+        entities[ent_id] = info.get("category", "Unknown")
             if entity["id"] not in entities:
                 entities[entity["id"]] = entity["label"]
 
