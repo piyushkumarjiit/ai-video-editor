@@ -52,6 +52,8 @@
 /qwen_input/*
 /logs/*
 /freeze/*
+**/models/**
+**/hub/**
 
 sample_videos.txt
 yt-dlp.conf
