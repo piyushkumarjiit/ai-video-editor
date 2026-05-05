@@ -195,10 +195,17 @@ pip install --no-deps \
     presidio-analyzer==2.2.355 pdfplumber==0.10.0 python-docx==1.0.0
 
 # 12.C Layer 9: New Modules for Vector store and testing
-echo "📦 Installing Vector DB and Utilities..."
+echo "📦 Installing Redis, Qdrant, and PostGres Utilities..."
 pip install --no-deps \
-    faiss-gpu==1.7.4 
+    boto3==1.43.2 botocore==1.43.2 grpcio==1.80.0 h2==4.3.0 \
+    hpack==4.1.0 hyperframe==6.1.0 jmespath==1.1.0 portalocker==3.2.0 \
+    psycopg2-binary==2.9.12 pydantic-settings==2.14.0 qdrant-client==1.17.1 \
+    redis==7.4.0 s3transfer==0.17.0
 
+# 12.C Layer 9: New Modules for Vector store and testing
+echo "📦 Installing Loki, JSON Logger and Python logging Utilities..."
+pip install --no-deps python-json-logger==4.1.0 python-logging-loki==0.3.1 rfc3339==6.2
+    
 # 12.D Layer 7: Llama CPP with Cuda
 CMAKE_ARGS="-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES=61" pip install llama_cpp_python==0.3.20 --no-cache-dir
 
