@@ -287,6 +287,14 @@ pip install --no-deps --no-cache-dir lazy_loader==0.4 acoustics==0.2.6 \
 echo "🔐 Adjusting permissions for $VENV_PATH..."
 sudo chown -R $USER:$USER "$VENV_PATH"
 
+# Set up the CuDNN path 
+# Dynamically resolve the cuDNN path
+#CUDNN_PATH=$(python3 -c "import nvidia.cudnn, os; print(os.path.join(os.path.dirname(nvidia.cudnn.__file__), 'lib'))")
+# Export for the current session
+#export LD_LIBRARY_PATH="$CUDNN_PATH:$LD_LIBRARY_PATH"
+echo 'export LD_LIBRARY_PATH=$(python -c "import nvidia.cudnn, os; print(os.path.join(os.path.dirname(nvidia.cudnn.__file__), \"lib\"))"):$LD_LIBRARY_PATH' >> $VENV_PATH/bin/activate
+
+
 # Clear any build-time path leaks
 export PYTHONPATH=""
 
